@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createQuiz } from '$lib/quiz.js';
-	import { currentQuiz, isQuizActive, quizStartTime, timeRemaining, totalTime } from '$lib/stores.js';
+	import { currentQuiz, currentQuestionIndex, quizAnswers, isQuizActive, quizStartTime, timeRemaining, totalTime, quizResult } from '$lib/stores.js';
 	import Timer from '$lib/components/Timer.svelte';
 	import QuestionCard from '$lib/components/QuestionCard.svelte';
 	import StartScreen from '$lib/components/StartScreen.svelte';
@@ -34,8 +34,13 @@
 		showQuiz = false;
 		showResults = false;
 		currentQuiz.set([]);
+		currentQuestionIndex.set(0);
+		quizAnswers.set([]);
 		isQuizActive.set(false);
 		quizStartTime.set(null);
+		timeRemaining.set(0);
+		totalTime.set(0);
+		quizResult.set(null);
 	}
 </script>
 
