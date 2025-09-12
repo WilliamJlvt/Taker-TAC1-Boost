@@ -3,7 +3,7 @@ services:
   tac1-boost:
     build: .
     ports:
-      - "3000:3000"
+      - "3500:3500"
     environment:
       - NODE_ENV=production
     restart: unless-stopped
