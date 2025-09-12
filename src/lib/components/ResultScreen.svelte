@@ -2,10 +2,11 @@
 	import { onMount } from 'svelte';
 	import { quizResult } from '$lib/stores.js';
 	import { formatTime } from '$lib/quiz.js';
+	import type { QuizResult, QuizAnswer } from '$lib/types.js';
 
 	let { resetQuiz } = $props<{ resetQuiz: () => void }>();
 
-	let result = $state<any>(null);
+	let result = $state<QuizResult | null>(null);
 	let showAnimation = $state(false);
 
 	$effect(() => {
@@ -23,7 +24,9 @@
 	const scoreBorder = $derived(result ? (result.score >= 80 ? 'border-green-200' : result.score >= 60 ? 'border-yellow-200' : 'border-red-200') : '');
 
 	function shareResults() {
-		const shareText = `J'ai obtenu ${result.score}% au test TAC1 Boost ! 🎯\n${result.score >= 80 ? 'Excellent !' : result.score >= 60 ? 'Bien joué !' : 'Il faut réviser encore !'}`;
+		const r = result;
+		if (!r) return;
+		const shareText = `J'ai obtenu ${r.score}% au test TAC1 Boost ! 🎯\n${r.score >= 80 ? 'Excellent !' : r.score >= 60 ? 'Bien joué !' : 'Il faut réviser encore !'}`;
 		
 		if (navigator.share) {
 			navigator.share({
@@ -38,26 +41,27 @@
 	}
 
 	function downloadPDF() {
-		if (!result) return;
+		const r = result;
+		if (!r) return;
 		
 		const pdf = `
 RÉSULTATS TAC1 BOOST
 ==================
 
-Score: ${result.score}%
-Questions: ${result.answers.filter(a => a.isCorrect).length}/${result.totalQuestions} correctes
-Temps total: ${formatTime(result.timeSpent)}
+Score: ${r.score}%
+Questions: ${r.answers.filter((a: QuizAnswer) => a.isCorrect).length}/${r.totalQuestions} correctes
+Temps total: ${formatTime(r.timeSpent)}
 
 DÉTAIL PAR CATÉGORIE:
-${Object.entries(result.categoryScores).map(([category, scores]: [string, any]) => 
+${Object.entries(r.categoryScores).map(([category, scores]: [string, any]) => 
 	`${category}: ${scores.correct}/${scores.total} (${Math.round(scores.correct / scores.total * 100)}%)`
 ).join('\n')}
 
 ERREURS:
-${result.answers
+${r.answers
 	.map((answer: any, index: number) => ({ answer, index }))
 	.filter(({ answer }: any) => !answer.isCorrect)
-	.map(({ index }: any) => `Q${index + 1}: ${result.answers[index].selectedAnswer}`)
+	.map(({ index }: any) => `Q${index + 1}: ${r.answers[index].selectedAnswer}`)
 	.join('\n')}
 		`.trim();
 
