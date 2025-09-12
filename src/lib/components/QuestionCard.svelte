@@ -14,11 +14,28 @@
 	let questionStartTime = $state(Date.now());
 	let showFeedback = $state(false);
 	let canSkip = $state(false);
+	let autoSkipTimer: number | null = $state(null);
 
 	$effect(() => {
 		quiz = $currentQuiz;
-		questionIndex = $currentQuestionIndex;
+		const newQuestionIndex = $currentQuestionIndex;
 		answers = $quizAnswers;
+		
+		// Reset question state when index changes
+		if (newQuestionIndex !== questionIndex) {
+			questionIndex = newQuestionIndex;
+			selectedChoice = null;
+			isAnswered = false;
+			showFeedback = false;
+			canSkip = false;
+			questionStartTime = Date.now();
+			
+			// Clear any existing timer
+			if (autoSkipTimer) {
+				clearTimeout(autoSkipTimer);
+				autoSkipTimer = null;
+			}
+		}
 	});
 
 	const currentQuestion = $derived(quiz[questionIndex]);
@@ -46,13 +63,15 @@
 		quizAnswers.set(newAnswers);
 		
 		canSkip = true;
-		
-		setTimeout(() => {
-			nextQuestion();
-		}, 4000);
 	}
 
 	function nextQuestion() {
+		// Clear the auto skip timer if it exists
+		if (autoSkipTimer) {
+			clearTimeout(autoSkipTimer);
+			autoSkipTimer = null;
+		}
+		
 		if (questionIndex + 1 >= quiz.length) {
 			const totalTime = ($quizStartTime ? Date.now() - $quizStartTime : 0) / 1000;
 			const result = calculateResult(quiz, answers, totalTime);
@@ -61,13 +80,8 @@
 			return;
 		}
 
-		questionIndex++;
-		currentQuestionIndex.set(questionIndex);
-		selectedChoice = null;
-		isAnswered = false;
-		showFeedback = false;
-		canSkip = false;
-		questionStartTime = Date.now();
+		// Update the store - the effect will handle the reset
+		currentQuestionIndex.set(questionIndex + 1);
 	}
 
 	onMount(() => {
