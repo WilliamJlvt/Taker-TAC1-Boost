@@ -1,15 +1,19 @@
 <script lang="ts">
 	import { questions } from '$lib/data/index.js';
+	import type { Question } from '$lib/types.js';
 
-	let { startQuiz } = $props<{ startQuiz: (questionCount: number, timeLimit: number) => void }>();
+	let { startQuiz } = $props<{ startQuiz: (questionCount: number, timeLimit: number, categories: string[]) => void }>();
 
 	const totalQuestions = questions.length;
 	const clrCount = questions.filter(q => q.category === 'CLR').length;
 	const mouvementCount = questions.filter(q => q.category === 'Mouvement').length;
 	const organisationnelCount = questions.filter(q => q.category === 'Organisationnel').length;
+	const tresorerieCount = questions.filter(q => q.category === 'Trésorerie').length;
 
 	let questionCount = $state(10);
 	let timeLimit = $state(3); // in minutes
+	
+	let selectedCategories = $state<string[]>(['CLR', 'Mouvement', 'Organisationnel', 'Trésorerie']);
 
 	const presets = [
 		{ name: "Rapide", questions: 10, time: 3, icon: "⚡", color: "from-yellow-400 to-orange-500" },
@@ -26,8 +30,18 @@
 		showCustom = false;
 	}
 
+	function toggleCategory(category: string) {
+		if (selectedCategories.includes(category)) {
+			if (selectedCategories.length > 1) { // Prevent deselecting all
+				selectedCategories = selectedCategories.filter(c => c !== category);
+			}
+		} else {
+			selectedCategories = [...selectedCategories, category];
+		}
+	}
+
 	function handleStart() {
-		startQuiz(questionCount, timeLimit);
+		startQuiz(questionCount, timeLimit, selectedCategories);
 	}
 </script>
 
@@ -36,6 +50,37 @@
 		<div class="mb-8">
 			<h2 class="text-2xl font-bold text-gray-800 mb-2">Prêt pour votre test TAC1 ?</h2>
 			<p class="text-gray-600">Choisissez votre mode de révision</p>
+		</div>
+
+		<!-- Category Selection -->
+		<div class="mb-8 bg-gray-50 p-4 rounded-xl border border-gray-200">
+			<h3 class="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wider">Catégories</h3>
+			<div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+				<button 
+					onclick={() => toggleCategory('CLR')}
+					class="p-2 rounded-lg border transition-all duration-200 text-sm font-medium {selectedCategories.includes('CLR') ? 'bg-blue-100 border-blue-300 text-blue-800' : 'bg-white border-gray-200 text-gray-500 hover:border-blue-200'}"
+				>
+					CLR ({clrCount})
+				</button>
+				<button 
+					onclick={() => toggleCategory('Mouvement')}
+					class="p-2 rounded-lg border transition-all duration-200 text-sm font-medium {selectedCategories.includes('Mouvement') ? 'bg-green-100 border-green-300 text-green-800' : 'bg-white border-gray-200 text-gray-500 hover:border-green-200'}"
+				>
+					Mouvement ({mouvementCount})
+				</button>
+				<button 
+					onclick={() => toggleCategory('Organisationnel')}
+					class="p-2 rounded-lg border transition-all duration-200 text-sm font-medium {selectedCategories.includes('Organisationnel') ? 'bg-purple-100 border-purple-300 text-purple-800' : 'bg-white border-gray-200 text-gray-500 hover:border-purple-200'}"
+				>
+					Organisationnel ({organisationnelCount})
+				</button>
+				<button 
+					onclick={() => toggleCategory('Trésorerie')}
+					class="p-2 rounded-lg border transition-all duration-200 text-sm font-medium {selectedCategories.includes('Trésorerie') ? 'bg-amber-100 border-amber-300 text-amber-800' : 'bg-white border-gray-200 text-gray-500 hover:border-amber-200'}"
+				>
+					Trésorerie ({tresorerieCount})
+				</button>
+			</div>
 		</div>
 
 		<!-- Mode Selection -->
@@ -104,21 +149,6 @@
 			{/if}
 		</div>
 
-		<div class="grid md:grid-cols-3 gap-4 mb-8">
-			<div class="bg-blue-50 rounded-lg p-4">
-				<h3 class="font-semibold text-blue-700 mb-1">CLR</h3>
-				<p class="text-blue-600 text-sm">{clrCount} questions</p>
-			</div>
-			<div class="bg-green-50 rounded-lg p-4">
-				<h3 class="font-semibold text-green-700 mb-1">Mouvement</h3>
-				<p class="text-green-600 text-sm">{mouvementCount} questions</p>
-			</div>
-			<div class="bg-purple-50 rounded-lg p-4">
-				<h3 class="font-semibold text-purple-700 mb-1">Organisationnel</h3>
-				<p class="text-purple-600 text-sm">{organisationnelCount} questions</p>
-			</div>
-		</div>
-
 		<div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
 			<div class="flex items-center justify-center mb-2">
 				<svg class="w-5 h-5 text-yellow-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -127,6 +157,9 @@
 				<span class="text-yellow-800 font-semibold">{questionCount} questions - {timeLimit} minute{timeLimit > 1 ? 's' : ''}</span>
 			</div>
 			<p class="text-yellow-700 text-sm">Les questions et réponses seront mélangées aléatoirement</p>
+			{#if selectedCategories.length < 4}
+			<p class="text-yellow-600 text-xs mt-1">Catégories : {selectedCategories.join(', ')}</p>
+			{/if}
 		</div>
 
 		<button 

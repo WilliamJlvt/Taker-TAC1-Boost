@@ -1,9 +1,14 @@
+export interface AnswerOption {
+	text: string;
+	isCorrect: boolean;
+	rationale?: string;
+}
+
 export interface Question {
 	id: string;
 	question: string;
-	choices: string[];
-	correctAnswer: string;
-	category: 'CLR' | 'Mouvement' | 'Organisationnel';
+	answerOptions: AnswerOption[];
+	category: 'CLR' | 'Mouvement' | 'Organisationnel' | 'Trésorerie';
 }
 
 export interface QuizAnswer {

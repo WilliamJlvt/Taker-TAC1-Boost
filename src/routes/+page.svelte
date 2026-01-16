@@ -10,8 +10,8 @@
 	let showQuiz = $state(false);
 	let showResults = $state(false);
 
-	function startQuiz(questionCount: number, timeLimit: number) {
-		const quiz = createQuiz(questionCount);
+	function startQuiz(questionCount: number, timeLimit: number, categories: string[] = []) {
+		const quiz = createQuiz(questionCount, categories as any[]);
 		currentQuiz.set(quiz);
 		isQuizActive.set(true);
 		quizStartTime.set(Date.now());

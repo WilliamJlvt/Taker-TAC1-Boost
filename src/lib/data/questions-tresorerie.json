@@ -1,0 +1,627 @@
+[
+    {
+      "question": "Une Junior-Entreprise achète une licence logicielle à 600€ HT pour les besoins d'une étude. Comment cette dépense doit-elle être traitée comptablement ?",
+      "answerOptions": [
+        {
+          "text": "Elle doit être enregistrée comme une charge (compte de classe 6) car elle est inférieure au seuil d'immobilisation.",
+          "isCorrect": true,
+          "rationale": "Un bien dont la valeur est supérieure à 500€ HT et destiné à être utilisé sur plus d'un an est considéré comme une immobilisation. Ce bien étant inférieur à ce seuil, il est comptabilisé comme une charge."
+        },
+        {
+          "text": "Elle doit être enregistrée comme une immobilisation incorporelle (compte de classe 2) car elle servira durablement.",
+          "isCorrect": false,
+          "rationale": "Le seuil pour l'enregistrement en immobilisation est fixé à 500€ HT. Ce montant étant supérieur, l'achat ne peut être immobilisé."
+        },
+        {
+          "text": "Elle doit être directement refacturée au client en tant que frais sans être enregistrée dans la comptabilité de la Junior.",
+          "isCorrect": false,
+          "rationale": "Toute dépense engagée par la Junior doit être enregistrée dans sa comptabilité, même si elle est ensuite refacturée."
+        },
+        {
+          "text": "Elle doit être provisionnée en attente de la clôture de l'étude pour décider de son traitement final.",
+          "isCorrect": false,
+          "rationale": "Le traitement comptable d'un achat (charge ou immobilisation) est déterminé au moment de l'enregistrement de la facture, et non à la fin de l'étude."
+        }
+      ]
+    },
+    {
+      "question": "Quelle est la date d'exigibilité de la TVA collectée pour une Junior-Entreprise sur une prestation de service ?",
+      "answerOptions": [
+        {
+          "text": "La date d'émission de la facture de solde.",
+          "isCorrect": false,
+          "rationale": "L'émission de la facture crée la créance, mais ne rend pas la TVA immédiatement exigible pour les Juniors."
+        },
+        {
+          "text": "La date de signature de la Convention d'Étude.",
+          "isCorrect": false,
+          "rationale": "La signature du contrat engage les parties mais ne correspond pas au fait générateur de la TVA."
+        },
+        {
+          "text": "La date de signature du Procès-Verbal de Recette Final (PVRF).",
+          "isCorrect": false,
+          "rationale": "Le PVRF atteste de la fin de la prestation, mais le régime de TVA des Juniors est basé sur un autre événement."
+        },
+        {
+          "text": "La date d'encaissement du paiement du client.",
+          "isCorrect": true,
+          "rationale": "Les Juniors sont soumises au régime de la TVA sur les encaissements, ce qui signifie que la taxe n'est due qu'au moment où le paiement est reçu."
+        }
+      ]
+    },
+    {
+      "question": "Une Junior au régime réel normal de TVA souhaite refacturer à un client un billet de train de 100€ TTC. La TVA sur les billets de train n'est pas récupérable. Quel montant TTC final la Junior doit-elle facturer au client ?",
+      "answerOptions": [
+        {
+          "text": "100€ TTC",
+          "isCorrect": false,
+          "rationale": "La refacturation de frais est considérée comme une prestation de service et est donc soumise à la TVA, même si le frais initial ne l'était pas au même taux."
+        },
+        {
+          "text": "120€ TTC",
+          "isCorrect": true,
+          "rationale": "Si la TVA sur la dépense initiale n'est pas récupérable, la Junior doit refacturer sur la base du montant TTC, en appliquant le taux de TVA normal de 20%."
+        },
+        {
+          "text": "83,33€ HT, soit 100€ TTC",
+          "isCorrect": false,
+          "rationale": "Ce calcul serait correct si la base de refacturation était le montant HT, ce qui n'est pas le cas pour les frais dont la TVA n'est pas récupérable."
+        },
+        {
+          "text": "110€ TTC",
+          "isCorrect": false,
+          "rationale": "Le taux de TVA à appliquer sur une refacturation de frais est le taux normal en vigueur, et non un taux spécifique au type de frais."
+        }
+      ]
+    },
+    {
+      "question": "Dans quel cas une subvention reçue par une Junior-Entreprise doit-elle être assujettie à la TVA ?",
+      "answerOptions": [
+        {
+          "text": "Uniquement si la subvention provient d'une entreprise privée.",
+          "isCorrect": false,
+          "rationale": "La nature de l'entité qui verse la subvention (publique ou privée) ne détermine pas son assujettissement à la TVA."
+        },
+        {
+          "text": "Si la subvention est qualifiée de \"commerciale\", c'est-à-dire qu'elle est la contrepartie d'un service.",
+          "isCorrect": true,
+          "rationale": "Une subvention est soumise à TVA dès lors qu'elle constitue la contrepartie d'une prestation de service ou d'un avantage donné au tiers payeur."
+        },
+        {
+          "text": "Si le montant de la subvention dépasse un certain seuil annuel fixé par l'administration fiscale.",
+          "isCorrect": false,
+          "rationale": "L'assujettissement à la TVA dépend de la nature de la subvention (avec ou sans contrepartie), et non de son montant."
+        },
+        {
+          "text": "Toutes les subventions reçues par une Junior-Entreprise sont exonérées de TVA.",
+          "isCorrect": false,
+          "rationale": "Il est nécessaire de distinguer les subventions commerciales (soumises à TVA) des subventions non-commerciales (non soumises)."
+        }
+      ]
+    },
+    {
+      "question": "Quelle est la règle concernant la TVA sur les cadeaux clients pour une Junior-Entreprise ?",
+      "answerOptions": [
+        {
+          "text": "La TVA n'est jamais déductible sur les cadeaux clients.",
+          "isCorrect": false,
+          "rationale": "La déductibilité est possible, mais elle est soumise à une condition de montant."
+        },
+        {
+          "text": "La TVA est toujours déductible, quel que soit le montant du cadeau.",
+          "isCorrect": false,
+          "rationale": "L'administration fiscale a fixé un plafond pour éviter les abus."
+        },
+        {
+          "text": "La TVA est déductible uniquement si le montant du cadeau ne dépasse pas 73€ TTC par client et par an.",
+          "isCorrect": true,
+          "rationale": "C'est le plafond légal au-delà duquel la TVA sur un cadeau offert à un client ne peut plus être récupérée."
+        },
+        {
+          "text": "La TVA est déductible à hauteur de 50% sur tous les cadeaux clients.",
+          "isCorrect": false,
+          "rationale": "La règle n'est pas un pourcentage de déduction, mais un seuil de valeur pour une déduction totale."
+        }
+      ]
+    },
+    {
+      "question": "A partir de quel chiffre d'affaires annuel une Junior-Entreprise est-elle obligée de déclarer la CVAE (Cotisation sur la Valeur Ajoutée des Entreprises) ?",
+      "answerOptions": [
+        {
+          "text": "Dès le premier euro de chiffre d'affaires.",
+          "isCorrect": false,
+          "rationale": "Il existe un seuil en dessous duquel aucune déclaration n'est requise."
+        },
+        {
+          "text": "Supérieur à 5 000€.",
+          "isCorrect": false,
+          "rationale": "Ce seuil concerne l'exonération de la CFE, mais pas l'obligation déclarative de la CVAE."
+        },
+        {
+          "text": "Supérieur à 152 500€.",
+          "isCorrect": true,
+          "rationale": "En dessous de ce seuil de chiffre d'affaires, une Junior n'a ni à déclarer ni à payer la CVAE."
+        },
+        {
+          "text": "Supérieur à 500 000€.",
+          "isCorrect": false,
+          "rationale": "Ce seuil déclenche une obligation de paiement de la CVAE, mais l'obligation de déclaration commence plus bas."
+        }
+      ]
+    },
+    {
+      "question": "Lors de la clôture comptable, une Junior a une étude en cours, facturée mais non totalement réalisée. Comment doit-elle traiter le chiffre d'affaires correspondant à la partie non réalisée ?",
+      "answerOptions": [
+        {
+          "text": "En l'enregistrant en Produit Constaté d'Avance (PCA).",
+          "isCorrect": true,
+          "rationale": "Le principe d'indépendance des exercices impose de ne comptabiliser en produit que la partie de la prestation effectivement réalisée. Le reste est neutralisé via un PCA."
+        },
+        {
+          "text": "En le laissant intégralement dans le résultat de l'exercice en cours.",
+          "isCorrect": false,
+          "rationale": "Cela irait à l'encontre du principe de séparation des exercices, car une partie du produit concerne l'exercice suivant."
+        },
+        {
+          "text": "En l'enregistrant en Charge Constatée d'Avance (CCA).",
+          "isCorrect": false,
+          "rationale": "Les CCA concernent les charges payées d'avance, et non les produits facturés d'avance."
+        },
+        {
+          "text": "En attendant la fin de l'étude l'année suivante pour comptabiliser l'intégralité du chiffre d'affaires.",
+          "isCorrect": false,
+          "rationale": "La partie de la prestation réalisée durant l'exercice doit être rattachée à celui-ci, même si la facture n'est pas émise."
+        }
+      ]
+    },
+    {
+      "question": "Quelle est la principale raison pour laquelle il est fortement conseillé aux Junior-Entreprises d'opter pour le régime réel normal (RN) de TVA plutôt que le régime simplifié d'imposition (RSI) ?",
+      "answerOptions": [
+        {
+          "text": "Le RSI impose des déclarations hebdomadaires trop contraignantes.",
+          "isCorrect": false,
+          "rationale": "Le RSI se base sur des acomptes semestriels et une déclaration annuelle, et non des déclarations hebdomadaires."
+        },
+        {
+          "text": "Le RN permet un meilleur contrôle de la trésorerie grâce à des déclarations et paiements mensuels.",
+          "isCorrect": true,
+          "rationale": "Le régime réel normal aligne les paiements de TVA sur l'activité réelle du mois, évitant les importants décalages de trésorerie inhérents au système d'acomptes du RSI."
+        },
+        {
+          "text": "Le RN est le seul régime qui autorise la déduction de la TVA sur les achats.",
+          "isCorrect": false,
+          "rationale": "Le RSI permet également la déduction de la TVA, bien que les modalités de régularisation soient différentes et moins fréquentes."
+        },
+        {
+          "text": "Le RSI est interdit pour les associations, seules les entreprises individuelles peuvent l'utiliser.",
+          "isCorrect": false,
+          "rationale": "Le RSI est une option possible pour les Juniors dont le CA se situe dans les seuils, bien qu'il soit déconseillé."
+        }
+      ]
+    },
+    {
+      "question": "Quelle information cruciale doit figurer sur une facture émise par une Junior en franchise en base de TVA ?",
+      "answerOptions": [
+        {
+          "text": "Le numéro de TVA intracommunautaire de la Junior.",
+          "isCorrect": false,
+          "rationale": "Une Junior en franchise en base n'est pas assujettie à la TVA et ne dispose donc généralement pas de numéro de TVA intracommunautaire."
+        },
+        {
+          "text": "La mention \"TVA non applicable – art. 293 du CGI\".",
+          "isCorrect": true,
+          "rationale": "Cette mention légale est obligatoire pour informer le client que la TVA n'est pas collectée et justifier son absence sur la facture."
+        },
+        {
+          "text": "La mention \"TVA sur les encaissements\".",
+          "isCorrect": false,
+          "rationale": "Cette mention concerne les entités soumises à la TVA au régime réel, ce qui n'est pas le cas d'une structure en franchise en base."
+        },
+        {
+          "text": "Un taux de TVA de 0%.",
+          "isCorrect": false,
+          "rationale": "Indiquer un taux de TVA de 0% est différent d'une non-application de la TVA ; la mention légale spécifique est requise."
+        }
+      ]
+    },
+    {
+      "question": "Une Junior-Entreprise réalise une étude pour un client professionnel assujetti à la TVA en Allemagne. Comment la TVA doit-elle être gérée sur la facture ?",
+      "answerOptions": [
+        {
+          "text": "La Junior doit facturer avec une TVA française de 20%.",
+          "isCorrect": false,
+          "rationale": "Pour les prestations de services BtoB au sein de l'UE, le lieu de taxation est celui du preneur (le client)."
+        },
+        {
+          "text": "La Junior doit facturer en Hors Taxes (HT) et le client allemand devra autoliquider la TVA dans son pays.",
+          "isCorrect": true,
+          "rationale": "Selon les règles de TVA intracommunautaire pour les services BtoB, la prestation n'est pas taxée en France. Le client est responsable de déclarer et payer la TVA dans son propre pays."
+        },
+        {
+          "text": "La Junior doit s'immatriculer à la TVA en Allemagne et facturer la TVA allemande.",
+          "isCorrect": false,
+          "rationale": "Le mécanisme d'autoliquidation par le client évite cette démarche complexe pour le prestataire."
+        },
+        {
+          "text": "La Junior doit facturer avec un taux de TVA réduit spécifique à l'Allemagne.",
+          "isCorrect": false,
+          "rationale": "La facturation doit être faite sans TVA française, et c'est le client qui gère la TVA applicable dans son pays."
+        }
+      ]
+    },
+    {
+      "question": "Quel est l'objectif principal de l'État de Rapprochement Bancaire (ERB) ?",
+      "answerOptions": [
+        {
+          "text": "Calculer le résultat comptable de la période.",
+          "isCorrect": false,
+          "rationale": "Le résultat est calculé via le compte de résultat, qui compare les produits et les charges, et non en comparant des soldes bancaires."
+        },
+        {
+          "text": "Justifier et expliquer l'écart entre le solde du compte 512 en comptabilité et le solde du relevé bancaire.",
+          "isCorrect": true,
+          "rationale": "L'ERB vise à pointer les opérations pour identifier les décalages (ex: chèques non encaissés, frais bancaires non saisis) et s'assurer de la concordance des deux soldes."
+        },
+        {
+          "text": "Préparer la déclaration de TVA mensuelle.",
+          "isCorrect": false,
+          "rationale": "La déclaration de TVA se base sur les factures émises et reçues et les encaissements/décaissements, mais l'ERB n'est pas l'outil direct pour sa préparation."
+        },
+        {
+          "text": "Lister l'ensemble des créances clients et dettes fournisseurs.",
+          "isCorrect": false,
+          "rationale": "Le suivi des créances et des dettes se fait via le lettrage des comptes de tiers (411 et 401), pas avec l'ERB."
+        }
+      ]
+    },
+    {
+      "question": "En cas de contrôle fiscal, quel document standardisé, extrait de la comptabilité, l'administration est-elle en droit de réclamer ?",
+      "answerOptions": [
+        {
+          "text": "La balance générale de l'exercice.",
+          "isCorrect": false,
+          "rationale": "La balance est un document de synthèse utile, mais l'administration demande un fichier détaillé avec un format spécifique."
+        },
+        {
+          "text": "Le Fichier des Écritures Comptables (FEC).",
+          "isCorrect": true,
+          "rationale": "Le FEC est une extraction de toutes les écritures comptables de l'exercice dans un format normé. Sa production est une obligation légale en cas de contrôle."
+        },
+        {
+          "text": "Tous les États de Rapprochement Bancaire (ERB) signés.",
+          "isCorrect": false,
+          "rationale": "Les ERB sont des documents de contrôle interne importants, mais le fichier principal requis pour l'analyse des comptes est le FEC."
+        },
+        {
+          "text": "La liasse fiscale de l'exercice précédent pour comparaison.",
+          "isCorrect": false,
+          "rationale": "Bien que l'administration y ait accès, le document qu'elle demande pour un contrôle informatisé de la comptabilité est le FEC."
+        }
+      ]
+    },
+    {
+      "question": "Une Junior-Entreprise souhaite rétribuer un dirigeant pour son implication dans la gestion de l'association. Quelle est la principale condition à respecter pour éviter une requalification en salariat ?",
+      "answerOptions": [
+        {
+          "text": "La rétribution doit être inférieure au SMIC mensuel.",
+          "isCorrect": false,
+          "rationale": "Bien qu'il existe des plafonds, le critère le plus important n'est pas le montant mais la nature de la relation."
+        },
+        {
+          "text": "La rétribution doit être approuvée par l'expert-comptable.",
+          "isCorrect": false,
+          "rationale": "L'approbation de l'expert-comptable est une bonne pratique, mais l'organe souverain pour cette décision est interne à l'association."
+        },
+        {
+          "text": "L'absence de tout lien de subordination entre le dirigeant et l'association doit être garantie.",
+          "isCorrect": true,
+          "rationale": "La requalification en contrat de travail repose principalement sur la caractérisation d'un lien de subordination (ordres, contrôle, sanction), qui doit être absolument évité."
+        },
+        {
+          "text": "Le dirigeant ne doit pas intervenir sur des missions pour des clients pendant son mandat.",
+          "isCorrect": false,
+          "rationale": "Un dirigeant peut être rétribué pour sa fonction et également recevoir une rétribution en tant qu'intervenant sur une étude, les deux sont distincts."
+        }
+      ]
+    },
+    {
+      "question": "Quelle est la durée minimale légale de conservation pour les documents comptables et les pièces justificatives (factures, notes de frais) ?",
+      "answerOptions": [
+        {
+          "text": "3 ans",
+          "isCorrect": false,
+          "rationale": "Cette durée de 3 ans correspond à la conservation des BRC et TR, mais pas aux documents comptables généraux."
+        },
+        {
+          "text": "5 ans",
+          "isCorrect": false,
+          "rationale": "Cette durée s'applique à la conservation des documents d'étude, mais une autre règle prévaut pour les pièces comptables."
+        },
+        {
+          "text": "10 ans",
+          "isCorrect": true,
+          "rationale": "L'article L.123-22 du Code de commerce impose une durée de conservation de 10 ans pour les documents comptables et les pièces justificatives."
+        },
+        {
+          "text": "À vie",
+          "isCorrect": false,
+          "rationale": "Cette durée de conservation est imposée pour les Bulletins de Versement, mais pas pour les factures."
+        }
+      ]
+    },
+    {
+      "question": "Concernant la facturation électronique, quelle sera la première obligation pour les Junior-Entreprises à compter du 1er septembre 2026 ?",
+      "answerOptions": [
+        {
+          "text": "Émettre toutes ses factures clients sous format électronique.",
+          "isCorrect": false,
+          "rationale": "L'obligation d'émission entrera en vigueur plus tard que la première obligation."
+        },
+        {
+          "text": "Être en capacité de recevoir les factures de ses fournisseurs sous format électronique.",
+          "isCorrect": true,
+          "rationale": "La réforme se déploie en deux temps : d'abord l'obligation de réception pour toutes les entreprises, puis l'obligation d'émission."
+        },
+        {
+          "text": "Transmettre l'ensemble de ses déclarations de TVA via une Plateforme de Dématérialisation Partenaire (PDP).",
+          "isCorrect": false,
+          "rationale": "Bien que liées, l'obligation initiale concerne la réception de factures et non la modification du processus de déclaration de TVA."
+        },
+        {
+          "text": "Archiver toutes ses factures sur le portail public de facturation (Chorus Pro).",
+          "isCorrect": false,
+          "rationale": "Le portail public est une option, mais l'obligation est de pouvoir recevoir via une plateforme agréée, qui peut être publique ou privée."
+        }
+      ]
+    },
+    {
+      "question": "Une Junior-Entreprise fait un don à une autre association. Comment ce don doit-il être comptabilisé ?",
+      "answerOptions": [
+        {
+          "text": "En compte 658 \"Charges diverses de gestion courante\".",
+          "isCorrect": false,
+          "rationale": "Ce compte est utilisé pour les charges courantes non classifiables ailleurs, mais il existe un compte plus spécifique pour les dons."
+        },
+        {
+          "text": "En compte 623 \"Publicité, publications, relations publiques\".",
+          "isCorrect": false,
+          "rationale": "Un don n'est pas une dépense de communication, sauf s'il s'agit d'un sponsoring avec une contrepartie publicitaire claire."
+        },
+        {
+          "text": "En compte 6713 \"Dons, libéralités\".",
+          "isCorrect": true,
+          "rationale": "Ce compte de charges exceptionnelles est spécifiquement prévu pour enregistrer les dons et libéralités versés par l'entité."
+        },
+        {
+          "text": "En compte 467 \"Autres comptes débiteurs ou créditeurs\".",
+          "isCorrect": false,
+          "rationale": "Ce compte de tiers est un compte d'attente ou pour des opérations diverses, mais le don est une charge définitive et doit être enregistré en classe 6."
+        }
+      ]
+    },
+    {
+      "question": "Quel placement financier est formellement interdit pour une Junior-Entreprise afin de respecter son objet social et de ne pas prendre de risques excessifs ?",
+      "answerOptions": [
+        {
+          "text": "Le Livret A.",
+          "isCorrect": false,
+          "rationale": "Le Livret A est un placement autorisé, sécurisé et liquide, tout à fait adapté à la gestion de trésorerie d'une association."
+        },
+        {
+          "text": "Les comptes à terme.",
+          "isCorrect": false,
+          "rationale": "Les comptes à terme sont autorisés mais leur usage doit être limité en raison de leur manque de liquidité par rapport à un livret classique."
+        },
+        {
+          "text": "Les fonds de placement (actions, OPCVM).",
+          "isCorrect": true,
+          "rationale": "Ces placements sont considérés comme trop risqués et spéculatifs, ce qui est contraire à l'objet social d'une Junior qui n'est pas de générer des produits financiers."
+        },
+        {
+          "text": "Le Livret B (ou compte sur livret).",
+          "isCorrect": false,
+          "rationale": "Comme le Livret A, il s'agit d'un placement sécurisé et autorisé, recommandé pour gérer l'excédent de trésorerie."
+        }
+      ]
+    },
+    {
+      "question": "Quelle est la conséquence fiscale pour un intervenant qui perçoit des rétributions d'une Junior-Entreprise ?",
+      "answerOptions": [
+        {
+          "text": "Les rétributions sont considérées comme des salaires et sont soumises au prélèvement à la source.",
+          "isCorrect": false,
+          "rationale": "La lettre de Bérégovoy qualifie fiscalement ces rétributions différemment, ce qui exclut le régime des salaires."
+        },
+        {
+          "text": "Les rétributions doivent être déclarées dans la catégorie des Bénéfices Non Commerciaux (BNC).",
+          "isCorrect": true,
+          "rationale": "Sur le plan fiscal, les rétributions versées aux étudiants sont qualifiées d'honoraires et doivent être déclarées en BNC par l'intervenant."
+        },
+        {
+          "text": "Les rétributions sont totalement exonérées d'impôt sur le revenu pour les étudiants.",
+          "isCorrect": false,
+          "rationale": "Ces revenus sont imposables et doivent être déclarés, même s'ils ne donnent pas systématiquement lieu au paiement d'un impôt en fonction des seuils."
+        },
+        {
+          "text": "C'est à la Junior-Entreprise de payer l'impôt correspondant aux rétributions versées.",
+          "isCorrect": false,
+          "rationale": "Chaque intervenant est personnellement responsable de la déclaration de ses propres revenus."
+        }
+      ]
+    },
+    {
+      "question": "Une Junior-Entreprise clôture son exercice comptable au 30 juin. Elle change de régime de TVA pour passer du réel simplifié au réel normal. Quand devra-t-elle déposer sa première déclaration mensuelle de TVA ?",
+      "answerOptions": [
+        {
+          "text": "Pour le mois de juin, à déposer avant le 24 juillet.",
+          "isCorrect": false,
+          "rationale": "Le changement prend effet au début du nouvel exercice, et la première déclaration regroupe les premiers mois de cet exercice."
+        },
+        {
+          "text": "Pour le mois de juillet, à déposer avant le 24 août.",
+          "isCorrect": false,
+          "rationale": "La première déclaration après un changement de régime regroupe une période plus longue que le premier mois seul."
+        },
+        {
+          "text": "Pour la période de juillet à septembre, à déposer avant le 24 octobre.",
+          "isCorrect": true,
+          "rationale": "Lors du passage au réel normal pour un exercice débutant en juillet, la première déclaration est celle du premier trimestre (juillet-septembre), même si le rythme devient ensuite mensuel."
+        },
+        {
+          "text": "Pour la période de janvier à mars de l'année suivante, car le régime s'aligne sur l'année civile.",
+          "isCorrect": false,
+          "rationale": "Le cycle déclaratif s'aligne sur l'exercice comptable de la Junior, et non sur l'année civile."
+        }
+      ]
+    },
+    {
+      "question": "Que représente le montant indiqué dans la case \"Disponibilités\" du bilan sur la liasse fiscale d'une Junior-Entreprise ?",
+      "answerOptions": [
+        {
+          "text": "Le chiffre d'affaires de l'exercice.",
+          "isCorrect": false,
+          "rationale": "Le chiffre d'affaires est un flux qui apparaît dans le compte de résultat, tandis que les disponibilités sont un stock à la date de clôture."
+        },
+        {
+          "text": "Le total des créances clients non encore encaissées.",
+          "isCorrect": false,
+          "rationale": "Les créances clients figurent dans une autre section de l'actif circulant, elles représentent de l'argent à recevoir et non de l'argent disponible."
+        },
+        {
+          "text": "Le résultat net de l'exercice.",
+          "isCorrect": false,
+          "rationale": "Le résultat net est une composante des capitaux propres au passif et ne correspond pas directement au solde des comptes bancaires."
+        },
+        {
+          "text": "La somme des soldes des comptes bancaires et de la caisse (comptes 51, 53, 54).",
+          "isCorrect": true,
+          "rationale": "Les disponibilités représentent la trésorerie immédiate de la Junior, c'est-à-dire l'argent présent sur ses comptes courants, ses livrets et en caisse à la date de clôture."
+        }
+      ]
+    },
+    {
+      "question": "Une Junior-Entreprise peut-elle bénéficier du Crédit d'Impôt Recherche (CIR) pour une étude réalisée pour le compte d'un client ?",
+      "answerOptions": [
+        {
+          "text": "Oui, automatiquement pour toute étude facturée plus de 10 000€.",
+          "isCorrect": false,
+          "rationale": "Le bénéfice du CIR n'est pas automatique et ne dépend pas du montant de l'étude."
+        },
+        {
+          "text": "Non, le CIR est exclusivement réservé aux entreprises et non aux associations.",
+          "isCorrect": false,
+          "rationale": "Les Juniors peuvent être agréées et permettre à leurs clients de bénéficier du CIR, sous conditions."
+        },
+        {
+          "text": "Oui, si la Junior est agréée par le ministère chargé de la recherche et que l'étude présente un caractère de R&D pour le client.",
+          "isCorrect": true,
+          "rationale": "Pour qu'un client puisse déclarer les dépenses d'une étude en CIR, la Junior doit avoir obtenu un agrément spécifique, reconnaissant sa capacité à mener des travaux de R&D."
+        },
+        {
+          "text": "Non, car les intervenants ne sont pas des salariés chercheurs.",
+          "isCorrect": false,
+          "rationale": "Le statut des intervenants n'est pas le critère ; c'est l'agrément de la structure et la nature des travaux qui comptent."
+        }
+      ]
+    },
+    {
+      "question": "En cas de rupture d'une étude à l'initiative du client, la Junior-Entreprise conserve l'acompte. Comment doit-elle traiter cet acompte pour pouvoir rétribuer les intervenants pour le travail déjà effectué ?",
+      "answerOptions": [
+        {
+          "text": "L'acompte est directement partagé entre les intervenants sans autre formalité.",
+          "isCorrect": false,
+          "rationale": "La rétribution doit obligatoirement correspondre à des JEH validés par une facture de solde."
+        },
+        {
+          "text": "L'acompte est enregistré comme un produit exceptionnel et ne peut pas servir à rétribuer les intervenants.",
+          "isCorrect": false,
+          "rationale": "L'acompte doit être rattaché à une prestation et donc à des JEH pour permettre la rétribution."
+        },
+        {
+          "text": "La Junior doit émettre un avenant de rupture et une facture de solde convertissant le montant de l'acompte en un nombre de JEH correspondant au travail réalisé.",
+          "isCorrect": true,
+          "rationale": "Pour clôturer l'étude et justifier la rétribution, il est indispensable de formaliser la fin de la mission et de facturer les JEH réellement effectués, même si le solde de la facture est nul."
+        },
+        {
+          "text": "La Junior doit rembourser l'acompte et facturer séparément le travail effectué.",
+          "isCorrect": false,
+          "rationale": "L'acompte est conservé et vient en déduction du montant total du travail effectué ; il n'est pas nécessaire de le rembourser pour refacturer."
+        }
+      ]
+    },
+    {
+      "question": "Dans le cadre de la procédure de surveillance des signataires, que doit faire une Junior lorsqu'un membre ayant les droits sur le compte bancaire (ex: Président, Trésorier) doit recevoir une rétribution ?",
+      "answerOptions": [
+        {
+          "text": "Le membre doit renoncer à sa rétribution pour éviter tout conflit d'intérêts.",
+          "isCorrect": false,
+          "rationale": "Il est possible de rétribuer un signataire, mais des mesures de contrôle supplémentaires sont nécessaires."
+        },
+        {
+          "text": "Le virement doit être effectué par un autre membre de l'association n'ayant pas de droits bancaires.",
+          "isCorrect": false,
+          "rationale": "La personne effectuant le virement doit avoir les habilitations bancaires nécessaires."
+        },
+        {
+          "text": "Une étape de validation supplémentaire par un autre administrateur doit être mise en place avant l'émission du Bulletin de Versement.",
+          "isCorrect": true,
+          "rationale": "Cette mesure de contrôle interne (principe de la double signature ou validation croisée) vise à prévenir les abus et garantir la légitimité du paiement."
+        },
+        {
+          "text": "Le Bulletin de Versement doit être co-signé par l'expert-comptable de la Junior.",
+          "isCorrect": false,
+          "rationale": "La surveillance des signataires est une procédure de contrôle interne à la Junior ; l'expert-comptable n'intervient pas dans ce processus opérationnel."
+        }
+      ]
+    },
+    {
+      "question": "Quel est le traitement de la TVA pour une facture d'avoir émise à un client pour annuler totalement une facture précédente déjà encaissée ?",
+      "answerOptions": [
+        {
+          "text": "La TVA n'est pas affectée, la Junior perd la TVA initialement versée à l'État.",
+          "isCorrect": false,
+          "rationale": "L'annulation d'une vente doit entraîner l'annulation de la TVA correspondante."
+        },
+        {
+          "text": "La Junior doit déduire le montant de TVA de l'avoir de sa TVA collectée du mois.",
+          "isCorrect": false,
+          "rationale": "Le montant de TVA à reverser ne se déduit pas directement de la TVA collectée, il est déclaré dans une case spécifique."
+        },
+        {
+          "text": "Le montant de la TVA de l'avoir est à déclarer en \"autre TVA à déduire\" sur la déclaration de TVA.",
+          "isCorrect": true,
+          "rationale": "Puisque la TVA initialement collectée a été reversée à l'État, l'émission d'un avoir permet à la Junior de récupérer cette TVA en l'imputant sur sa TVA déductible."
+        },
+        {
+          "text": "La Junior doit faire une demande de remboursement de crédit de TVA spécifique pour le montant de l'avoir.",
+          "isCorrect": false,
+          "rationale": "La récupération de la TVA se fait directement sur la déclaration périodique via la case \"autre TVA à déduire\", sans nécessiter une procédure de remboursement distincte."
+        }
+      ]
+    },
+    {
+      "question": "Comment le chiffre d'affaires d'une Junior-Entreprise est-il généralement identifié sur la liasse fiscale (formulaire 2052 - Compte de résultat) ?",
+      "answerOptions": [
+        {
+          "text": "À la ligne \"Subventions d'exploitation\".",
+          "isCorrect": false,
+          "rationale": "Les subventions sont des produits, mais ne constituent pas le chiffre d'affaires principal issu des prestations."
+        },
+        {
+          "text": "À la ligne \"Production vendue - Biens\".",
+          "isCorrect": false,
+          "rationale": "Les Juniors réalisent des prestations de services, et non de la vente de biens ou de marchandises."
+        },
+        {
+          "text": "À la ligne \"Production vendue - Services\".",
+          "isCorrect": true,
+          "rationale": "Cette ligne correspond à la somme des soldes des comptes de classe 70 (hors vente de marchandises), ce qui représente l'activité de prestation de services des Juniors."
+        },
+        {
+          "text": "À la ligne \"Autres produits de gestion courante\".",
+          "isCorrect": false,
+          "rationale": "Cette ligne est destinée aux produits qui ne proviennent pas de l'activité principale de l'entité."
+        }
+      ]
+    }
+]
