@@ -1,0 +1,2057 @@
+[
+  {
+    "question": "Combien de temps conserve-t-on les récépissés de Préfecture ?",
+    "answerOptions": [
+      {
+        "text": "10 ans",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "5 ans",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "A vie",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "3 ans",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "A quoi sert la mention \"Tous droits de reproduction réservés\" sur une Convention d'Etude",
+    "answerOptions": [
+      {
+        "text": "A payer moins de frais de reproduction papier",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Avertir le client qu'il n'a pas le droit de diffuser la Convention d'Etude",
+        "isCorrect": true,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Peut-on utiliser le permis de conduire comme pièce d'identité dans un dossier étudiant ?",
+    "answerOptions": [
+      {
+        "text": "Non, le permis de conduire ne permet pas de vérifier la nationalité",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Oui mais seulement s'il a le permis A1",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Aucune des 3 réponses",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Oui s'il a la nouvelle version de permis de conduire.",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Est-il possible de prendre plusieurs stagiaires en Junior ?",
+    "answerOptions": [
+      {
+        "text": "Oui dans la limite de 2 stagiaires en simultané sur une semaine civile",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Oui dans la limite de 5 stagiaires en simultané sur une semaine civile",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Oui dans la limite de 6 stagiaires en simultané sur une semaine civile",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Oui dans la limite de 3 stagiaires en simultané sur une semaine civile",
+        "isCorrect": true,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Comment procéder si un intervenant refuse de signer un Avenant au Récapitulatif de Mission ?",
+    "answerOptions": [
+      {
+        "text": "Il faut faire un avenant de rupture au RM.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Il faut faire un avenant de rupture à la CE et au RM.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Il faut utiliser l'article \"Sanctions\" du Règlement Intérieur",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Il suffit de ne pas payer l'étudiant",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Qu'est ce que le RGPD ?",
+    "answerOptions": [
+      {
+        "text": "C'est le Règlement Général sur la Protection des Données, en application depuis le 25 mai 2020.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "C'est la Règlementation Générale sur la Protection des Données, en application depuis le 25 mai 2020.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "C'est le Règlement Général sur la Protection des Données, en application depuis le 25 mai 2018.",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "C'est la Règlementation Générale sur la Protection des Données, en application depuis le 25 mai 2018.",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Combien de temps doit-on conserver un questionnaire de satisfaction ?",
+    "answerOptions": [
+      {
+        "text": "Aucune durée obligatoire",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "5 ans",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "2 ans",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "5 ans normalement et 10 ans pour une étude avec des documents électroniques",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Est-il possible de renvoyer un document d'étude signé par mail ?",
+    "answerOptions": [
+      {
+        "text": "Aucune des 3 réponses",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Impossible, le document scanné n'a pas de valeur légale en droit civil.",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "C'est possible, uniquement si le document est paraphé.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "C'est possible, dans tous les cas",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Qu'est-ce que la norme ISO 9001 ?",
+    "answerOptions": [
+      {
+        "text": "Aucune de ces 3 réponses",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "C'est une norme délivré par la CNJE aux 30 meilleurs Juniors de France.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Elle certifie la rigueur du système de management par la qualité et l’attention particulière portée à la satisfaction client et à la rigueur et conformité des prestations de services vendues.",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "C'est le nom de l'ancienne norme J.E.",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Quels sont les deux types de quitus existant en association, et donc en Junior ?",
+    "answerOptions": [
+      {
+        "text": "Quitus moral et quitus fiscal",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Quitus social et quitus financier",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Quitus social et quitus fiscal",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Quitus moral et quitus financier",
+        "isCorrect": true,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "A quelle fréquence le Conseil d'Administration doit-il se réunir ?",
+    "answerOptions": [
+      {
+        "text": "Il doit se réunir au moins 1 fois par mois.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "La fréquence de réunion est fixée par les Statuts ou le Règlement Intérieur",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Il doit se réunir au moins 1 fois par trimestre.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Il doit se réunir au moins 1 fois par an.",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Que dois-je penser à mettre dans ma Convention d'Etude dans le cadre d'une étude à l'international ?",
+    "answerOptions": [
+      {
+        "text": "Le Tribunal compétent et le droit applicable : le droit du pays du Client",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Le Tribunal compétent et le droit applicable : le droit français",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Le CA de la CNJE",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Le Tribunal compétent et le droit applicable : le droit européen",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Une fois la nouvelle équipe élue, quelle formalité remplir avec la Préfecture pour les Juniors hors Alsace-Moselle?",
+    "answerOptions": [
+      {
+        "text": "Déclarer la nouvelle équipe en préfecture sous 6 mois",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Déclarer la nouvelle équipe en préfecture sous 3 mois",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Déclarer la nouvelle équipe en préfecture sous 4 mois",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Déclarer la nouvelle équipe en préfecture sous 2 mois",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Une Junior peut-elle accepter une mission sans plus-value pédagogique ?",
+    "answerOptions": [
+      {
+        "text": "Jamais",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Oui si sous-traitance entre Juniors, la Junior sous-traitante conserve l'analyse",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Dans un seul cas : le Client est un alumni",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Oui si sous-traitance entre Juniors, la Junior sous-traitée conserve l'analyse",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Qu'est-ce que la CNIL ?",
+    "answerOptions": [
+      {
+        "text": "Conseil National de l'Informatique et des Libertés",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Commission Nationale de l'Informatique et des Libertés",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Commission Nationale de l'Information et des Libertés",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Conseil National de l'Information et des Libertés",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Quelle mention doit obligatoirement figurer à côté du montant TTC sur les documents d'étude ?",
+    "answerOptions": [
+      {
+        "text": "TTC au moment du prélèvement",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "A titre indicatif et au taux actuel de TVA",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Selon la TVA européenne et française.",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Qu'est-ce qu'un quorum ?",
+    "answerOptions": [
+      {
+        "text": "Le nombre maximal de membres présents d'un corps délibératif nécessaire à la validité d'une décision",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Le nombre minimal de membres d'un corps délibératif nécessaire à la validité d'une décision",
+        "isCorrect": true,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Quel est l'organe souverain d'une Junior ?",
+    "answerOptions": [
+      {
+        "text": "En Junior, il s'agit généralement de l'Assemblée Générale",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "En Junior, il s'agit généralement du bureau",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "En Junior, il s'agit généralement du Conseil d'Administration",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Aucune des 3 réponses",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Une Junior peut-elle répondre à un Appel d'Offres Public ?",
+    "answerOptions": [
+      {
+        "text": "Non, c'est interdit",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Oui, attention aux documents contractuels et au type d'obligation",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Seulement si l'offre est posté sur Kiwi AO",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "A partir de quand un étudiant est-il considéré comme adhérent ?",
+    "answerOptions": [
+      {
+        "text": "Si cotisation gratuite, a partir de la signature du BV",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Si cotisation gratuite, a partir de la signature du RM",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Si cotisation gratuite, a partir de la signature du CE",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Si cotisation gratuite, apres signature du BA",
+        "isCorrect": true,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Que se passe-t-il si le quorum n'est pas atteint en Assemblée Générale ?",
+    "answerOptions": [
+      {
+        "text": "Aucune des 3 réponses",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Il faut convoqué le CA",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Les décisions votées seraient aussitôt rendues nulles",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "La voix du président compte double",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "A combien est limité le nombre de procurations lors d'une Assemblée Générale ?",
+    "answerOptions": [
+      {
+        "text": "La limite est fixé à 6 voix",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "La limite est fixé à 2 voix",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Il n'est pas obligatoire de fixer des limites.",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "La limite est fixé à 4 voix",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Qu'est-ce que l'INPI ?",
+    "answerOptions": [
+      {
+        "text": "Institut National de la Propriété Informative",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Institut National de la Propriété Industrielle",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Institut National de la Propriété Intellectuel",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Aucune des 3 réponses",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Combien de temps une Junior doit-elle archiver ses études ?",
+    "answerOptions": [
+      {
+        "text": "6 ans en général, 10 ans pour les documents avec signature électronique",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "5 ans en général, 10 ans pour les documents avec signature électronique",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "8 ans en général, 10 ans pour les documents avec signature électronique",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "7 ans en général, 10 ans pour les documents avec signature électronique",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Dans le cas d’un avenant allongeant le délai de l’étude, doit-on faire un avenant au Récapitulatif de Mission (RM) également ?",
+    "answerOptions": [
+      {
+        "text": "Oui dans tout les cas.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Non pas besoin",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Seulement si les étudiants continuent à travailler durant cette période",
+        "isCorrect": true,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Quelle est la durée minimale de garantie pour la livraison d'un produit technique, un site internet par exemple ?",
+    "answerOptions": [
+      {
+        "text": "5 mois",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "3 mois",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "4 mois",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "6 mois",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Si le taux de TVA change en cours d'étude, avec quel taux la facture de solde sera-t-elle éditée ?",
+    "answerOptions": [
+      {
+        "text": "Le taux de TVA en vigueur au moment du devis",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Le taux de TVA en vigueur à la date de signature de la CE",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Le nouveau taux de TVA, la date d'édition de la facture fait foi",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Le taux de TVA en vigueur au moment du virement",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Est-il possible de déduire la cotisation d'un intervenant sur l'un de ses Bulletins de Versement ?",
+    "answerOptions": [
+      {
+        "text": "Oui c'est possible",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Oui seulement si les statuts l'autorisent",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Non, car un intervenant doit payer sa cotisation lors de l'adhésion",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Non, sauf si la cotisation est calculé en pourcentage du BV dans les RI",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Comment procéder si un intervenant n'a pas de numéro de sécurité sociale français ?",
+    "answerOptions": [
+      {
+        "text": "Il faut créer un numéro de sécurité sociale standard en utilisant le sexe, l'année, le mois de naissance de l'intervenant et compléter avec des 9 jusqu'à obtenir 13 chiffres",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Il faut créer un numéro de sécurité sociale standard pour les déclarations en utilisant le sexe, l'année de naissance, le mois de naissance de l'intervenant et compléter avec des 7 jusqu'à obtenir 13 chiffres",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Il faut créer un numéro de sécurité sociale standard pour les déclarations en utilisant le sexe, l'année de naissance, le mois de naissance de l'intervenant et compléter avec des 6 jusqu'à obtenir 13 chiffres",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Il faut créer un numéro de sécurité sociale standard pour les déclarations en utilisant le sexe, l'année de naissance, le mois de naissance de l'intervenant et compléter avec des 1 jusqu'à obtenir 13 chiffres",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Que faut-il avoir comme enseignement pour réaliser une étude documentaire ?",
+    "answerOptions": [
+      {
+        "text": "Il n'y a pas d'enseignements précis à avoir.",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Aucun car une étude documentaire n'a pas de plus value pédagogique.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Etude de marché",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Analyse de données",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Quand doit -on déclarer un changement de logo à la Préfecture ?",
+    "answerOptions": [
+      {
+        "text": "Un changement de logo doit être déclaré au bout de 12 mois en Préfecture",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Un changement de logo n'a pas besoin d'être déclaré en Préfecture",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Un changement de logo doit être déclaré au bout de 3 mois en Préfecture",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Un changement de logo doit être déclaré au bout de 6 mois en Préfecture",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Peut-on faire un avenant à un bon de commande ?",
+    "answerOptions": [
+      {
+        "text": "Aucune de ces 3 réponses",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Les avenants au bon de commande n'existent pas, il faut faire un bon de commande rectificatif.",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Non il faut faire un avenant à la Convention Cadre.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Oui mais seulement en version papier.",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Quelle est la durée de garantie pour une étude ?",
+    "answerOptions": [
+      {
+        "text": "6 mois pour un livrable technique, 15 jours pour un livrable écrit",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "5 mois pour un livrable technique, 15 jours pour un livrable écrit",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "4 mois pour un livrable technique, 15 jours pour un livrable écrit",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "3 mois pour un livrable technique, 15 jours pour un livrable écrit",
+        "isCorrect": true,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Une Junior peut-elle se faire prêter une licence ?",
+    "answerOptions": [
+      {
+        "text": "Non, s'il s'agit d'une licence commerciale.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Oui, s'il s'agit d'une licence non commerciale, une Junior peut se faire prêter une licence en signant un document de prêt précisant le nom du logiciel, numéro de licence, le motif du prêt.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Oui, s'il s'agit d'une licence commerciale dont l'éditeur autorise le prêt, une Junior peut se faire prêter une licence en signant un document de prêt précisant le nom du logiciel, numéro de licence, le motif du prêt et les dates du prêt.",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Oui, s'il s'agit d'une licence commerciale dont l'éditeur autorise le prêt, une Junior peut se faire prêter une licence en signant un document de prêt précisant le nom du logiciel, numéro de licence, le motif du prêt.",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Est-il possible de constituer un bureau de plus de 8 personnes en Junior ?",
+    "answerOptions": [
+      {
+        "text": "C'est impossible il faut 4 membres au maximum.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Oui, attention simplement au niveau de l'organisation",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Non, le bureau doit seulement être composé par le Président, SG, Trésorier",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "C'est impossible il faut un nombre impair de membres au bureau",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Lorsqu'une Junior accueille un stagiaire, qui doit signer la Convention de stage ?",
+    "answerOptions": [
+      {
+        "text": "Le stagiaire et l'Etablissement.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Le stagiaire et la Junior.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Le stagiaire, la Junior et la CNJE.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Le stagiaire, la Junior et l'Etablissement.",
+        "isCorrect": true,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Un stagiaire à la Junior peut-il travailler sur les études avec un Récapitulatif de Mission ?",
+    "answerOptions": [
+      {
+        "text": "Oui seulement si c'est un administrateur de la Junior.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Oui seulement si c'est un membre externe à la Junior-Entreprise.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Oui, à condition que cela ne constitue pas sa mission principale",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Non, c'est interdit.",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Une Junior peut-elle réaliser une étude pour un hôpital public ?",
+    "answerOptions": [
+      {
+        "text": "Oui, du moment que l'étude ne concerne pas un domaine réglementé",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Seulement si c'est une Junior pharmaceutique",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Aucune des 3 réponses",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Une Junior ne peut pas faire d'étude pour un Client du domaine médical",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Quelle proposition n'est pas une obligation d'une association (hors Alsace-Moselle) vis-à-vis de la Préfecture ?",
+    "answerOptions": [
+      {
+        "text": "Déclarer les intervenants non membres de l'EEE",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Déclarer dans les 3 mois tout changement dans les Statuts.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Tenir à jour le Dossier de Suivi",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Déclarer dans les 3 mois tout changement dans les RI.",
+        "isCorrect": true,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Dans quels documents l'objet social de la Junior est-il défini ?",
+    "answerOptions": [
+      {
+        "text": "Ils sont définis dans la charte de déontologie",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Ils sont définis dans les Statuts, à l'article : \"Objet et moyens\"",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Ils sont définis dans les Bulletins d'Adhésion",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Ils sont définis dans les RI , à l'article : \"Objet et moyens\"",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Quel numéro d'immatriculation légal n'est pas obligatoire pour une Junior ?",
+    "answerOptions": [
+      {
+        "text": "Un numéro de TVA intracommunautaire (délivré par les impôts)",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Un numéro SIRET et un code APE (délivrés par l'INSEE)",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Un numéro URSSAF (délivré par les URSSAF)",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Un numéro de commerce (chambre de commerce)",
+        "isCorrect": true,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Doit-on conserver toutes les versions des statuts et du règlement intérieur ?",
+    "answerOptions": [
+      {
+        "text": "Oui et par ordre chronologique.",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Oui sauf les statuts avant 1988.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Oui sauf les statuts avant 2000.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Non",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Que trouve-t-on dans le classeur d'association ?",
+    "answerOptions": [
+      {
+        "text": "PV d'AG, anciennes déclarations CNIL et autres documents",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "CRCA, PV d'AG, anciennes déclarations CNIL et autres documents",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "CRCA, PV d'AG, anciennes déclarations CNIL, licences...",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "CRCA, PV d'AG,demandes RGPD, licences...",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Un PVRI permet-il de rémunérer les intervenants ?",
+    "answerOptions": [
+      {
+        "text": "Oui, à condition qu'une FI ait été émise et payé par le client",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Non, il faut attendre le PVRF",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Oui, dans tout les cas",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Les Juniors en Alsace-Moselle doivent-elles déclarer les changements de statuts en préfecture ?",
+    "answerOptions": [
+      {
+        "text": "Non, il faut qu'elles les déclarent au Tribunal Administratif.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Non, il faut qu'elles les déclarent au Tribunal Judiciaire.",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Non, il faut qu'elles les déclarent au CA de la CNJE.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Oui",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Est-il possible de rémunérer un étudiant en utilisant l'acompte versé par le client ?",
+    "answerOptions": [
+      {
+        "text": "Non, car l'acompte facture un pourcentage et pas des JEH",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Oui",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Non, car l'intervenant risquerait de ne jamais finir sa mission",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Une Junior peut-elle réaliser une étude pour elle-même ?",
+    "answerOptions": [
+      {
+        "text": "Oui mais le président ne peut ni être chef de projet ou intervenant",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Oui mais seulement si l'intervenant est un administrateur de la Junior.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Non cela pourrait engendrer des dérives dangereuses pour le Mouvement",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Aucune des 3 réponses",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Qu'est-ce que l'exercice social d'une Junior ?",
+    "answerOptions": [
+      {
+        "text": "Aucune des 3 réponses",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Il s'agit de la période sur laquelle s'inscrit un mandat.",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Il doit s'étendre du 1er janvier au 31 décembre de l'année",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "L'exercice social se base sur la cloture comptable.",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Qu'est-ce qu'un quitus ?",
+    "answerOptions": [
+      {
+        "text": "Bilan du Président et du Trésorier sortants voté en AGE.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Bilan du Président et du Trésorier entrants voté en AGE.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Bilan du Président et du Trésorier sortants voté en AGO.",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Bilan du Président et du Trésorier entrants voté en AGO.",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "En cas d'avenant au RM, que mettre comme référence sur le BV ?",
+    "answerOptions": [
+      {
+        "text": "La référence du RM initial ainsi que la (ou les) référence de l'avenant au RM pour permettre de conserver une cohérence, entre le nombre de JEH par exemple.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Seulement la référence du dernier avenant au RM pour permettre de conserver une cohérence, entre le nombre de JEH par exemple.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "La référence du RM initial ainsi que la référence du dernier avenant au RM pour permettre de conserver une cohérence, entre le nombre de JEH par exemple.",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "La référence du RM initial.",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Utiliser un CMS est-il déontologique ?",
+    "answerOptions": [
+      {
+        "text": "Non, c'est interdit",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Oui si étudiant capable de prouver une PVP suffisante",
+        "isCorrect": true,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Qu'est-ce que Sphinx ?",
+    "answerOptions": [
+      {
+        "text": "Logiciel de CAO pouvant être utilisé dans le cadre d'études commerciales",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Logiciel de de dévelopement pouvant être utilisé dans le cadre d'études commerciales",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Logiciel de traitement de données ne pouvant pas être utilisé dans le cadre d'études commerciales",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Logiciel de traitement de données pouvant être utilisé dans le cadre d'études commerciales",
+        "isCorrect": true,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Quelle est la différence entre une Assemblée Générale Ordinaire (AGO) et une Assemblée Générale Extraordinaire (AGE) ?",
+    "answerOptions": [
+      {
+        "text": "Aucune des 3 réponses",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Une AGO est prévue statutairement et permet le renouvellement de l'équipe dirigeante, une AGE n'est pas prévisible et répond à un certain nombre de cas exceptionnels définis par les Statuts",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Une AGE est prévue statutairement et permet le renouvellement de l'équipe dirigeante, une AGO n'est pas prévisible et répond à un certain nombre de cas exceptionnels définis par les Statuts",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Une AGO peut modifier les statuts contrairement à une AGE.",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Une Junior peut-elle organiser un événement ?",
+    "answerOptions": [
+      {
+        "text": "Oui, il faut limiter les bénéfices et que cela reste à titre exceptionnel.",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Oui, mais que cela reste à titre exceptionnel.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Non c'est interdit",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Oui aucun problème",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Quels sont les droits des personnes concernant la conservation des données personnelles ?",
+    "answerOptions": [
+      {
+        "text": "accès,portabilité,effacement, modification, opposition",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "accès,portabilité, suppression, rectification, opposition",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "accès,portabilité,effacement, rectification, opposition",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "lecture ,portabilité,effacement, rectification, opposition",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Qu'est-ce qu'un processus ?",
+    "answerOptions": [
+      {
+        "text": "Une suite logique d'étapes avec acteurs, temps...",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Aucune des 2 réponses",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Ne contient pas de procédures",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "A quoi sert la Convention d'Etude ?",
+    "answerOptions": [
+      {
+        "text": "C'est une convention qui présente l'offre commerciale et les conditions contractuelles. Elle lie et engage le client et la Junior autour d'un projet, une fois signée",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "C'est une convention qui présente l'offre commerciale et les conditions contractuelles. Elle lie et engage l'intervenant et la Junior autour d'un projet, une fois signée",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Le client souhaite changer une partie du Cahier des Charges en cours d'étude, comment faire ?",
+    "answerOptions": [
+      {
+        "text": "Il faut réaliser un avenant de budget",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Il faut réaliser un avenant de délai",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Il faut réaliser un avenant de rupture",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Il faut réaliser un avenant de méthode",
+        "isCorrect": true,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "A quelles conditions puis-je faire un avenant de délai à un Récapitulatif de Mission par courriel ?",
+    "answerOptions": [
+      {
+        "text": "Seulement si l'avenant de délai à la CE a été réalisé par courriel.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Seulement si l'étudiant est un étudiant français.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Aucune, tout avenant au Récapitulatif de Mission doit être sous forme papier.",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Seulement s'il y a plus de 3 intervenants sur l'étude.",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Une étude de prospection respecte-elle le cadre déontologique des Juniors ?",
+    "answerOptions": [
+      {
+        "text": "Aucune des 3 réponses",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Non",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Oui si elle est suivi par une phase d'analyse.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Il faut demander l'accord du pôle Conseil avec un ticket.",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Existe-t-il un montant maximum de cotisation ?",
+    "answerOptions": [
+      {
+        "text": "Oui, la limite est fixée à 280€",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Oui, la limite est fixée à 75% du SMIC annuel",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Oui, la limite est fixée à 450€",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Non aucune",
+        "isCorrect": true,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Quand est émis le Procès-Verbal de Recette finale ?",
+    "answerOptions": [
+      {
+        "text": "Il est émis apres la facture de solde",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Il est émis avant la facture de solde",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Il est émis apres le BV",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Comment faire si l'on souhaite rajouter un point exceptionnel à une AGO ?",
+    "answerOptions": [
+      {
+        "text": "Au Conseil d'Administration",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "On fait une AGE : Assemblée Générale Extraordinaire",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "On fait une AGO : Assemblée Générale Ordinaire",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "On fait une AGM : Assemblée Générale Mixte",
+        "isCorrect": true,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Est-on obligé d'éditer des documents d'étude pour une étude pro-bono sans  indemnisation de l'intervenant ?",
+    "answerOptions": [
+      {
+        "text": "Seulement si le Client est un particulier.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "C'est facultatif mais peut-être mis en place pour un meilleur suivi de l'étude pro-bono",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "C'est obligatoire pour un meilleur suivi de l'étude pro-bono",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Seulement s'il y a plus de 3 étudiants sur l'étude.",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Quel document doit être édité suite à une Assemblée Générale ?",
+    "answerOptions": [
+      {
+        "text": "Un Procès-Verbal qui reprendra les décisions prises par l'AG",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Une Note d'AG qui reprendra les décisions prises par l'Assemblée Générale",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Un Compte Rendu qui reprendra les décisions prises par l'Assemblée Générale",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Un Plan d'Action qui reprendra les décisions prises par l'AG",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "A quel(s) document(s) un Récapitulatif de Mission doit-il faire référence ?",
+    "answerOptions": [
+      {
+        "text": "Aucune des 3 réponses",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Au BV",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Au PVRI",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "A la Convention d'Etude ou au Bon de Commande",
+        "isCorrect": true,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Est-il possible de payer sa cotisation par des moyens \"numériques\" (Lydia Pro, PayPal…) ?",
+    "answerOptions": [
+      {
+        "text": "Non, c'est interdit",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Tout à fait, tant qu'une preuve comptable est à disposition de la Junior",
+        "isCorrect": true,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Quelles règles faut-il respecter pour rédiger un Avenant à un Avenant à la Convention d'Etude ou à la Convention Cadre ?",
+    "answerOptions": [
+      {
+        "text": "il faut mentionner la raison de l'avenant de manière explicite",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Il est impossible de rédiger un document de ce type.",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Il faut faire faire figurer la référence a l'ancien avenant.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Aucune des 3 réponses",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Où est défini le délai de garantie d'une prestation ?",
+    "answerOptions": [
+      {
+        "text": "Dans la Convention d'Etude, à l'article \"Garantie\".",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Dans le RM à l'article \"Garantie\".",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Dans le PVRF, à l'article \"Garantie\".",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Dans le RP, à l'article \"Garantie\".",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Le questionnaire de satisfaction est-il obligatoire ?",
+    "answerOptions": [
+      {
+        "text": "Pas pour le client, mais il est obligatoire pour chaque intervenant.",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Il est obligatoire pour chaque intervenant et pour le Client.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Il n'est pas obligatoire.",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Quand est-il possible de signer un Récapitulatif de Mission avec un intervenant ?",
+    "answerOptions": [
+      {
+        "text": "Le premier Récapitulatif de Mission sur une étude peut être signé avant la signature du Bulletin d'Adhésion si la fin d'étude est dans 15 jours.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Le premier Récapitulatif de Mission sur une étude ne pourra être signé qu'après la Convention d'Etude qui lance l'étude",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Le premier Récapitulatif de Mission sur une étude peut être signé avant la Convention d'Etude qui lance l'étude",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Le premier Récapitulatif de Mission sur une étude peut être signé avant la signature du Bulletin d'Adhésion si l'étude à déjà commencé depuis 15 jours.",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Qui est responsable pénalement  ?",
+    "answerOptions": [
+      {
+        "text": "Trésorier et SG au nom de la Junior",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Président et SG au nom de la Junior",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Tous les membres à hauteur de leurs responsabilités personnelles",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Président et Tresorier",
+        "isCorrect": true,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Qu'est-ce qu'une Convention-Cadre ?",
+    "answerOptions": [
+      {
+        "text": "C'est le document a utiliser en cas de sous-traitance entre Juniors.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "C'est le nouveau document qui remplace la Convention Etude.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "C'est un document permettant de simplifier les formalités administratives d'une relation commerciale avec un client, pour facilement renouveler les études avec lui. La Convention Cadre Agile permet de faire évoluer l'étude au fur et à mesure des signatures des Bons de Commande.",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Aucune de ces 3 réponses",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "A la fin d'une étude, à qui appartient le droit moral ? ?",
+    "answerOptions": [
+      {
+        "text": "Il appartient au Client.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Il appartient à la Junior",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Il appartient à l'intervenant",
+        "isCorrect": true,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Comment définir une subvention commerciale ?",
+    "answerOptions": [
+      {
+        "text": "Une subvention commerciale donne droit à un service commercial",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Une subvention commerciale ne donne pas droit à un service commercial",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Est-on obligé d’attendre la date de fin théorique pour clôturer l’étude ?",
+    "answerOptions": [
+      {
+        "text": "Oui",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Non, vous pouvez faire signer le PVRI",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Non vous pouvez faire signer l'avenant de rupture.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Non, vous pouvez faire signer le PVRF",
+        "isCorrect": true,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "A partir de quel moment la modification des Statuts est-elle valable ?",
+    "answerOptions": [
+      {
+        "text": "Deux semaines après que les nouveaux Statuts ont été votés par le CA",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Deux semaines après que les nouveaux Statuts ont été votés en AGO",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Dès que les nouveaux Statuts ont été votés en AGE/AGM",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Dès que les nouveaux Statuts ont été votés par le CA",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Que se passe-t-il si une Junior recrute un intervenant spécifiquement pour une mission ?",
+    "answerOptions": [
+      {
+        "text": "La cotisation ne résulte plus d'une volonté d'adhérer à la Junior mais devient un droit d'accès commercial aux missions et est donc soumise à TVA",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "La base URSSAF qui servira a déclarer les cotisations de cet étudiant augmente",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "La base URSSAF diminue",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Aucune des 3 autres réponses",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Pour une étude débutée en 2020 et des Bulletins de Versement émis en 2021 quelle base URSSAF appliquer sur les Bulletins de Versement ?",
+    "answerOptions": [
+      {
+        "text": "Cela dépend de la date sur le PVRF.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Cela dépend de la date de fin théorique inscrit sur la CE.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "La Base URSSAF 2021 car la date de référence est celle de l'émission du BV",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "La Base URSSAF 2020 car la date de référence est celle de l'émission du RM.",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Combien de temps une liasse fiscale doit-elle être archivée ?",
+    "answerOptions": [
+      {
+        "text": "Une liasse fiscale doit être archivée à vie",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Une liasse fiscale doit être archivée au moins 10 ans",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Une liasse fiscale doit être archivée au moins 3 ans",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Une liasse fiscale doit être archivée au moins 5 ans",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Quelle est la différence entre une obligation de moyen et une obligation de résultat ?",
+    "answerOptions": [
+      {
+        "text": "L'obligation de résultat est la plus protectrice",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "L'obligation de moyen est la plus protectrice",
+        "isCorrect": true,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Combien de temps doit-on conserver les feuilles d'émargement en Assemblée Générale ?",
+    "answerOptions": [
+      {
+        "text": "5 ans minimum",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "7 ans minimum",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "6 ans minimum",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "8 ans minimum",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Dans quel cas une Junior peut-elle faire de la formation lors d'une étude ?",
+    "answerOptions": [
+      {
+        "text": "Aucune des 3 réponses",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Dans le cadre d'une conférence.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Seulement auprès de particuliers et d'organismes de formation",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Formation en lien avec enseignement de l'école, support adapté au client",
+        "isCorrect": true,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Qui est responsable pénalement et civilement dans une association ?",
+    "answerOptions": [
+      {
+        "text": "Tous les membres à hauteur de leurs responsabilités personnelles",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Président et SG au nom de la Junior",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Trésorier et SG au nom de la Junior",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Président et Tresorier",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Quel document n'est pas obligatoire pour un dossier étudiant complet ?",
+    "answerOptions": [
+      {
+        "text": "Un document officiel présentant le Numéro de Sécurité Sociale",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Carte étudiante et certificat de scolarité",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Le CV et la lettre de motivation",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "La CVEC",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Comment faire s'il y a plusieurs clients sur une même étude ?",
+    "answerOptions": [
+      {
+        "text": "Il faut faire autant de CE que de clients.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Il faut faire une convention (multi) partite.",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Il faut faire une CE seulement avec le client qui paye l'étude.",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  },
+  {
+    "question": "Quelle est la juridiction compétente à faire figurer dans une Convention d'Etude à l'article \"Litiges\" ?",
+    "answerOptions": [
+      {
+        "text": "Pour une institution publique, il s'agit du CA de la CNJE.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Pour une institution publique, il s'agit du tribunal judiciaire.",
+        "isCorrect": false,
+        "rationale": ""
+      },
+      {
+        "text": "Pour une institution publique, il s'agit du tribunal administratif.",
+        "isCorrect": true,
+        "rationale": ""
+      },
+      {
+        "text": "Pour une institution publique, il s'agit de l'AGP",
+        "isCorrect": false,
+        "rationale": ""
+      }
+    ]
+  }
+]

@@ -1,8 +1,8 @@
 import type { Question, QuizAnswer, QuizResult } from './types.js';
 import { getRandomQuestions, shuffleChoices } from './data/index.js';
 
-export function createQuiz(questionCount: number = 100): Question[] {
-	const randomQuestions = getRandomQuestions(questionCount);
+export function createQuiz(questionCount: number = 100, categories: Question['category'][] = []): Question[] {
+	const randomQuestions = getRandomQuestions(questionCount, categories);
 	return randomQuestions.map(shuffleChoices);
 }
 
