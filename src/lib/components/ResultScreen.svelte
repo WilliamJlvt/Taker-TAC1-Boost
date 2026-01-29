@@ -378,12 +378,6 @@ ${r.answers
 
 				<!-- Actions -->
 				<div class="flex flex-col sm:flex-row gap-4">
-					<button
-						onclick={resetQuiz}
-						class="flex-1 bg-[#122555] hover:bg-[#0d1a3d] text-white font-semibold py-3 px-6 rounded-lg transform hover:scale-105 transition-all duration-200"
-					>
-						Refaire un test
-					</button>
 					{#if saveStatus === 'saved' || examMode !== 'custom'}
 						<a
 							href="/scoreboard"
@@ -409,6 +403,7 @@ ${r.answers
 				<!-- Back to Home -->
 				<div class="mt-6 text-center">
 					<a
+						onclick={resetQuiz}
 						href="/"
 						class="inline-flex items-center gap-2 text-[#122555] hover:text-[#122555]/70 font-medium transition-colors"
 					>

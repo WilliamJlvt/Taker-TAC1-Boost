@@ -148,8 +148,8 @@
 			</div>
 
 			<!-- Question Content -->
-			<div class="p-8">
-				<h2 class="text-xl font-semibold text-[#122555] mb-6 leading-relaxed">
+			<div class="p-8 min-h-[400px]">
+				<h2 class="text-xl font-semibold text-[#122555] mb-6 leading-relaxed min-h-[80px]">
 					{currentQuestion.question}
 				</h2>
 
