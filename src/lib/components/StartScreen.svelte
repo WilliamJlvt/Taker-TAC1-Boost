@@ -36,15 +36,15 @@
 	let currentTranslate = $state(0);
 
 	const presets = [
-		{ name: 'Rapide', questions: 10, time: 3, icon: '⚡', color: 'from-yellow-400 to-orange-500' },
-		{ name: 'Moyen', questions: 25, time: 10, icon: '🎯', color: 'from-blue-400 to-blue-600' },
-		{ name: 'Long', questions: 50, time: 25, icon: '💪', color: 'from-green-400 to-green-600' },
+		{ name: 'Rapide', questions: 10, time: 3, icon: '⚡', color: 'from-[#122555]/70 to-[#122555]' },
+		{ name: 'Moyen', questions: 25, time: 10, icon: '🎯', color: 'from-[#122555]/80 to-[#122555]' },
+		{ name: 'Long', questions: 50, time: 25, icon: '💪', color: 'from-[#122555]/90 to-[#122555]' },
 		{
 			name: 'Complet',
 			questions: 100,
 			time: 60,
 			icon: '🏆',
-			color: 'from-purple-400 to-purple-600'
+			color: 'from-[#122555] to-[#0d1a3d]'
 		}
 	];
 
@@ -109,10 +109,10 @@
 	}
 </script>
 
-<div class="max-w-2xl mx-auto space-y-6">
+<div class="max-w-2xl mx-auto space-y-3">
 	<!-- Mode Selector Tabs -->
 	<div class="flex justify-center">
-		<div class="inline-flex bg-gray-100 rounded-2xl p-1.5 shadow-inner">
+		<div class="inline-flex bg-[#122555]/10 rounded-2xl p-1.5 shadow-inner">
 			<button
 				onclick={() => switchMode(0)}
 				class="relative px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 {activeMode ===
@@ -123,7 +123,7 @@
 				<span class="flex items-center gap-2"> 🏆 Mode Officiel </span>
 				{#if activeMode === 0}
 					<div
-						class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-12 h-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"
+						class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-12 h-1 bg-[#122555] rounded-full"
 					></div>
 				{/if}
 			</button>
@@ -137,7 +137,7 @@
 				<span class="flex items-center gap-2"> ⚙️ Entraînement </span>
 				{#if activeMode === 1}
 					<div
-						class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-12 h-1 bg-gradient-to-r from-gray-400 to-gray-600 rounded-full"
+						class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-12 h-1 bg-[#122555]/50 rounded-full"
 					></div>
 				{/if}
 			</button>
@@ -157,15 +157,15 @@
 		>
 			<!-- Slide 1: Official Mode -->
 			<div class="w-full flex-shrink-0 px-1">
-				<div class="bg-white rounded-2xl shadow-xl p-8 animate-fade-in">
-					<div class="text-center mb-6">
+				<div class="bg-white rounded-2xl shadow-xl p-6 animate-fade-in border border-[#122555]/10">
+					<div class="text-center mb-4">
 						<div
-							class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl mb-4 shadow-lg"
+							class="inline-flex items-center justify-center w-12 h-12 bg-[#122555] rounded-xl mb-3 shadow-lg"
 						>
-							<span class="text-3xl">🏆</span>
+							<span class="text-2xl">🏆</span>
 						</div>
-						<h2 class="text-2xl font-bold text-gray-800 mb-2">Modes Officiels</h2>
-						<p class="text-gray-500 text-sm">Scores enregistrés dans le classement</p>
+						<h2 class="text-xl font-bold text-[#122555] mb-1">Modes Officiels</h2>
+						<p class="text-[#122555]/60 text-xs">Scores enregistrés dans le classement</p>
 					</div>
 
 					{#if !session}
@@ -193,20 +193,19 @@
 					{/if}
 
 					<div class="space-y-4">
-						<!-- TAC1 Organisationnelle -->
 						<button
 							onclick={() => startOfficialMode('organisationnelle')}
 							class="w-full group relative p-5 rounded-xl border-2 transition-all duration-300 text-left overflow-hidden
 								{session
-								? 'border-indigo-200 bg-gradient-to-br from-indigo-50/50 to-purple-50/50 hover:border-indigo-400 hover:shadow-xl hover:-translate-y-1'
+								? 'border-[#122555]/20 bg-gradient-to-br from-[#122555]/5 to-[#122555]/10 hover:border-[#122555]/40 hover:shadow-xl hover:-translate-y-1'
 								: 'border-gray-200 bg-gray-50 opacity-60 cursor-pointer'}"
 						>
 							<div
-								class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-indigo-200/30 to-purple-200/30 rounded-full -translate-y-1/2 translate-x-1/2"
+								class="absolute top-0 right-0 w-32 h-32 bg-[#122555]/10 rounded-full -translate-y-1/2 translate-x-1/2"
 							></div>
 							<div class="relative flex items-center gap-4">
 								<div
-									class="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-2xl shadow-lg {!session
+									class="w-14 h-14 rounded-xl bg-[#122555] flex items-center justify-center text-white text-2xl shadow-lg {!session
 										? 'opacity-50'
 										: 'group-hover:scale-110 transition-transform'}"
 								>
@@ -214,17 +213,17 @@
 								</div>
 								<div class="flex-1">
 									<div class="flex items-center gap-2 mb-1">
-										<h3 class="font-bold text-lg {session ? 'text-gray-800' : 'text-gray-500'}">
+										<h3 class="font-bold text-lg {session ? 'text-[#122555]' : 'text-gray-500'}">
 											TAC1 Organisationnelle
 										</h3>
 										{#if session}
 											<span
-												class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium"
+												class="text-xs bg-[#122555]/10 text-[#122555] px-2 py-0.5 rounded-full font-medium"
 												>⭐ Classé</span
 											>
 										{/if}
 									</div>
-									<p class="text-sm text-gray-500 mb-2">
+									<p class="text-sm text-[#122555]/60 mb-2">
 										{EXAM_MODES.organisationnelle.description}
 									</p>
 									<div class="flex items-center gap-3 text-xs">
@@ -239,7 +238,7 @@
 									</div>
 								</div>
 								<svg
-									class="w-6 h-6 text-gray-300 group-hover:text-indigo-500 group-hover:translate-x-1 transition-all"
+									class="w-6 h-6 text-[#122555]/30 group-hover:text-[#122555] group-hover:translate-x-1 transition-all"
 									fill="none"
 									stroke="currentColor"
 									viewBox="0 0 24 24"
@@ -259,15 +258,15 @@
 							onclick={() => startOfficialMode('tresorerie')}
 							class="w-full group relative p-5 rounded-xl border-2 transition-all duration-300 text-left overflow-hidden
 								{session
-								? 'border-emerald-200 bg-gradient-to-br from-emerald-50/50 to-teal-50/50 hover:border-emerald-400 hover:shadow-xl hover:-translate-y-1'
+								? 'border-[#122555]/20 bg-gradient-to-br from-[#122555]/5 to-[#122555]/10 hover:border-[#122555]/40 hover:shadow-xl hover:-translate-y-1'
 								: 'border-gray-200 bg-gray-50 opacity-60 cursor-pointer'}"
 						>
 							<div
-								class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-emerald-200/30 to-teal-200/30 rounded-full -translate-y-1/2 translate-x-1/2"
+								class="absolute top-0 right-0 w-32 h-32 bg-[#122555]/10 rounded-full -translate-y-1/2 translate-x-1/2"
 							></div>
 							<div class="relative flex items-center gap-4">
 								<div
-									class="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white text-2xl shadow-lg {!session
+									class="w-14 h-14 rounded-xl bg-[#122555] flex items-center justify-center text-white text-2xl shadow-lg {!session
 										? 'opacity-50'
 										: 'group-hover:scale-110 transition-transform'}"
 								>
@@ -275,17 +274,17 @@
 								</div>
 								<div class="flex-1">
 									<div class="flex items-center gap-2 mb-1">
-										<h3 class="font-bold text-lg {session ? 'text-gray-800' : 'text-gray-500'}">
+										<h3 class="font-bold text-lg {session ? 'text-[#122555]' : 'text-gray-500'}">
 											TAC1 Trésorerie
 										</h3>
 										{#if session}
 											<span
-												class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium"
+												class="text-xs bg-[#122555]/10 text-[#122555] px-2 py-0.5 rounded-full font-medium"
 												>⭐ Classé</span
 											>
 										{/if}
 									</div>
-									<p class="text-sm text-gray-500 mb-2">{EXAM_MODES.tresorerie.description}</p>
+									<p class="text-sm text-[#122555]/60 mb-2">{EXAM_MODES.tresorerie.description}</p>
 									<div class="flex items-center gap-3 text-xs">
 										<span
 											class="bg-white/80 backdrop-blur px-3 py-1 rounded-full text-gray-600 font-medium shadow-sm"
@@ -298,7 +297,7 @@
 									</div>
 								</div>
 								<svg
-									class="w-6 h-6 text-gray-300 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"
+									class="w-6 h-6 text-[#122555]/30 group-hover:text-[#122555] group-hover:translate-x-1 transition-all"
 									fill="none"
 									stroke="currentColor"
 									viewBox="0 0 24 24"
@@ -315,10 +314,10 @@
 					</div>
 
 					<!-- Link to Scoreboard -->
-					<div class="text-center mt-6 pt-6 border-t border-gray-100">
+					<div class="text-center mt-4 pt-4 border-t border-[#122555]/10">
 						<a
 							href="/scoreboard"
-							class="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-800 font-medium transition-colors"
+							class="inline-flex items-center gap-2 text-[#122555] hover:text-[#122555]/80 font-medium transition-colors"
 						>
 							<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 								<path
@@ -342,22 +341,21 @@
 				</div>
 			</div>
 
-			<!-- Slide 2: Training Mode -->
 			<div class="w-full flex-shrink-0 px-1">
-				<div class="bg-white rounded-2xl shadow-xl p-8 animate-fade-in">
-					<div class="text-center mb-6">
+				<div class="bg-white rounded-2xl shadow-xl p-6 animate-fade-in border border-[#122555]/10">
+					<div class="text-center mb-4">
 						<div
-							class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-gray-500 to-gray-700 rounded-2xl mb-4 shadow-lg"
+							class="inline-flex items-center justify-center w-12 h-12 bg-[#122555]/70 rounded-xl mb-3 shadow-lg"
 						>
-							<span class="text-3xl">⚙️</span>
+							<span class="text-2xl">⚙️</span>
 						</div>
-						<h2 class="text-2xl font-bold text-gray-800 mb-2">Mode Entraînement</h2>
-						<p class="text-gray-500 text-sm">Session personnalisée • Non classée</p>
+						<h2 class="text-xl font-bold text-[#122555] mb-1">Mode Entraînement</h2>
+						<p class="text-[#122555]/60 text-xs">Session personnalisée • Non classée</p>
 					</div>
 
 					<!-- Category Selection -->
-					<div class="mb-6">
-						<h3 class="text-xs font-semibold text-gray-500 mb-3 uppercase tracking-wider">
+					<div class="mb-4">
+						<h3 class="text-xs font-semibold text-[#122555]/60 mb-3 uppercase tracking-wider">
 							Catégories
 						</h3>
 						<div class="grid grid-cols-2 gap-2">
@@ -366,8 +364,8 @@
 								class="p-3 rounded-xl border-2 transition-all duration-200 text-sm font-medium {selectedCategories.includes(
 									'CLR'
 								)
-									? 'bg-blue-50 border-blue-300 text-blue-700'
-									: 'bg-gray-50 border-gray-200 text-gray-500 hover:border-blue-200'}"
+									? 'bg-[#122555]/10 border-[#122555]/30 text-[#122555]'
+									: 'bg-gray-50 border-gray-200 text-gray-500 hover:border-[#122555]/20'}"
 							>
 								<span class="block text-lg mb-1">📋</span>
 								CLR ({clrCount})
@@ -377,8 +375,8 @@
 								class="p-3 rounded-xl border-2 transition-all duration-200 text-sm font-medium {selectedCategories.includes(
 									'Mouvement'
 								)
-									? 'bg-green-50 border-green-300 text-green-700'
-									: 'bg-gray-50 border-gray-200 text-gray-500 hover:border-green-200'}"
+									? 'bg-[#122555]/10 border-[#122555]/30 text-[#122555]'
+									: 'bg-gray-50 border-gray-200 text-gray-500 hover:border-[#122555]/20'}"
 							>
 								<span class="block text-lg mb-1">🚚</span>
 								Mouvement ({mouvementCount})
@@ -388,8 +386,8 @@
 								class="p-3 rounded-xl border-2 transition-all duration-200 text-sm font-medium {selectedCategories.includes(
 									'Organisationnel'
 								)
-									? 'bg-purple-50 border-purple-300 text-purple-700'
-									: 'bg-gray-50 border-gray-200 text-gray-500 hover:border-purple-200'}"
+									? 'bg-[#122555]/10 border-[#122555]/30 text-[#122555]'
+									: 'bg-gray-50 border-gray-200 text-gray-500 hover:border-[#122555]/20'}"
 							>
 								<span class="block text-lg mb-1">🏢</span>
 								Organisationnel ({organisationnelCount})
@@ -399,8 +397,8 @@
 								class="p-3 rounded-xl border-2 transition-all duration-200 text-sm font-medium {selectedCategories.includes(
 									'Trésorerie'
 								)
-									? 'bg-amber-50 border-amber-300 text-amber-700'
-									: 'bg-gray-50 border-gray-200 text-gray-500 hover:border-amber-200'}"
+									? 'bg-[#122555]/10 border-[#122555]/30 text-[#122555]'
+									: 'bg-gray-50 border-gray-200 text-gray-500 hover:border-[#122555]/20'}"
 							>
 								<span class="block text-lg mb-1">💰</span>
 								Trésorerie ({tresorerieCount})
@@ -409,8 +407,10 @@
 					</div>
 
 					<!-- Presets -->
-					<div class="mb-6">
-						<h3 class="text-xs font-semibold text-gray-500 mb-3 uppercase tracking-wider">Durée</h3>
+					<div class="mb-4">
+						<h3 class="text-xs font-semibold text-[#122555]/60 mb-3 uppercase tracking-wider">
+							Durée
+						</h3>
 						<div class="grid grid-cols-4 gap-2">
 							{#each presets as preset}
 								<button
@@ -433,10 +433,10 @@
 					</div>
 
 					<!-- Custom Toggle -->
-					<div class="mb-6">
+					<div class="mb-4">
 						<button
 							onclick={() => (showCustom = !showCustom)}
-							class="w-full flex items-center justify-between px-4 py-3 text-sm text-gray-600 hover:text-gray-800 border border-dashed border-gray-300 rounded-xl hover:border-gray-400 transition-colors"
+							class="w-full flex items-center justify-between px-4 py-3 text-sm text-[#122555]/70 hover:text-[#122555] border border-dashed border-[#122555]/30 rounded-xl hover:border-[#122555]/50 transition-colors"
 						>
 							<span class="flex items-center gap-2">
 								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -500,12 +500,12 @@
 
 					<!-- Summary -->
 					<div
-						class="bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl p-4 mb-6 border border-gray-200"
+						class="bg-gradient-to-r from-[#122555]/5 to-[#122555]/10 rounded-xl p-4 mb-6 border border-[#122555]/20"
 					>
 						<div class="flex items-center justify-center gap-4 text-sm">
-							<span class="flex items-center gap-1 text-gray-700 font-medium">
+							<span class="flex items-center gap-1 text-[#122555] font-medium">
 								<svg
-									class="w-4 h-4 text-gray-500"
+									class="w-4 h-4 text-[#122555]/60"
 									fill="none"
 									stroke="currentColor"
 									viewBox="0 0 24 24"
@@ -519,10 +519,10 @@
 								</svg>
 								{questionCount} questions
 							</span>
-							<span class="text-gray-300">•</span>
-							<span class="flex items-center gap-1 text-gray-700 font-medium">
+							<span class="text-[#122555]/30">•</span>
+							<span class="flex items-center gap-1 text-[#122555] font-medium">
 								<svg
-									class="w-4 h-4 text-gray-500"
+									class="w-4 h-4 text-[#122555]/60"
 									fill="none"
 									stroke="currentColor"
 									viewBox="0 0 24 24"
@@ -538,13 +538,15 @@
 							</span>
 						</div>
 						{#if selectedCategories.length < 4}
-							<p class="text-xs text-gray-500 text-center mt-2">{selectedCategories.join(', ')}</p>
+							<p class="text-xs text-[#122555]/60 text-center mt-2">
+								{selectedCategories.join(', ')}
+							</p>
 						{/if}
 					</div>
 
 					<button
 						onclick={handleStart}
-						class="w-full bg-gradient-to-r from-gray-600 to-gray-800 hover:from-gray-700 hover:to-gray-900 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+						class="w-full bg-[#122555] hover:bg-[#0d1a3d] text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
 					>
 						<span class="flex items-center justify-center gap-2">
 							<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -574,21 +576,21 @@
 		<button
 			onclick={() => switchMode(0)}
 			class="w-2.5 h-2.5 rounded-full transition-all duration-300 {activeMode === 0
-				? 'bg-indigo-500 w-6'
-				: 'bg-gray-300 hover:bg-gray-400'}"
+				? 'bg-[#122555] w-6'
+				: 'bg-[#122555]/30 hover:bg-[#122555]/50'}"
 			aria-label="Mode Officiel"
 		></button>
 		<button
 			onclick={() => switchMode(1)}
 			class="w-2.5 h-2.5 rounded-full transition-all duration-300 {activeMode === 1
-				? 'bg-gray-600 w-6'
-				: 'bg-gray-300 hover:bg-gray-400'}"
+				? 'bg-[#122555] w-6'
+				: 'bg-[#122555]/30 hover:bg-[#122555]/50'}"
 			aria-label="Mode Entraînement"
 		></button>
 	</div>
 
 	<!-- Swipe hint for mobile -->
-	<p class="text-center text-xs text-gray-400 md:hidden">← Glissez pour changer de mode →</p>
+	<p class="text-center text-xs text-[#122555]/40 md:hidden">← Glissez pour changer de mode →</p>
 </div>
 
 <style>
