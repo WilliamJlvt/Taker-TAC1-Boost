@@ -43,13 +43,14 @@ export interface DbScore {
 }
 
 export function getOrCreateUser(user: Omit<DbUser, 'created_at'>): DbUser {
-	const existing = db.prepare('SELECT * FROM users WHERE id = ?').get(user.id) as DbUser | undefined;
+	const existing = db.prepare('SELECT * FROM users WHERE email = ?').get(user.email) as DbUser | undefined;
 	if (existing) {
-		// Update user info in case it changed
-		db.prepare('UPDATE users SET name = ?, image = ? WHERE id = ?').run(user.name, user.image, user.id);
-		return { ...existing, name: user.name, image: user.image };
+		db.prepare('UPDATE users SET id = ?, name = ?, image = ? WHERE email = ?').run(
+			user.id, user.name, user.image, user.email
+		);
+		return { ...existing, id: user.id, name: user.name, image: user.image };
 	}
-	
+
 	db.prepare('INSERT INTO users (id, email, name, image) VALUES (?, ?, ?, ?)').run(
 		user.id,
 		user.email,
@@ -73,7 +74,7 @@ export function saveScore(score: Omit<DbScore, 'id' | 'created_at'>): DbScore {
 		score.time_spent,
 		score.category_scores
 	);
-	
+
 	return {
 		...score,
 		id: result.lastInsertRowid as number,
