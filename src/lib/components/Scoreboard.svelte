@@ -1,6 +1,9 @@
 <script lang="ts">
 	import type { ScoreEntry, ExamMode } from '$lib/types.js';
 	import { formatTime } from '$lib/quiz.js';
+	import BuildingIcon from '@lucide/svelte/icons/building-2';
+	import WalletIcon from '@lucide/svelte/icons/wallet';
+	import TrophyIcon from '@lucide/svelte/icons/trophy';
 
 	let {
 		initialMode = 'organisationnelle',
@@ -130,7 +133,8 @@
 				? 'text-[#122555] border-b-2 border-[#122555] bg-[#122555]/5'
 				: 'text-[#122555]/60 hover:text-[#122555] hover:bg-[#122555]/5'}"
 		>
-			🏢 Organisationnelle
+			<BuildingIcon class="w-4 h-4 inline mr-1" />
+			Organisationnelle
 		</button>
 		<button
 			onclick={() => goToSlide(1)}
@@ -141,7 +145,8 @@
 				? 'text-[#122555] border-b-2 border-[#122555] bg-[#122555]/5'
 				: 'text-[#122555]/60 hover:text-[#122555] hover:bg-[#122555]/5'}"
 		>
-			💰 Trésorerie
+			<WalletIcon class="w-4 h-4 inline mr-1" />
+			Trésorerie
 		</button>
 	</div>
 
@@ -176,7 +181,9 @@
 					</div>
 				{:else if leaderboardOrga.length === 0}
 					<div class="text-center py-12">
-						<p class="text-[#122555]/60 text-lg">🏆 Aucun score pour le moment</p>
+						<p class="text-[#122555]/60 text-lg flex items-center justify-center gap-2">
+							<TrophyIcon class="w-5 h-5" /> Aucun score pour le moment
+						</p>
 						<p class="text-[#122555]/40 mt-2">Soyez le premier à apparaître au classement !</p>
 					</div>
 				{:else}
@@ -256,7 +263,9 @@
 					</div>
 				{:else if leaderboardTreso.length === 0}
 					<div class="text-center py-12">
-						<p class="text-[#122555]/60 text-lg">🏆 Aucun score pour le moment</p>
+						<p class="text-[#122555]/60 text-lg flex items-center justify-center gap-2">
+							<TrophyIcon class="w-5 h-5" /> Aucun score pour le moment
+						</p>
 						<p class="text-[#122555]/40 mt-2">Soyez le premier à apparaître au classement !</p>
 					</div>
 				{:else}

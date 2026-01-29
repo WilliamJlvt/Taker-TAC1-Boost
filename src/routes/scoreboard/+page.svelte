@@ -2,6 +2,7 @@
 	import Scoreboard from '$lib/components/Scoreboard.svelte';
 	import UserMenu from '$lib/components/UserMenu.svelte';
 	import type { Session } from '@auth/core/types';
+	import TrophyIcon from '@lucide/svelte/icons/trophy';
 
 	let { data }: { data: { session: Session | null } } = $props();
 </script>
@@ -25,7 +26,10 @@
 					</svg>
 					Retour
 				</a>
-				<h1 class="text-4xl font-bold text-[#122555] mb-2">🏆 Classement</h1>
+				<h1 class="text-4xl font-bold text-[#122555] mb-2 flex items-center gap-3">
+					<TrophyIcon class="w-8 h-8" />
+					Classement
+				</h1>
 				<p class="text-[#122555]/60">Les meilleurs scores des examens officiels TAC1</p>
 			</div>
 			<UserMenu session={data.session} />

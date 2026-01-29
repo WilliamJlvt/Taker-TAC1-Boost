@@ -46,7 +46,7 @@ export interface ExamModeConfig {
 
 export const EXAM_MODES: Record<Exclude<ExamMode, 'custom'>, ExamModeConfig> = {
 	organisationnelle: {
-		name: 'TAC1 Organisationnelle',
+		name: 'TAC1 Organisationnel',
 		description: 'Examen officiel incluant les questions Organisationnel, CLR et Mouvement',
 		categories: ['Organisationnel', 'CLR', 'Mouvement'],
 		questionCount: 50,

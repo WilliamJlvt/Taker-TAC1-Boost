@@ -2,6 +2,11 @@
 	import { formatTime } from '$lib/quiz.js';
 	import type { UserStats } from '$lib/server/db';
 	import logo from '$lib/assets/logo.svg';
+	import BuildingIcon from '@lucide/svelte/icons/building-2';
+	import WalletIcon from '@lucide/svelte/icons/wallet';
+	import BarChartIcon from '@lucide/svelte/icons/bar-chart-3';
+	import TrendingUpIcon from '@lucide/svelte/icons/trending-up';
+	import ClipboardListIcon from '@lucide/svelte/icons/clipboard-list';
 
 	let { data } = $props();
 	const stats: UserStats = data.stats;
@@ -133,7 +138,9 @@
 				<p class="text-3xl font-bold {getScoreColor(stats.avgScore)}">{stats.avgScore}%</p>
 			</div>
 			<div class="bg-white rounded-xl shadow p-4 border border-[#122555]/10">
-				<p class="text-[#122555]/60 text-sm">🏢 Meilleur Organisationnel</p>
+				<p class="text-[#122555]/60 text-sm flex items-center gap-1">
+					<BuildingIcon class="w-4 h-4" /> Meilleur Organisationnel
+				</p>
 				<p
 					class="text-3xl font-bold {stats.bestScoreOrga
 						? getScoreColor(stats.bestScoreOrga)
@@ -143,7 +150,9 @@
 				</p>
 			</div>
 			<div class="bg-white rounded-xl shadow p-4 border border-[#122555]/10">
-				<p class="text-[#122555]/60 text-sm">💰 Meilleur Trésorerie</p>
+				<p class="text-[#122555]/60 text-sm flex items-center gap-1">
+					<WalletIcon class="w-4 h-4" /> Meilleur Trésorerie
+				</p>
 				<p
 					class="text-3xl font-bold {stats.bestScoreTreso
 						? getScoreColor(stats.bestScoreTreso)
@@ -157,7 +166,9 @@
 		<div class="grid md:grid-cols-2 gap-8 mb-8">
 			<!-- Category Stats -->
 			<div class="bg-white rounded-2xl shadow-lg p-6 border border-[#122555]/10">
-				<h2 class="text-xl font-bold text-[#122555] mb-4">📊 Taux de réussite par catégorie</h2>
+				<h2 class="text-xl font-bold text-[#122555] mb-4 flex items-center gap-2">
+					<BarChartIcon class="w-5 h-5" /> Taux de réussite par catégorie
+				</h2>
 				{#if Object.keys(stats.categoryStats).length > 0}
 					<div class="space-y-4">
 						{#each Object.entries(stats.categoryStats) as [category, catData]}
@@ -191,7 +202,9 @@
 
 			<!-- Progression Chart -->
 			<div class="bg-white rounded-2xl shadow-lg p-6 border border-[#122555]/10">
-				<h2 class="text-xl font-bold text-[#122555] mb-4">📈 Progression</h2>
+				<h2 class="text-xl font-bold text-[#122555] mb-4 flex items-center gap-2">
+					<TrendingUpIcon class="w-5 h-5" /> Progression
+				</h2>
 				{#if chartDataOrga.length > 0 || chartDataTreso.length > 0}
 					<div class="w-full">
 						<svg viewBox="0 0 {chartWidth} {chartHeight}" class="w-full h-auto">
@@ -309,7 +322,9 @@
 
 		<!-- Recent Attempts -->
 		<div class="bg-white rounded-2xl shadow-lg p-6 border border-[#122555]/10">
-			<h2 class="text-xl font-bold text-[#122555] mb-4">📋 Historique des tentatives</h2>
+			<h2 class="text-xl font-bold text-[#122555] mb-4 flex items-center gap-2">
+				<ClipboardListIcon class="w-5 h-5" /> Historique des tentatives
+			</h2>
 			{#if stats.recentAttempts.length > 0}
 				<div class="overflow-x-auto">
 					<table class="w-full">
@@ -335,7 +350,9 @@
 												? 'bg-blue-100 text-blue-800'
 												: 'bg-green-100 text-green-800'}"
 										>
-											{attempt.exam_mode === 'organisationnelle' ? '🏢 Organisationnel' : '💰 Trésorerie'}
+											{attempt.exam_mode === 'organisationnelle'
+												? '🏢 Organisationnel'
+												: '💰 Trésorerie'}
 										</span>
 									</td>
 									<td class="py-3 px-2 text-center">

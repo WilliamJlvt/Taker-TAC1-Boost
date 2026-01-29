@@ -4,6 +4,12 @@
 	import { EXAM_MODES } from '$lib/types.js';
 	import { signIn } from '@auth/sveltekit/client';
 	import type { Session } from '@auth/core/types';
+	import TrophyIcon from '@lucide/svelte/icons/trophy';
+	import BuildingIcon from '@lucide/svelte/icons/building-2';
+	import WalletIcon from '@lucide/svelte/icons/wallet';
+	import ClipboardListIcon from '@lucide/svelte/icons/clipboard-list';
+	import SettingsIcon from '@lucide/svelte/icons/settings';
+	import TruckIcon from '@lucide/svelte/icons/truck';
 
 	let {
 		startQuiz,
@@ -120,7 +126,7 @@
 					? 'bg-white text-gray-800 shadow-lg'
 					: 'text-gray-500 hover:text-gray-700'}"
 			>
-				<span class="flex items-center gap-2"> 🏆 Mode Officiel </span>
+				<span class="flex items-center gap-2"> <TrophyIcon class="w-4 h-4" /> Mode Officiel </span>
 				{#if activeMode === 0}
 					<div
 						class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-12 h-1 bg-[#122555] rounded-full"
@@ -134,7 +140,7 @@
 					? 'bg-white text-gray-800 shadow-lg'
 					: 'text-gray-500 hover:text-gray-700'}"
 			>
-				<span class="flex items-center gap-2"> ⚙️ Entraînement </span>
+				<span class="flex items-center gap-2"> <SettingsIcon class="w-4 h-4" /> Entraînement </span>
 				{#if activeMode === 1}
 					<div
 						class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-12 h-1 bg-[#122555]/50 rounded-full"
@@ -162,7 +168,7 @@
 						<div
 							class="inline-flex items-center justify-center w-12 h-12 bg-[#122555] rounded-xl mb-3 shadow-lg"
 						>
-							<span class="text-2xl">🏆</span>
+							<TrophyIcon class="w-6 h-6 text-white" />
 						</div>
 						<h2 class="text-xl font-bold text-[#122555] mb-1">Modes Officiels</h2>
 						<p class="text-[#122555]/60 text-xs">Scores enregistrés dans le classement</p>
@@ -209,12 +215,12 @@
 										? 'opacity-50'
 										: 'group-hover:scale-110 transition-transform'}"
 								>
-									🏢
+									<BuildingIcon class="w-7 h-7" />
 								</div>
 								<div class="flex-1">
 									<div class="flex items-center gap-2 mb-1">
 										<h3 class="font-bold text-lg {session ? 'text-[#122555]' : 'text-gray-500'}">
-											TAC1 Organisationnelle
+											TAC1 Organisationnel
 										</h3>
 										{#if session}
 											<span
@@ -270,7 +276,7 @@
 										? 'opacity-50'
 										: 'group-hover:scale-110 transition-transform'}"
 								>
-									💰
+									<WalletIcon class="w-7 h-7" />
 								</div>
 								<div class="flex-1">
 									<div class="flex items-center gap-2 mb-1">
@@ -347,7 +353,7 @@
 						<div
 							class="inline-flex items-center justify-center w-12 h-12 bg-[#122555]/70 rounded-xl mb-3 shadow-lg"
 						>
-							<span class="text-2xl">⚙️</span>
+							<SettingsIcon class="w-6 h-6 text-white" />
 						</div>
 						<h2 class="text-xl font-bold text-[#122555] mb-1">Mode Entraînement</h2>
 						<p class="text-[#122555]/60 text-xs">Session personnalisée • Non classée</p>
@@ -361,47 +367,47 @@
 						<div class="grid grid-cols-2 gap-2">
 							<button
 								onclick={() => toggleCategory('CLR')}
-								class="p-3 rounded-xl border-2 transition-all duration-200 text-sm font-medium {selectedCategories.includes(
+								class="p-3 rounded-xl border-2 transition-all duration-200 text-sm font-medium flex flex-col items-center justify-center gap-1 {selectedCategories.includes(
 									'CLR'
 								)
 									? 'bg-[#122555]/10 border-[#122555]/30 text-[#122555]'
 									: 'bg-gray-50 border-gray-200 text-gray-500 hover:border-[#122555]/20'}"
 							>
-								<span class="block text-lg mb-1">📋</span>
-								CLR ({clrCount})
+								<ClipboardListIcon class="w-5 h-5" />
+								<span>CLR ({clrCount})</span>
 							</button>
 							<button
 								onclick={() => toggleCategory('Mouvement')}
-								class="p-3 rounded-xl border-2 transition-all duration-200 text-sm font-medium {selectedCategories.includes(
+								class="p-3 rounded-xl border-2 transition-all duration-200 text-sm font-medium flex flex-col items-center justify-center gap-1 {selectedCategories.includes(
 									'Mouvement'
 								)
 									? 'bg-[#122555]/10 border-[#122555]/30 text-[#122555]'
 									: 'bg-gray-50 border-gray-200 text-gray-500 hover:border-[#122555]/20'}"
 							>
-								<span class="block text-lg mb-1">🚚</span>
-								Mouvement ({mouvementCount})
+								<TruckIcon class="w-5 h-5" />
+								<span>Mouvement ({mouvementCount})</span>
 							</button>
 							<button
 								onclick={() => toggleCategory('Organisationnel')}
-								class="p-3 rounded-xl border-2 transition-all duration-200 text-sm font-medium {selectedCategories.includes(
+								class="p-3 rounded-xl border-2 transition-all duration-200 text-sm font-medium flex flex-col items-center justify-center gap-1 {selectedCategories.includes(
 									'Organisationnel'
 								)
 									? 'bg-[#122555]/10 border-[#122555]/30 text-[#122555]'
 									: 'bg-gray-50 border-gray-200 text-gray-500 hover:border-[#122555]/20'}"
 							>
-								<span class="block text-lg mb-1">🏢</span>
-								Organisationnel ({organisationnelCount})
+								<BuildingIcon class="w-5 h-5" />
+								<span>Organisationnel ({organisationnelCount})</span>
 							</button>
 							<button
 								onclick={() => toggleCategory('Trésorerie')}
-								class="p-3 rounded-xl border-2 transition-all duration-200 text-sm font-medium {selectedCategories.includes(
+								class="p-3 rounded-xl border-2 transition-all duration-200 text-sm font-medium flex flex-col items-center justify-center gap-1 {selectedCategories.includes(
 									'Trésorerie'
 								)
 									? 'bg-[#122555]/10 border-[#122555]/30 text-[#122555]'
 									: 'bg-gray-50 border-gray-200 text-gray-500 hover:border-[#122555]/20'}"
 							>
-								<span class="block text-lg mb-1">💰</span>
-								Trésorerie ({tresorerieCount})
+								<WalletIcon class="w-5 h-5" />
+								<span>Trésorerie ({tresorerieCount})</span>
 							</button>
 						</div>
 					</div>

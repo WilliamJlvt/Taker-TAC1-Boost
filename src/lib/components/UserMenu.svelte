@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { signIn, signOut } from '@auth/sveltekit/client';
 	import type { Session } from '@auth/core/types';
+	import UserIcon from '@lucide/svelte/icons/user';
+	import TrophyIcon from '@lucide/svelte/icons/trophy';
+	import LogOutIcon from '@lucide/svelte/icons/log-out';
 
 	let { session }: { session: Session | null } = $props();
 
@@ -54,17 +57,20 @@
 					? 'opacity-100 scale-100 translate-y-0' 
 					: 'opacity-0 scale-95 -translate-y-2 pointer-events-none'}"
 		>
-			<a href="/profile" class="block px-4 py-2 text-sm text-[#122555] hover:bg-[#122555]/5 transition-colors">
-				👤 Mon Profil
+			<a href="/profile" class="flex items-center gap-2 px-4 py-2 text-sm text-[#122555] hover:bg-[#122555]/5 transition-colors">
+				<UserIcon class="w-4 h-4" />
+				Mon Profil
 			</a>
-			<a href="/scoreboard" class="block px-4 py-2 text-sm text-[#122555] hover:bg-[#122555]/5 transition-colors">
-				🏆 Classement
+			<a href="/scoreboard" class="flex items-center gap-2 px-4 py-2 text-sm text-[#122555] hover:bg-[#122555]/5 transition-colors">
+				<TrophyIcon class="w-4 h-4" />
+				Classement
 			</a>
 			<hr class="my-1 border-[#122555]/10" />
 			<button
 				onclick={() => signOut()}
-				class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+				class="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
 			>
+				<LogOutIcon class="w-4 h-4" />
 				Se déconnecter
 			</button>
 		</div>

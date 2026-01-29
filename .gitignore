@@ -25,3 +25,4 @@ vite.config.ts.timestamp-*
 # Database
 data/tac1.db-shm
 data/tac1.db-wal
+data/tac1.db
