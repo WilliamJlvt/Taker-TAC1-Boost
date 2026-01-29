@@ -38,27 +38,33 @@
 			<span class="text-sm font-medium text-[#122555] hidden sm:block">
 				{session.user.name}
 			</span>
-			<svg class="w-4 h-4 text-[#122555]/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+			<svg 
+				class="w-4 h-4 text-[#122555]/60 transition-transform duration-200 {showDropdown ? 'rotate-180' : ''}" 
+				fill="none" 
+				stroke="currentColor" 
+				viewBox="0 0 24 24"
+			>
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
 			</svg>
 		</button>
 
-		{#if showDropdown}
-			<div
-				class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-[#122555]/10 py-1 z-50"
+		<div
+			class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-[#122555]/10 py-1 z-50 origin-top-right transition-all duration-200 ease-out
+				{showDropdown 
+					? 'opacity-100 scale-100 translate-y-0' 
+					: 'opacity-0 scale-95 -translate-y-2 pointer-events-none'}"
+		>
+			<a href="/scoreboard" class="block px-4 py-2 text-sm text-[#122555] hover:bg-[#122555]/5 transition-colors">
+				🏆 Classement
+			</a>
+			<hr class="my-1 border-[#122555]/10" />
+			<button
+				onclick={() => signOut()}
+				class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
 			>
-				<a href="/scoreboard" class="block px-4 py-2 text-sm text-[#122555] hover:bg-[#122555]/5">
-					🏆 Classement
-				</a>
-				<hr class="my-1 border-[#122555]/10" />
-				<button
-					onclick={() => signOut()}
-					class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
-				>
-					Se déconnecter
-				</button>
-			</div>
-		{/if}
+				Se déconnecter
+			</button>
+		</div>
 	{:else}
 		<button
 			onclick={() => signIn('google')}
