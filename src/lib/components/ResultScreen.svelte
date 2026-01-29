@@ -1,23 +1,65 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { quizResult } from '$lib/stores.js';
+	import { quizResult, currentExamMode } from '$lib/stores.js';
 	import { formatTime } from '$lib/quiz.js';
-	import type { QuizResult, QuizAnswer } from '$lib/types.js';
+	import type { QuizResult, QuizAnswer, ExamMode } from '$lib/types.js';
+	import type { Session } from '@auth/core/types';
 
-	let { resetQuiz } = $props<{ resetQuiz: () => void }>();
+	let { resetQuiz, session }: { resetQuiz: () => void; session: Session | null } = $props();
 
 	let result = $state<QuizResult | null>(null);
+	let examMode = $state<ExamMode>('custom');
 	let showAnimation = $state(false);
+	let saveStatus = $state<'idle' | 'saving' | 'saved' | 'error'>('idle');
 
 	$effect(() => {
 		result = $quizResult;
+	});
+
+	$effect(() => {
+		examMode = $currentExamMode;
 	});
 
 	onMount(() => {
 		setTimeout(() => {
 			showAnimation = true;
 		}, 100);
+		
+		// Auto-save score if authenticated and official mode
+		saveScoreIfEligible();
 	});
+
+	async function saveScoreIfEligible() {
+		const r = $quizResult;
+		const mode = $currentExamMode;
+		
+		if (!session?.user || !r || mode === 'custom') return;
+		
+		saveStatus = 'saving';
+		
+		try {
+			const response = await fetch('/api/scores', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					examMode: mode,
+					score: r.score,
+					totalQuestions: r.totalQuestions,
+					correctAnswers: r.answers.filter(a => a.isCorrect).length,
+					timeSpent: r.timeSpent,
+					categoryScores: r.categoryScores
+				})
+			});
+			
+			if (response.ok) {
+				saveStatus = 'saved';
+			} else {
+				saveStatus = 'error';
+			}
+		} catch {
+			saveStatus = 'error';
+		}
+	}
 
 	const scoreColor = $derived(result ? (result.score >= 80 ? 'text-green-600' : result.score >= 60 ? 'text-yellow-600' : 'text-red-600') : '');
 	const scoreBg = $derived(result ? (result.score >= 80 ? 'from-green-50 to-green-100' : result.score >= 60 ? 'from-yellow-50 to-yellow-100' : 'from-red-50 to-red-100') : '');
@@ -114,6 +156,48 @@ ${r.answers
 				<p class="text-lg text-gray-700">
 					{result.answers.filter(a => a.isCorrect).length} / {result.totalQuestions} questions correctes
 				</p>
+				
+				<!-- Score Save Status -->
+				{#if examMode !== 'custom'}
+					<div class="mt-4">
+						{#if saveStatus === 'saving'}
+							<span class="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">
+								<svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+									<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+									<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+								</svg>
+								Enregistrement...
+							</span>
+						{:else if saveStatus === 'saved'}
+							<span class="inline-flex items-center gap-2 px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">
+								<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+									<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+								</svg>
+								Score enregistré au classement !
+							</span>
+						{:else if saveStatus === 'error'}
+							<span class="inline-flex items-center gap-2 px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm">
+								<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+									<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+								</svg>
+								Erreur lors de l'enregistrement
+							</span>
+						{:else if !session}
+							<span class="inline-flex items-center gap-2 px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm">
+								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+								</svg>
+								Connectez-vous pour enregistrer votre score
+							</span>
+						{/if}
+					</div>
+				{:else}
+					<div class="mt-4">
+						<span class="inline-flex items-center gap-2 px-3 py-1 bg-gray-100 text-gray-500 rounded-full text-sm">
+							Mode entraînement • Non classé
+						</span>
+					</div>
+				{/if}
 			</div>
 
 			<!-- Stats -->
@@ -148,14 +232,14 @@ ${r.answers
 								{@const percentage = Math.round((scores.correct / scores.total) * 100)}
 								<div>
 									<div class="flex justify-between mb-1">
-										<span class="text-sm font-medium {category === 'CLR' ? 'text-blue-700' : category === 'Mouvement' ? 'text-green-700' : 'text-purple-700'}">
+										<span class="text-sm font-medium {category === 'CLR' ? 'text-blue-700' : category === 'Mouvement' ? 'text-green-700' : category === 'Trésorerie' ? 'text-amber-700' : 'text-purple-700'}">
 											{category}
 										</span>
 										<span class="text-sm text-gray-600">{scores.correct}/{scores.total}</span>
 									</div>
 									<div class="w-full bg-gray-200 rounded-full h-2">
 										<div 
-											class="h-2 rounded-full transition-all duration-1000 {category === 'CLR' ? 'bg-blue-500' : category === 'Mouvement' ? 'bg-green-500' : 'bg-purple-500'}"
+											class="h-2 rounded-full transition-all duration-1000 {category === 'CLR' ? 'bg-blue-500' : category === 'Mouvement' ? 'bg-green-500' : category === 'Trésorerie' ? 'bg-amber-500' : 'bg-purple-500'}"
 											style="width: {percentage}%"
 										></div>
 									</div>
@@ -191,6 +275,14 @@ ${r.answers
 					>
 						Refaire un test
 					</button>
+					{#if saveStatus === 'saved' || examMode !== 'custom'}
+						<a 
+							href="/scoreboard"
+							class="flex-1 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white font-semibold py-3 px-6 rounded-lg transform hover:scale-105 transition-all duration-200 text-center"
+						>
+							Voir le classement
+						</a>
+					{/if}
 					<button 
 						onclick={shareResults}
 						class="flex-1 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-semibold py-3 px-6 rounded-lg transform hover:scale-105 transition-all duration-200"

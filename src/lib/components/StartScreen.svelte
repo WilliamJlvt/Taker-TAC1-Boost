@@ -1,8 +1,14 @@
 <script lang="ts">
 	import { questions } from '$lib/data/index.js';
-	import type { Question } from '$lib/types.js';
+	import type { Question, ExamMode } from '$lib/types.js';
+	import { EXAM_MODES } from '$lib/types.js';
+	import { signIn } from '@auth/sveltekit/client';
+	import type { Session } from '@auth/core/types';
 
-	let { startQuiz } = $props<{ startQuiz: (questionCount: number, timeLimit: number, categories: string[]) => void }>();
+	let { startQuiz, session }: { 
+		startQuiz: (questionCount: number, timeLimit: number, categories: string[], examMode?: ExamMode) => void;
+		session: Session | null;
+	} = $props();
 
 	const totalQuestions = questions.length;
 	const clrCount = questions.filter(q => q.category === 'CLR').length;
@@ -23,6 +29,7 @@
 	];
 
 	let showCustom = $state(false);
+	let showEntrainement = $state(false);
 
 	function selectPreset(preset: typeof presets[0]) {
 		questionCount = preset.questions;
@@ -41,15 +48,140 @@
 	}
 
 	function handleStart() {
-		startQuiz(questionCount, timeLimit, selectedCategories);
+		startQuiz(questionCount, timeLimit, selectedCategories, 'custom');
+	}
+
+	function startOfficialMode(mode: Exclude<ExamMode, 'custom'>) {
+		if (!session) {
+			signIn('google');
+			return;
+		}
+		const config = EXAM_MODES[mode];
+		startQuiz(config.questionCount, config.timeLimit, config.categories, mode);
 	}
 </script>
 
-<div class="max-w-2xl mx-auto">
-	<div class="bg-white rounded-2xl shadow-xl p-8 text-center animate-fade-in">
-		<div class="mb-8">
-			<h2 class="text-2xl font-bold text-gray-800 mb-2">Prêt pour votre test TAC1 ?</h2>
-			<p class="text-gray-600">Choisissez votre mode de révision</p>
+<div class="max-w-2xl mx-auto space-y-6">
+	<!-- Official Exam Modes -->
+	<div class="bg-white rounded-2xl shadow-xl p-8 animate-fade-in">
+		<div class="text-center mb-6">
+			<h2 class="text-2xl font-bold text-gray-800 mb-2">🏆 Modes Officiels</h2>
+			<p class="text-gray-600 text-sm">Ces modes sont enregistrés dans le classement</p>
+		</div>
+		
+		{#if !session}
+			<div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4 flex items-center gap-3">
+				<svg class="w-5 h-5 text-amber-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+					<path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+				</svg>
+				<span class="text-amber-800 text-sm">Connectez-vous pour accéder aux modes officiels et au classement</span>
+			</div>
+		{/if}
+
+		<div class="grid md:grid-cols-2 gap-4">
+			<!-- TAC1 Organisationnelle -->
+			<button
+				onclick={() => startOfficialMode('organisationnelle')}
+				class="group relative p-6 pt-8 rounded-xl border-2 transition-all duration-200 text-left
+					{session 
+						? 'border-indigo-200 bg-gradient-to-br from-indigo-50 to-purple-50 hover:border-indigo-400 hover:shadow-lg' 
+						: 'border-gray-200 bg-gray-50 opacity-75 cursor-pointer'}"
+			>
+				<div class="absolute top-2 right-2">
+					{#if session}
+						<span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">⭐ Classement</span>
+					{:else}
+						<span class="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded-full font-medium">🔒 Connexion</span>
+					{/if}
+				</div>
+				<div class="flex items-center gap-3 mb-3">
+					<div class="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-xl {!session ? 'opacity-50' : ''}">
+						🏢
+					</div>
+					<div>
+						<h3 class="font-bold {session ? 'text-gray-800' : 'text-gray-500'}">TAC1 Organisationnelle</h3>
+						<p class="text-xs {session ? 'text-indigo-600' : 'text-gray-400'} font-medium">
+							{session ? 'Examen officiel' : 'Connexion requise'}
+						</p>
+					</div>
+				</div>
+				<p class="text-sm text-gray-600 mb-3">{EXAM_MODES.organisationnelle.description}</p>
+				<div class="flex items-center gap-4 text-xs text-gray-500">
+					<span class="bg-white px-2 py-1 rounded-full">{EXAM_MODES.organisationnelle.questionCount} questions</span>
+					<span class="bg-white px-2 py-1 rounded-full">{EXAM_MODES.organisationnelle.timeLimit} min</span>
+				</div>
+			</button>
+
+			<!-- TAC1 Trésorerie -->
+			<button
+				onclick={() => startOfficialMode('tresorerie')}
+				class="group relative p-6 pt-8 rounded-xl border-2 transition-all duration-200 text-left
+					{session 
+						? 'border-emerald-200 bg-gradient-to-br from-emerald-50 to-teal-50 hover:border-emerald-400 hover:shadow-lg' 
+						: 'border-gray-200 bg-gray-50 opacity-75 cursor-pointer'}"
+			>
+				<div class="absolute top-2 right-2">
+					{#if session}
+						<span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">⭐ Classement</span>
+					{:else}
+						<span class="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded-full font-medium">🔒 Connexion</span>
+					{/if}
+				</div>
+				<div class="flex items-center gap-3 mb-3">
+					<div class="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white text-xl {!session ? 'opacity-50' : ''}">
+						💰
+					</div>
+					<div>
+						<h3 class="font-bold {session ? 'text-gray-800' : 'text-gray-500'}">TAC1 Trésorerie</h3>
+						<p class="text-xs {session ? 'text-emerald-600' : 'text-gray-400'} font-medium">
+							{session ? 'Examen officiel' : 'Connexion requise'}
+						</p>
+					</div>
+				</div>
+				<p class="text-sm text-gray-600 mb-3">{EXAM_MODES.tresorerie.description}</p>
+				<div class="flex items-center gap-4 text-xs text-gray-500">
+					<span class="bg-white px-2 py-1 rounded-full">{EXAM_MODES.tresorerie.questionCount} questions</span>
+					<span class="bg-white px-2 py-1 rounded-full">{EXAM_MODES.tresorerie.timeLimit} min</span>
+				</div>
+			</button>
+		</div>
+		
+		<!-- Link to Scoreboard -->
+		<div class="text-center mt-6">
+			<a 
+				href="/scoreboard" 
+				class="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-800 font-medium"
+			>
+				Voir le classement
+				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+				</svg>
+			</a>
+		</div>
+	</div>
+
+	<!-- Training Mode Toggle -->
+	<div class="text-center">
+		<button
+			onclick={() => showEntrainement = !showEntrainement}
+			class="inline-flex items-center gap-2 px-6 py-3 text-gray-600 hover:text-gray-800 bg-white rounded-xl border border-gray-200 hover:border-gray-300 shadow-sm transition-all"
+		>
+			<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
+			</svg>
+			Mode Entraînement (non classé)
+			<svg class="w-4 h-4 transition-transform {showEntrainement ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+			</svg>
+		</button>
+	</div>
+
+	<!-- Training Mode Panel -->
+	{#if showEntrainement}
+	<div class="bg-white rounded-2xl shadow-xl p-8 animate-fade-in">
+		<div class="mb-6 text-center">
+			<h2 class="text-xl font-bold text-gray-800 mb-2">Mode Entraînement</h2>
+			<p class="text-gray-500 text-sm">Personnalisez votre session • Non enregistré au classement</p>
 		</div>
 
 		<!-- Category Selection -->
@@ -158,17 +290,18 @@
 			</div>
 			<p class="text-yellow-700 text-sm">Les questions et réponses seront mélangées aléatoirement</p>
 			{#if selectedCategories.length < 4}
-			<p class="text-yellow-600 text-xs mt-1">Catégories : {selectedCategories.join(', ')}</p>
+				<p class="text-yellow-600 text-xs mt-1">Catégories : {selectedCategories.join(', ')}</p>
 			{/if}
 		</div>
 
 		<button 
 			onclick={handleStart}
-			class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold py-4 px-8 rounded-xl transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
+			class="w-full bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 text-white font-semibold py-4 px-8 rounded-xl transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
 		>
-			Commencer le test
+			Lancer l'entraînement
 		</button>
 	</div>
+	{/if}
 </div>
 
 <style>
