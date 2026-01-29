@@ -107,6 +107,14 @@
 		if (browser) {
 			window.addEventListener('popstate', handlePopState);
 			window.addEventListener('beforeunload', handleBeforeUnload);
+
+			// Reset state if quiz was left in an incomplete state
+			// This handles navigation from profile/scoreboard pages back to home
+			const isActive = $isQuizActive;
+			if (!isActive && !showStartScreen) {
+				// User navigated away and came back - reset to start screen
+				resetQuiz();
+			}
 		}
 	});
 

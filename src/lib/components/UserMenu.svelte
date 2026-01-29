@@ -54,6 +54,9 @@
 					? 'opacity-100 scale-100 translate-y-0' 
 					: 'opacity-0 scale-95 -translate-y-2 pointer-events-none'}"
 		>
+			<a href="/profile" class="block px-4 py-2 text-sm text-[#122555] hover:bg-[#122555]/5 transition-colors">
+				👤 Mon Profil
+			</a>
 			<a href="/scoreboard" class="block px-4 py-2 text-sm text-[#122555] hover:bg-[#122555]/5 transition-colors">
 				🏆 Classement
 			</a>

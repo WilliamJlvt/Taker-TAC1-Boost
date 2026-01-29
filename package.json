@@ -40,7 +40,14 @@
 	"dependencies": {
 		"@auth/core": "^0.41.1",
 		"@auth/sveltekit": "^1.11.1",
+		"@lucide/svelte": "^0.563.1",
 		"@sveltejs/adapter-node": "^5.3.2",
-		"better-sqlite3": "^12.6.2"
+		"better-sqlite3": "^12.6.2",
+		"chart.js": "^4.5.1",
+		"chartjs-adapter-date-fns": "^3.0.0",
+		"d3-scale": "^4.0.2",
+		"d3-shape": "^3.2.0",
+		"date-fns": "^4.1.0",
+		"layerchart": "^1.0.13"
 	}
 }

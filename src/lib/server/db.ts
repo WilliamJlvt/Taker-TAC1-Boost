@@ -121,3 +121,79 @@ export function getUserScores(userId: string, examMode?: string): DbScore[] {
 	}
 	return db.prepare('SELECT * FROM scores WHERE user_id = ? ORDER BY created_at DESC').all(userId) as DbScore[];
 }
+
+export interface UserStats {
+	totalAttempts: number;
+	bestScoreOrga: number | null;
+	bestScoreTreso: number | null;
+	avgScore: number;
+	categoryStats: Record<string, { correct: number; total: number; percentage: number }>;
+	progression: {
+		organisationnelle: { date: string; score: number }[];
+		tresorerie: { date: string; score: number }[];
+	};
+	recentAttempts: DbScore[];
+}
+
+export function getUserStats(userId: string): UserStats {
+	const allScores = db.prepare('SELECT * FROM scores WHERE user_id = ? ORDER BY created_at ASC').all(userId) as DbScore[];
+	
+	// Calculate stats
+	const totalAttempts = allScores.length;
+	const orgaScores = allScores.filter(s => s.exam_mode === 'organisationnelle');
+	const tresoScores = allScores.filter(s => s.exam_mode === 'tresorerie');
+	
+	const bestScoreOrga = orgaScores.length > 0 ? Math.max(...orgaScores.map(s => s.score)) : null;
+	const bestScoreTreso = tresoScores.length > 0 ? Math.max(...tresoScores.map(s => s.score)) : null;
+	const avgScore = totalAttempts > 0 ? Math.round(allScores.reduce((sum, s) => sum + s.score, 0) / totalAttempts) : 0;
+	
+	// Aggregate category stats
+	const categoryStats: Record<string, { correct: number; total: number; percentage: number }> = {};
+	for (const score of allScores) {
+		if (score.category_scores) {
+			try {
+				const cats = JSON.parse(score.category_scores) as Record<string, { correct: number; total: number }>;
+				for (const [cat, data] of Object.entries(cats)) {
+					if (!categoryStats[cat]) {
+						categoryStats[cat] = { correct: 0, total: 0, percentage: 0 };
+					}
+					categoryStats[cat].correct += data.correct;
+					categoryStats[cat].total += data.total;
+				}
+			} catch (e) {
+				// Ignore malformed JSON
+			}
+		}
+	}
+	
+	// Calculate percentages
+	for (const cat of Object.keys(categoryStats)) {
+		const { correct, total } = categoryStats[cat];
+		categoryStats[cat].percentage = total > 0 ? Math.round((correct / total) * 100) : 0;
+	}
+	
+	// Progression data for charts
+	const progression = {
+		organisationnelle: orgaScores.map(s => ({
+			date: s.created_at,
+			score: s.score
+		})),
+		tresorerie: tresoScores.map(s => ({
+			date: s.created_at,
+			score: s.score
+		}))
+	};
+	
+	// Recent attempts (last 10)
+	const recentAttempts = allScores.slice(-10).reverse();
+	
+	return {
+		totalAttempts,
+		bestScoreOrga,
+		bestScoreTreso,
+		avgScore,
+		categoryStats,
+		progression,
+		recentAttempts
+	};
+}
