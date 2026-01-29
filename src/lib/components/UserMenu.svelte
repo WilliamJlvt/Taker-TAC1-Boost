@@ -4,6 +4,7 @@
 	import UserIcon from '@lucide/svelte/icons/user';
 	import TrophyIcon from '@lucide/svelte/icons/trophy';
 	import LogOutIcon from '@lucide/svelte/icons/log-out';
+	import SettingsIcon from '@lucide/svelte/icons/settings';
 
 	let { session }: { session: Session | null } = $props();
 
@@ -41,10 +42,12 @@
 			<span class="text-sm font-medium text-[#122555] hidden sm:block">
 				{session.user.name}
 			</span>
-			<svg 
-				class="w-4 h-4 text-[#122555]/60 transition-transform duration-200 {showDropdown ? 'rotate-180' : ''}" 
-				fill="none" 
-				stroke="currentColor" 
+			<svg
+				class="w-4 h-4 text-[#122555]/60 transition-transform duration-200 {showDropdown
+					? 'rotate-180'
+					: ''}"
+				fill="none"
+				stroke="currentColor"
 				viewBox="0 0 24 24"
 			>
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -53,17 +56,30 @@
 
 		<div
 			class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-[#122555]/10 py-1 z-50 origin-top-right transition-all duration-200 ease-out
-				{showDropdown 
-					? 'opacity-100 scale-100 translate-y-0' 
-					: 'opacity-0 scale-95 -translate-y-2 pointer-events-none'}"
+				{showDropdown
+				? 'opacity-100 scale-100 translate-y-0'
+				: 'opacity-0 scale-95 -translate-y-2 pointer-events-none'}"
 		>
-			<a href="/profile" class="flex items-center gap-2 px-4 py-2 text-sm text-[#122555] hover:bg-[#122555]/5 transition-colors">
+			<a
+				href="/profile"
+				class="flex items-center gap-2 px-4 py-2 text-sm text-[#122555] hover:bg-[#122555]/5 transition-colors"
+			>
 				<UserIcon class="w-4 h-4" />
 				Mon Profil
 			</a>
-			<a href="/scoreboard" class="flex items-center gap-2 px-4 py-2 text-sm text-[#122555] hover:bg-[#122555]/5 transition-colors">
+			<a
+				href="/scoreboard"
+				class="flex items-center gap-2 px-4 py-2 text-sm text-[#122555] hover:bg-[#122555]/5 transition-colors"
+			>
 				<TrophyIcon class="w-4 h-4" />
 				Classement
+			</a>
+			<a
+				href="/admin"
+				class="flex items-center gap-2 px-4 py-2 text-sm text-[#122555] hover:bg-[#122555]/5 transition-colors"
+			>
+				<SettingsIcon class="w-4 h-4" />
+				Administration
 			</a>
 			<hr class="my-1 border-[#122555]/10" />
 			<button

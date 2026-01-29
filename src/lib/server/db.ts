@@ -2,9 +2,10 @@ import Database from 'better-sqlite3';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { existsSync, mkdirSync, readFileSync } from 'fs';
+import { env } from '$env/dynamic/private';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const dbPath = process.env.DATABASE_PATH || join(__dirname, '../../../data/tac1.db');
+const dbPath = env.DATABASE_PATH || join(__dirname, '../../../data/tac1.db');
 
 // Ensure data directory exists
 const dataDir = dirname(dbPath);
@@ -40,6 +41,37 @@ export interface DbScore {
 	time_spent: number;
 	category_scores: string;
 	created_at: string;
+}
+
+export interface DbCategory {
+	id: number;
+	name: string;
+	slug: string;
+	description: string | null;
+	created_at: string;
+}
+
+export interface DbQuestion {
+	id: number;
+	category_id: number;
+	question_text: string;
+	created_at: string;
+	updated_at: string;
+}
+
+export interface DbAnswerOption {
+	id: number;
+	question_id: number;
+	text: string;
+	is_correct: number; // SQLite uses 0/1 for booleans
+	rationale: string | null;
+	position: number;
+}
+
+export function isAdmin(email?: string | null): boolean {
+	if (!email) return false;
+	const adminEmails = (env.ADMIN_EMAILS || '').split(',').map(e => e.trim().toLowerCase());
+	return adminEmails.includes(email.toLowerCase());
 }
 
 export function getOrCreateUser(user: Omit<DbUser, 'created_at'>): DbUser {
@@ -196,4 +228,176 @@ export function getUserStats(userId: string): UserStats {
 		progression,
 		recentAttempts
 	};
+}
+
+// --- Admin Functions ---
+
+export function getCategories(): DbCategory[] {
+	return db.prepare('SELECT * FROM categories ORDER BY name ASC').all() as DbCategory[];
+}
+
+export function createCategory(data: { name: string; slug: string; description?: string }): number {
+	const info = db.prepare('INSERT INTO categories (name, slug, description) VALUES (?, ?, ?)')
+		.run(data.name, data.slug, data.description || null);
+	return info.lastInsertRowid as number;
+}
+
+export interface QuestionFilter {
+	categoryId?: number;
+	search?: string;
+	limit?: number;
+	offset?: number;
+}
+
+export function getQuestions(filter: QuestionFilter = {}): (DbQuestion & { category_name: string, answer_count: number })[] {
+	let query = `
+		SELECT q.*, c.name as category_name,
+		(SELECT COUNT(*) FROM answer_options WHERE question_id = q.id) as answer_count
+		FROM questions q
+		JOIN categories c ON q.category_id = c.id
+		WHERE 1=1
+	`;
+	const params: any[] = [];
+
+	if (filter.categoryId) {
+		query += ' AND q.category_id = ?';
+		params.push(filter.categoryId);
+	}
+
+	if (filter.search) {
+		query += ' AND q.question_text LIKE ?';
+		params.push(`%${filter.search}%`);
+	}
+
+	query += ' ORDER BY q.created_at DESC';
+
+	if (filter.limit) {
+		query += ' LIMIT ?';
+		params.push(filter.limit);
+		if (filter.offset) {
+			query += ' OFFSET ?';
+			params.push(filter.offset);
+		}
+	}
+
+	return db.prepare(query).all(...params) as (DbQuestion & { category_name: string, answer_count: number })[];
+}
+
+export function getQuestion(id: number): (DbQuestion & { answers: DbAnswerOption[] }) | undefined {
+	const question = db.prepare('SELECT * FROM questions WHERE id = ?').get(id) as DbQuestion | undefined;
+	if (!question) return undefined;
+
+	const answers = db.prepare('SELECT * FROM answer_options WHERE question_id = ? ORDER BY position ASC, id ASC').all(id) as DbAnswerOption[];
+	return { ...question, answers };
+}
+
+export interface QuestionData {
+	categoryId: number;
+	questionText: string;
+	answers: {
+		text: string;
+		isCorrect: boolean;
+		rationale?: string;
+	}[];
+}
+
+export function createQuestion(data: QuestionData): number {
+	const insertQuestion = db.prepare('INSERT INTO questions (category_id, question_text) VALUES (?, ?)');
+	const insertAnswer = db.prepare('INSERT INTO answer_options (question_id, text, is_correct, rationale, position) VALUES (?, ?, ?, ?, ?)');
+
+	const createTx = db.transaction((questionData: QuestionData) => {
+		const info = insertQuestion.run(questionData.categoryId, questionData.questionText);
+		const questionId = info.lastInsertRowid as number;
+
+		questionData.answers.forEach((ans, index) => {
+			insertAnswer.run(questionId, ans.text, ans.isCorrect ? 1 : 0, ans.rationale || null, index);
+		});
+
+		return questionId;
+	});
+
+	return createTx(data);
+}
+
+export function updateQuestion(id: number, data: QuestionData): void {
+	const updateQuestionStmt = db.prepare('UPDATE questions SET category_id = ?, question_text = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?');
+	const deleteAnswers = db.prepare('DELETE FROM answer_options WHERE question_id = ?');
+	const insertAnswer = db.prepare('INSERT INTO answer_options (question_id, text, is_correct, rationale, position) VALUES (?, ?, ?, ?, ?)');
+
+	const updateTx = db.transaction((qId: number, questionData: QuestionData) => {
+		updateQuestionStmt.run(questionData.categoryId, questionData.questionText, qId);
+		deleteAnswers.run(qId);
+		questionData.answers.forEach((ans, index) => {
+			insertAnswer.run(qId, ans.text, ans.isCorrect ? 1 : 0, ans.rationale || null, index);
+		});
+	});
+
+	updateTx(id, data);
+}
+
+export function deleteQuestion(id: number): void {
+	db.prepare('DELETE FROM questions WHERE id = ?').run(id);
+}
+
+export function importQuestionsFromJSON(jsonContent: any, categoryId: number): { added: number; errors: string[] } {
+	// Expects an array of question objects based on the index.ts transformData structure or raw JSON
+	// We handle the structure: { question: string, answerOptions: { text: string, isCorrect: boolean, rationale?: string }[] }
+	
+	if (!Array.isArray(jsonContent)) {
+		return { added: 0, errors: ['JSON content must be an array'] };
+	}
+
+	let added = 0;
+	const errors: string[] = [];
+
+	const insertQuestion = db.prepare('INSERT INTO questions (category_id, question_text) VALUES (?, ?)');
+	const insertAnswer = db.prepare('INSERT INTO answer_options (question_id, text, is_correct, rationale, position) VALUES (?, ?, ?, ?, ?)');
+
+	const importTx = db.transaction((questions: any[]) => {
+		for (let i = 0; i < questions.length; i++) {
+			const q = questions[i];
+			if (!q.question || !Array.isArray(q.answerOptions)) {
+				errors.push(`Question at index ${i} is missing required fields`);
+				continue;
+			}
+
+			try {
+				const info = insertQuestion.run(categoryId, q.question);
+				const qId = info.lastInsertRowid as number;
+
+				q.answerOptions.forEach((ans: any, idx: number) => {
+					insertAnswer.run(qId, ans.text, ans.isCorrect ? 1 : 0, ans.rationale || null, idx);
+				});
+				added++;
+			} catch (e: any) {
+				errors.push(`Error saving question at index ${i}: ${e.message}`);
+			}
+		}
+	});
+
+	importTx(jsonContent);
+	return { added, errors };
+}
+
+export function getAllQuestionsWithAnswers(): any[] {
+	const questions = db.prepare('SELECT * FROM questions').all() as DbQuestion[];
+	const answers = db.prepare('SELECT * FROM answer_options ORDER BY position ASC').all() as DbAnswerOption[];
+	const categories = db.prepare('SELECT * FROM categories').all() as DbCategory[];
+	
+	const catMap = new Map(categories.map(c => [c.id, c.name]));
+
+	return questions.map(q => {
+		const qAnswers = answers.filter(a => a.question_id === q.id).map(a => ({
+			text: a.text,
+			isCorrect: a.is_correct === 1,
+			rationale: a.rationale || undefined
+		}));
+		
+		return {
+			id: q.id.toString(),
+			question: q.question_text,
+			answerOptions: qAnswers,
+			category: catMap.get(q.category_id)
+		};
+	});
 }

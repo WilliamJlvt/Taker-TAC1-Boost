@@ -43,11 +43,15 @@
 		"@lucide/svelte": "^0.563.1",
 		"@sveltejs/adapter-node": "^5.3.2",
 		"better-sqlite3": "^12.6.2",
+		"bits-ui": "^2.15.5",
 		"chart.js": "^4.5.1",
 		"chartjs-adapter-date-fns": "^3.0.0",
+		"class-variance-authority": "^0.7.1",
+		"clsx": "^2.1.1",
 		"d3-scale": "^4.0.2",
 		"d3-shape": "^3.2.0",
 		"date-fns": "^4.1.0",
-		"layerchart": "^1.0.13"
+		"layerchart": "^1.0.13",
+		"tailwind-merge": "^3.4.0"
 	}
 }

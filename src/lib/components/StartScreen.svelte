@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { questions } from '$lib/data/index.js';
 	import type { Question, ExamMode } from '$lib/types.js';
 	import { EXAM_MODES } from '$lib/types.js';
 	import { signIn } from '@auth/sveltekit/client';
@@ -10,30 +9,38 @@
 	import ClipboardListIcon from '@lucide/svelte/icons/clipboard-list';
 	import SettingsIcon from '@lucide/svelte/icons/settings';
 	import TruckIcon from '@lucide/svelte/icons/truck';
+	import ZapIcon from '@lucide/svelte/icons/zap';
+	import TargetIcon from '@lucide/svelte/icons/target';
+	import DumbbellIcon from '@lucide/svelte/icons/dumbbell';
+	import StarIcon from '@lucide/svelte/icons/star';
 
 	let {
 		startQuiz,
-		session
+		session,
+		questions
 	}: {
 		startQuiz: (
 			questionCount: number,
 			timeLimit: number,
-			categories: string[],
+			categories: Question['category'][],
 			examMode?: ExamMode
 		) => void;
 		session: Session | null;
+		questions: Question[];
 	} = $props();
 
-	const totalQuestions = questions.length;
-	const clrCount = questions.filter((q) => q.category === 'CLR').length;
-	const mouvementCount = questions.filter((q) => q.category === 'Mouvement').length;
-	const organisationnelCount = questions.filter((q) => q.category === 'Organisationnel').length;
-	const tresorerieCount = questions.filter((q) => q.category === 'Trésorerie').length;
+	let totalQuestions = $derived(questions.length);
+	let clrCount = $derived(questions.filter((q) => q.category === 'CLR').length);
+	let mouvementCount = $derived(questions.filter((q) => q.category === 'Mouvement').length);
+	let organisationnelCount = $derived(
+		questions.filter((q) => q.category === 'Organisationnel').length
+	);
+	let tresorerieCount = $derived(questions.filter((q) => q.category === 'Trésorerie').length);
 
 	let questionCount = $state(10);
 	let timeLimit = $state(3);
 
-	let selectedCategories = $state<string[]>(['CLR', 'Mouvement', 'Organisationnel', 'Trésorerie']);
+	let selectedCategories = $state<Question['category'][]>(['CLR', 'Mouvement', 'Organisationnel', 'Trésorerie']);
 
 	// Carousel state: 0 = official, 1 = training
 	let activeMode = $state(0);
@@ -62,7 +69,7 @@
 		showCustom = false;
 	}
 
-	function toggleCategory(category: string) {
+	function toggleCategory(category: Question['category']) {
 		if (selectedCategories.includes(category)) {
 			if (selectedCategories.length > 1) {
 				selectedCategories = selectedCategories.filter((c) => c !== category);

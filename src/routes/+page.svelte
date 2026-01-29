@@ -17,12 +17,12 @@
 	import ResultScreen from '$lib/components/ResultScreen.svelte';
 	import UserMenu from '$lib/components/UserMenu.svelte';
 	import logo from '$lib/assets/logo.svg';
-	import type { ExamMode } from '$lib/types.js';
+	import type { ExamMode, Question } from '$lib/types.js';
 	import type { Session } from '@auth/core/types';
 	import { onMount, onDestroy } from 'svelte';
 	import { browser } from '$app/environment';
 
-	let { data }: { data: { session: Session | null } } = $props();
+	let { data }: { data: { session: Session | null; questions: Question[] } } = $props();
 
 	let showStartScreen = $state(true);
 	let showQuiz = $state(false);
@@ -35,7 +35,7 @@
 		categories: Question['category'][] = [],
 		examMode: ExamMode = 'custom'
 	) {
-		const quiz = createQuiz(questionCount, categories);
+		const quiz = createQuiz(data.questions, questionCount, categories);
 		currentQuiz.set(quiz);
 		isQuizActive.set(true);
 		quizStartTime.set(Date.now());
@@ -161,7 +161,7 @@
 		</header>
 
 		{#if showStartScreen}
-			<StartScreen {startQuiz} session={data.session} />
+			<StartScreen {startQuiz} session={data.session} questions={data.questions} />
 		{:else if showQuiz}
 			<div class="max-w-4xl mx-auto">
 				<div class="mb-6">
