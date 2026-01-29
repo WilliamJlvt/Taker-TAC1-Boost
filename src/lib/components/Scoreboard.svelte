@@ -227,7 +227,9 @@
 										{entry.score}%
 									</p>
 									<p class="text-xs text-[#122555]/60">
-										{entry.correct_answers}/{entry.total_questions} • {formatTime(entry.time_spent)}
+										{entry.correct_answers}/{entry.total_questions} • {formatTime(
+											Math.round(entry.time_spent)
+										)} • {entry.attempt_count} essai{entry.attempt_count > 1 ? 's' : ''}
 									</p>
 								</div>
 							</div>
@@ -305,7 +307,9 @@
 										{entry.score}%
 									</p>
 									<p class="text-xs text-[#122555]/60">
-										{entry.correct_answers}/{entry.total_questions} • {formatTime(entry.time_spent)}
+										{entry.correct_answers}/{entry.total_questions} • {formatTime(
+											Math.round(entry.time_spent)
+										)} • {entry.attempt_count} essai{entry.attempt_count > 1 ? 's' : ''}
 									</p>
 								</div>
 							</div>

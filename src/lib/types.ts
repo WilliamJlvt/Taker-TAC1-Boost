@@ -79,5 +79,6 @@ export interface ScoreEntry {
 	total_questions: number;
 	correct_answers: number;
 	time_spent: number;
+	attempt_count: number;
 	created_at: string;
 }

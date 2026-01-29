@@ -91,6 +91,7 @@ export interface LeaderboardEntry {
 	total_questions: number;
 	correct_answers: number;
 	time_spent: number;
+	attempt_count: number;
 	created_at: string;
 }
 
@@ -98,7 +99,8 @@ export function getLeaderboard(examMode: 'organisationnelle' | 'tresorerie', lim
 	return db.prepare(`
 		SELECT 
 			s.id, s.user_id, u.name as user_name, u.image as user_image,
-			s.score, s.total_questions, s.correct_answers, s.time_spent, s.created_at
+			s.score, s.total_questions, s.correct_answers, s.time_spent, s.created_at,
+			(SELECT COUNT(*) FROM scores s3 WHERE s3.user_id = s.user_id AND s3.exam_mode = s.exam_mode) as attempt_count
 		FROM scores s
 		JOIN users u ON s.user_id = u.id
 		WHERE s.exam_mode = ?
