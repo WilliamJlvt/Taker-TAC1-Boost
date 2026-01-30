@@ -34,7 +34,7 @@ export interface QuizConfig {
 }
 
 // Official exam modes for scoreboard
-export type ExamMode = 'organisationnelle' | 'tresorerie' | 'custom';
+export type ExamMode = 'organisationnel' | 'tresorerie' | 'custom';
 
 export interface ExamModeConfig {
 	name: string;
@@ -45,7 +45,7 @@ export interface ExamModeConfig {
 }
 
 export const EXAM_MODES: Record<Exclude<ExamMode, 'custom'>, ExamModeConfig> = {
-	organisationnelle: {
+	organisationnel: {
 		name: 'TAC1 Organisationnel',
 		description: 'Examen officiel incluant les questions Organisationnel, CLR et Mouvement',
 		categories: ['Organisationnel', 'CLR', 'Mouvement'],

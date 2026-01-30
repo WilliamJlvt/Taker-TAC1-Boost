@@ -40,7 +40,12 @@
 	let questionCount = $state(10);
 	let timeLimit = $state(3);
 
-	let selectedCategories = $state<Question['category'][]>(['CLR', 'Mouvement', 'Organisationnel', 'Trésorerie']);
+	let selectedCategories = $state<Question['category'][]>([
+		'CLR',
+		'Mouvement',
+		'Organisationnel',
+		'Trésorerie'
+	]);
 
 	// Carousel state: 0 = official, 1 = training
 	let activeMode = $state(0);
@@ -207,7 +212,7 @@
 
 					<div class="space-y-4">
 						<button
-							onclick={() => startOfficialMode('organisationnelle')}
+							onclick={() => startOfficialMode('organisationnel')}
 							class="w-full group relative p-5 rounded-xl border-2 transition-all duration-300 text-left overflow-hidden
 								{session
 								? 'border-[#122555]/20 bg-gradient-to-br from-[#122555]/5 to-[#122555]/10 hover:border-[#122555]/40 hover:shadow-xl hover:-translate-y-1'
@@ -237,16 +242,16 @@
 										{/if}
 									</div>
 									<p class="text-sm text-[#122555]/60 mb-2">
-										{EXAM_MODES.organisationnelle.description}
+										{EXAM_MODES.organisationnel.description}
 									</p>
 									<div class="flex items-center gap-3 text-xs">
 										<span
 											class="bg-white/80 backdrop-blur px-3 py-1 rounded-full text-gray-600 font-medium shadow-sm"
-											>{EXAM_MODES.organisationnelle.questionCount} questions</span
+											>{EXAM_MODES.organisationnel.questionCount} questions</span
 										>
 										<span
 											class="bg-white/80 backdrop-blur px-3 py-1 rounded-full text-gray-600 font-medium shadow-sm"
-											>{EXAM_MODES.organisationnelle.timeLimit} min</span
+											>{EXAM_MODES.organisationnel.timeLimit} min</span
 										>
 									</div>
 								</div>

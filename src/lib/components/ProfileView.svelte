@@ -17,17 +17,21 @@
 	const innerHeight = chartHeight - padding.top - padding.bottom;
 
 	// Prepare chart data
-	const chartDataOrga = stats.progression.organisationnelle.map((p: { date: string; score: number }, i: number) => ({
-		date: new Date(p.date),
-		score: p.score,
-		index: i
-	}));
+	const chartDataOrga = stats.progression.organisationnel.map(
+		(p: { date: string; score: number }, i: number) => ({
+			date: new Date(p.date),
+			score: p.score,
+			index: i
+		})
+	);
 
-	const chartDataTreso = stats.progression.tresorerie.map((p: { date: string; score: number }, i: number) => ({
-		date: new Date(p.date),
-		score: p.score,
-		index: i
-	}));
+	const chartDataTreso = stats.progression.tresorerie.map(
+		(p: { date: string; score: number }, i: number) => ({
+			date: new Date(p.date),
+			score: p.score,
+			index: i
+		})
+	);
 
 	// Scale functions
 	function scaleX(index: number, total: number): number {
@@ -209,7 +213,7 @@
 							Tentatives
 						</text>
 
-						<!-- Organisationnelle line -->
+						<!-- Organisationnel line -->
 						{#if chartDataOrga.length > 0}
 							<path
 								d={generatePath(chartDataOrga, chartDataOrga.length)}
@@ -312,11 +316,11 @@
 								<td class="py-3 px-2">
 									<span
 										class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium {attempt.exam_mode ===
-										'organisationnelle'
+										'organisationnel'
 											? 'bg-blue-100 text-blue-800'
 											: 'bg-green-100 text-green-800'}"
 									>
-										{attempt.exam_mode === 'organisationnelle'
+										{attempt.exam_mode === 'organisationnel'
 											? '🏢 Organisationnel'
 											: '💰 Trésorerie'}
 									</span>

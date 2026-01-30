@@ -63,7 +63,7 @@ export interface DbUser {
 export interface DbScore {
 	id: number;
 	user_id: string;
-	exam_mode: 'organisationnelle' | 'tresorerie';
+	exam_mode: 'organisationnel' | 'tresorerie';
 	score: number;
 	total_questions: number;
 	correct_answers: number;
@@ -224,7 +224,7 @@ export interface LeaderboardEntry {
 	created_at: string;
 }
 
-export function getLeaderboard(examMode: 'organisationnelle' | 'tresorerie', limit = 20): LeaderboardEntry[] {
+export function getLeaderboard(examMode: 'organisationnel' | 'tresorerie', limit = 20): LeaderboardEntry[] {
 	return db.prepare(`
 		SELECT 
 			s.id, s.user_id, u.name as user_name, u.image as user_image,
@@ -258,7 +258,7 @@ export interface UserStats {
 	avgScore: number;
 	categoryStats: Record<string, { correct: number; total: number; percentage: number }>;
 	progression: {
-		organisationnelle: { date: string; score: number }[];
+		organisationnel: { date: string; score: number }[];
 		tresorerie: { date: string; score: number }[];
 	};
 	recentAttempts: DbScore[];
@@ -269,7 +269,7 @@ export function getUserStats(userId: string): UserStats {
 
 	// Calculate stats
 	const totalAttempts = allScores.length;
-	const orgaScores = allScores.filter(s => s.exam_mode === 'organisationnelle');
+	const orgaScores = allScores.filter(s => s.exam_mode === 'organisationnel');
 	const tresoScores = allScores.filter(s => s.exam_mode === 'tresorerie');
 
 	const bestScoreOrga = orgaScores.length > 0 ? Math.max(...orgaScores.map(s => s.score)) : null;
@@ -303,7 +303,7 @@ export function getUserStats(userId: string): UserStats {
 
 	// Progression data for charts
 	const progression = {
-		organisationnelle: orgaScores.map(s => ({
+		organisationnel: orgaScores.map(s => ({
 			date: s.created_at,
 			score: s.score
 		})),
@@ -520,7 +520,7 @@ export function updateQuestionStats(results: { questionId: string; isCorrect: bo
 export interface DashboardStats {
 	dailyParticipation: { date: string; count: number }[];
 	avgScoreEvolution: {
-		organisationnelle: { date: string; score: number }[];
+		organisationnel: { date: string; score: number }[];
 		tresorerie: { date: string; score: number }[];
 	};
 	categoryPerformance: { name: string; successRate: number; totalQuestions: number }[];
@@ -549,7 +549,7 @@ export function getDashboardStats(): DashboardStats {
 	`).all() as { date: string; exam_mode: string; avg_score: number }[];
 
 	const avgScoreEvolution = {
-		organisationnelle: scores.filter(s => s.exam_mode === 'organisationnelle').map(s => ({ date: s.date, score: Math.round(s.avg_score) })),
+		organisationnel: scores.filter(s => s.exam_mode === 'organisationnel').map(s => ({ date: s.date, score: Math.round(s.avg_score) })),
 		tresorerie: scores.filter(s => s.exam_mode === 'tresorerie').map(s => ({ date: s.date, score: Math.round(s.avg_score) }))
 	};
 

@@ -6,7 +6,7 @@
 	import TrophyIcon from '@lucide/svelte/icons/trophy';
 
 	let {
-		initialMode = 'organisationnelle',
+		initialMode = 'organisationnel',
 		currentUserId = null
 	}: {
 		initialMode?: Exclude<ExamMode, 'custom'>;
@@ -29,7 +29,7 @@
 	let currentTranslate = $state(0);
 
 	async function fetchLeaderboard(mode: Exclude<ExamMode, 'custom'>) {
-		if (mode === 'organisationnelle') {
+		if (mode === 'organisationnel') {
 			loadingOrga = true;
 			errorOrga = null;
 		} else {
@@ -41,20 +41,20 @@
 			const response = await fetch(`/api/scores?mode=${mode}`);
 			if (!response.ok) throw new Error('Failed to fetch leaderboard');
 			const data = await response.json();
-			if (mode === 'organisationnelle') {
+			if (mode === 'organisationnel') {
 				leaderboardOrga = data.leaderboard;
 			} else {
 				leaderboardTreso = data.leaderboard;
 			}
 		} catch (e) {
 			const errorMsg = e instanceof Error ? e.message : 'Une erreur est survenue';
-			if (mode === 'organisationnelle') {
+			if (mode === 'organisationnel') {
 				errorOrga = errorMsg;
 			} else {
 				errorTreso = errorMsg;
 			}
 		} finally {
-			if (mode === 'organisationnelle') {
+			if (mode === 'organisationnel') {
 				loadingOrga = false;
 			} else {
 				loadingTreso = false;
@@ -64,7 +64,7 @@
 
 	function goToSlide(index: number) {
 		currentSlide = index;
-		activeMode = index === 0 ? 'organisationnelle' : 'tresorerie';
+		activeMode = index === 0 ? 'organisationnel' : 'tresorerie';
 		currentTranslate = 0;
 	}
 
@@ -102,7 +102,7 @@
 
 	// Fetch both leaderboards on mount
 	$effect(() => {
-		fetchLeaderboard('organisationnelle');
+		fetchLeaderboard('organisationnel');
 		fetchLeaderboard('tresorerie');
 	});
 
@@ -134,7 +134,7 @@
 				: 'text-[#122555]/60 hover:text-[#122555] hover:bg-[#122555]/5'}"
 		>
 			<BuildingIcon class="w-4 h-4 inline mr-1" />
-			Organisationnelle
+			Organisationnel
 		</button>
 		<button
 			onclick={() => goToSlide(1)}
@@ -163,7 +163,7 @@
 				? currentTranslate
 				: 0}px))"
 		>
-			<!-- Organisationnelle Slide -->
+			<!-- Organisationnel Slide -->
 			<div class="w-full flex-shrink-0 p-6">
 				{#if loadingOrga}
 					<div class="flex justify-center items-center py-12">
@@ -173,7 +173,7 @@
 					<div class="text-center py-12">
 						<p class="text-red-600">{errorOrga}</p>
 						<button
-							onclick={() => fetchLeaderboard('organisationnelle')}
+							onclick={() => fetchLeaderboard('organisationnel')}
 							class="mt-4 px-4 py-2 bg-[#122555] text-white rounded-lg hover:bg-[#0d1a3d]"
 						>
 							Réessayer
@@ -336,7 +336,7 @@
 			class="w-2.5 h-2.5 rounded-full transition-all duration-200 {currentSlide === 0
 				? 'bg-[#122555] w-6'
 				: 'bg-[#122555]/30 hover:bg-[#122555]/50'}"
-			aria-label="Aller au classement Organisationnelle"
+			aria-label="Aller au classement Organisationnel"
 		></button>
 		<button
 			onclick={() => goToSlide(1)}

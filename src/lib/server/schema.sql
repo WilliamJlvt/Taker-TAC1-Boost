@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS scores (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id TEXT NOT NULL REFERENCES users(id),
-    exam_mode TEXT NOT NULL CHECK(exam_mode IN ('organisationnelle', 'tresorerie')),
+    exam_mode TEXT NOT NULL CHECK(exam_mode IN ('organisationnel', 'tresorerie')),
     score INTEGER NOT NULL CHECK(score >= 0 AND score <= 100),
     total_questions INTEGER NOT NULL,
     correct_answers INTEGER NOT NULL,

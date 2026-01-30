@@ -5,8 +5,8 @@ import { saveScore, getLeaderboard, updateQuestionStats, getOrCreateUser } from 
 export const GET: RequestHandler = async ({ url }) => {
 	const mode = url.searchParams.get('mode');
 
-	if (!mode || (mode !== 'organisationnelle' && mode !== 'tresorerie')) {
-		return json({ error: 'Invalid mode. Must be "organisationnelle" or "tresorerie"' }, { status: 400 });
+	if (!mode || (mode !== 'organisationnel' && mode !== 'tresorerie')) {
+		return json({ error: 'Invalid mode. Must be "organisationnel" or "tresorerie"' }, { status: 400 });
 	}
 
 	const leaderboard = getLeaderboard(mode);
@@ -24,7 +24,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 	const { examMode, score, totalQuestions, correctAnswers, timeSpent, categoryScores } = body;
 
 	// Validate exam mode
-	if (!examMode || (examMode !== 'organisationnelle' && examMode !== 'tresorerie')) {
+	if (!examMode || (examMode !== 'organisationnel' && examMode !== 'tresorerie')) {
 		return json({ error: 'Invalid exam mode' }, { status: 400 });
 	}
 

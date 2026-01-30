@@ -5,48 +5,86 @@
 	import TrendingUpIcon from '@lucide/svelte/icons/trending-up';
 	import TrendingDownIcon from '@lucide/svelte/icons/trending-down';
 	import * as Card from '$lib/components/ui/card';
-	import { LineChart, BarChart } from 'layerchart';
-	import { scaleUtc, scaleBand } from 'd3-scale';
-	import { curveNatural } from 'd3-shape';
 	import * as Chart from '$lib/components/ui/chart/index.js';
+	import * as Select from '$lib/components/ui/select/index.js';
+	import { Area, AreaChart, ChartClipPath } from 'layerchart';
+	import { scaleUtc } from 'd3-scale';
+	import { curveNatural } from 'd3-shape';
+	import { cubicInOut } from 'svelte/easing';
 
 	let { data } = $props();
 
-	// Prepare chart data
-	// Use string dates for discrete bar chart x-axis
-	const participationData = data.stats.dailyParticipation.map((d) => ({
-		date: d.date, // keep original string "YYYY-MM-DD" for uniqueness
-		label: new Date(d.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' }),
-		count: d.count
-	}));
+	// Time range filter state
+	let timeRange = $state('30d');
+
+	const selectedLabel = $derived.by(() => {
+		switch (timeRange) {
+			case '30d':
+				return '30 derniers jours';
+			case '14d':
+				return '14 derniers jours';
+			case '7d':
+				return '7 derniers jours';
+			default:
+				return '30 derniers jours';
+		}
+	});
+
+	// Prepare participation data with Date objects
+	const participationData = $derived(
+		data.stats.dailyParticipation
+			.map((d) => ({
+				date: new Date(d.date),
+				count: d.count
+			}))
+			.filter((item) => {
+				const referenceDate = new Date();
+				let daysToSubtract = 30;
+				if (timeRange === '14d') daysToSubtract = 14;
+				else if (timeRange === '7d') daysToSubtract = 7;
+				const cutoff = new Date(referenceDate);
+				cutoff.setDate(cutoff.getDate() - daysToSubtract);
+				return item.date >= cutoff;
+			})
+	);
 
 	const participationConfig = {
-		count: { label: 'Participations', color: '#2563eb' } // Use explicit hex
+		count: { label: 'Participations', color: 'hsl(221, 83%, 53%)' }
 	} satisfies Chart.ChartConfig;
 
 	// Merge score evolution for chart
-	const scoreEvolutionData = (() => {
+	const scoreEvolutionData = $derived.by(() => {
 		const dates = new Set(
 			[
-				...data.stats.avgScoreEvolution.organisationnelle.map((d) => d.date),
+				...data.stats.avgScoreEvolution.organisationnel.map((d) => d.date),
 				...data.stats.avgScoreEvolution.tresorerie.map((d) => d.date)
 			].sort()
 		);
 
-		return Array.from(dates).map((date) => {
-			const orga = data.stats.avgScoreEvolution.organisationnelle.find((d) => d.date === date);
+		const allData = Array.from(dates).map((date) => {
+			const orga = data.stats.avgScoreEvolution.organisationnel.find((d) => d.date === date);
 			const treso = data.stats.avgScoreEvolution.tresorerie.find((d) => d.date === date);
 			return {
 				date: new Date(date),
-				organisationnelle: orga?.score || null,
-				tresorerie: treso?.score || null
+				Organisationnel: orga?.score || 0,
+				tresorerie: treso?.score || 0
 			};
 		});
-	})();
+
+		// Filter by time range
+		const referenceDate = new Date();
+		let daysToSubtract = 30;
+		if (timeRange === '14d') daysToSubtract = 14;
+		else if (timeRange === '7d') daysToSubtract = 7;
+		const cutoff = new Date(referenceDate);
+		cutoff.setDate(cutoff.getDate() - daysToSubtract);
+
+		return allData.filter((item) => item.date >= cutoff);
+	});
 
 	const evolutionConfig = {
-		organisationnelle: { label: 'Organisationnelle', color: '#2563eb' },
-		tresorerie: { label: 'Trésorerie', color: '#d97706' }
+		organisationnel: { label: 'Organisationnel', color: 'hsl(221, 83%, 53%)' },
+		tresorerie: { label: 'Trésorerie', color: 'hsl(36, 77%, 49%)' }
 	} satisfies Chart.ChartConfig;
 </script>
 
@@ -80,7 +118,6 @@
 			</div>
 			<div>
 				<p class="text-sm text-gray-500 font-medium">Catégories</p>
-				<!-- Calculated from length of categoryPerformance array as we stopped passing it explicitly -->
 				<p class="text-2xl font-bold text-[#122555]">{data.stats.categoryPerformance.length}</p>
 			</div>
 		</div>
@@ -98,23 +135,36 @@
 		</div>
 	</div>
 
-	<!-- Charts Row 1 -->
+	<!-- Charts Row -->
 	<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-		<!-- Daily Participation -->
+		<!-- Participation Chart -->
 		<Card.Root>
-			<Card.Header>
-				<Card.Title>Participations (30 jours)</Card.Title>
-				<Card.Description>Nombre de tests effectués par jour</Card.Description>
+			<Card.Header
+				class="flex items-center gap-2 space-y-0 border-b border-gray-100/50 py-5 sm:flex-row"
+			>
+				<div class="grid flex-1 gap-1 text-center sm:text-start">
+					<Card.Title>Participations quotidiennes</Card.Title>
+					<Card.Description>Nombre de tests effectués par jour</Card.Description>
+				</div>
+				<Select.Root type="single" bind:value={timeRange}>
+					<Select.Trigger class="w-44 rounded-lg sm:ms-auto bg-white" aria-label="Période">
+						{selectedLabel}
+					</Select.Trigger>
+					<Select.Content class="rounded-xl bg-white">
+						<Select.Item value="30d" class="rounded-lg">30 derniers jours</Select.Item>
+						<Select.Item value="14d" class="rounded-lg">14 derniers jours</Select.Item>
+						<Select.Item value="7d" class="rounded-lg">7 derniers jours</Select.Item>
+					</Select.Content>
+				</Select.Root>
 			</Card.Header>
 			<Card.Content>
-				<div class="h-[300px] w-full">
+				<div class="h-[250px] w-full">
 					{#if participationData.length > 0}
 						<Chart.Container config={participationConfig} class="h-full w-full">
-							<BarChart
+							<AreaChart
 								data={participationData}
 								x="date"
-								y="count"
-								xScale={scaleBand().padding(0.4)}
+								xScale={scaleUtc()}
 								series={[
 									{
 										key: 'count',
@@ -123,24 +173,48 @@
 									}
 								]}
 								props={{
-									bars: { rx: 4, ry: 4 },
+									area: {
+										curve: curveNatural,
+										'fill-opacity': 0.4,
+										line: { class: 'stroke-2' },
+										motion: 'tween'
+									},
 									xAxis: {
-										format: (d: string) => {
-											const item = participationData.find((p) => p.date === d);
-											return item ? item.label : d;
-										}
-									}
+										ticks: timeRange === '7d' ? 7 : undefined,
+										format: (v) =>
+											v.toLocaleDateString('fr-FR', {
+												day: 'numeric',
+												month: 'short'
+											})
+									},
+									yAxis: { format: (v) => v.toString() }
 								}}
 							>
+								{#snippet marks({ series, getAreaProps })}
+									<defs>
+										<linearGradient id="fillParticipation" x1="0" y1="0" x2="0" y2="1">
+											<stop offset="5%" stop-color="hsl(221, 83%, 53%)" stop-opacity={0.8} />
+											<stop offset="95%" stop-color="hsl(221, 83%, 53%)" stop-opacity={0.1} />
+										</linearGradient>
+									</defs>
+									<ChartClipPath
+										initialWidth={0}
+										motion={{
+											width: { type: 'tween', duration: 1000, easing: cubicInOut }
+										}}
+									>
+										{#each series as s, i (s.key)}
+											<Area {...getAreaProps(s, i)} fill="url(#fillParticipation)" />
+										{/each}
+									</ChartClipPath>
+								{/snippet}
 								{#snippet tooltip()}
 									<Chart.Tooltip
-										labelFormatter={(v: string) => {
-											const item = participationData.find((p) => p.date === v);
-											return item ? item.label : v;
-										}}
+										labelFormatter={(v: Date) =>
+											v.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}
 									/>
 								{/snippet}
-							</BarChart>
+							</AreaChart>
 						</Chart.Container>
 					{:else}
 						<div class="flex h-full items-center justify-center text-gray-400">
@@ -151,85 +225,136 @@
 			</Card.Content>
 		</Card.Root>
 
-		<!-- Category Performance -->
+		<!-- Score Evolution Chart -->
 		<Card.Root>
-			<Card.Header>
-				<Card.Title>Performance par catégorie</Card.Title>
-				<Card.Description>Taux de réussite global</Card.Description>
+			<Card.Header
+				class="flex items-center gap-2 space-y-0 border-b border-gray-100/50 py-5 sm:flex-row"
+			>
+				<div class="grid flex-1 gap-1 text-center sm:text-start">
+					<Card.Title>Évolution des scores moyens</Card.Title>
+					<Card.Description>Progression par type d'examen</Card.Description>
+				</div>
+				<Select.Root type="single" bind:value={timeRange}>
+					<Select.Trigger class="w-44 rounded-lg sm:ms-auto bg-white" aria-label="Période">
+						{selectedLabel}
+					</Select.Trigger>
+					<Select.Content class="rounded-xl bg-white">
+						<Select.Item value="30d" class="rounded-lg">30 derniers jours</Select.Item>
+						<Select.Item value="14d" class="rounded-lg">14 derniers jours</Select.Item>
+						<Select.Item value="7d" class="rounded-lg">7 derniers jours</Select.Item>
+					</Select.Content>
+				</Select.Root>
 			</Card.Header>
 			<Card.Content>
-				<div class="space-y-4">
-					{#each data.stats.categoryPerformance as cat}
-						<div class="space-y-1">
-							<div class="flex justify-between text-sm">
-								<span class="font-medium text-[#122555]">{cat.name}</span>
-								<span class="text-gray-500"
-									>{cat.successRate}% ({cat.totalQuestions} questions)</span
-								>
-							</div>
-							<div class="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
-								<div
-									class="h-full rounded-full {cat.successRate >= 70
-										? 'bg-green-500'
-										: cat.successRate >= 40
-											? 'bg-yellow-500'
-											: 'bg-red-500'}"
-									style="width: {cat.successRate}%"
-								></div>
-							</div>
+				<div class="h-[250px] w-full">
+					{#if scoreEvolutionData.length > 0}
+						<Chart.Container config={evolutionConfig} class="h-full w-full">
+							<AreaChart
+								legend
+								data={scoreEvolutionData}
+								x="date"
+								xScale={scaleUtc()}
+								series={[
+									{
+										key: 'tresorerie',
+										label: 'Trésorerie',
+										color: evolutionConfig.tresorerie.color
+									},
+									{
+										key: 'Organisationnel',
+										label: 'Organisationnel',
+										color: evolutionConfig.organisationnel.color
+									}
+								]}
+								seriesLayout="stack"
+								props={{
+									area: {
+										curve: curveNatural,
+										'fill-opacity': 0.4,
+										line: { class: 'stroke-1' },
+										motion: 'tween'
+									},
+									xAxis: {
+										ticks: timeRange === '7d' ? 7 : undefined,
+										format: (v) =>
+											v.toLocaleDateString('fr-FR', {
+												day: 'numeric',
+												month: 'short'
+											})
+									},
+									yAxis: { format: (v) => v + '%' }
+								}}
+							>
+								{#snippet marks({ series, getAreaProps })}
+									<defs>
+										<linearGradient id="fillOrga" x1="0" y1="0" x2="0" y2="1">
+											<stop offset="5%" stop-color="hsl(221, 83%, 53%)" stop-opacity={1.0} />
+											<stop offset="95%" stop-color="hsl(221, 83%, 53%)" stop-opacity={0.1} />
+										</linearGradient>
+										<linearGradient id="fillTreso" x1="0" y1="0" x2="0" y2="1">
+											<stop offset="5%" stop-color="hsl(36, 77%, 49%)" stop-opacity={0.8} />
+											<stop offset="95%" stop-color="hsl(36, 77%, 49%)" stop-opacity={0.1} />
+										</linearGradient>
+									</defs>
+									<ChartClipPath
+										initialWidth={0}
+										motion={{
+											width: { type: 'tween', duration: 1000, easing: cubicInOut }
+										}}
+									>
+										{#each series as s, i (s.key)}
+											<Area
+												{...getAreaProps(s, i)}
+												fill={s.key === 'Organisationnel' ? 'url(#fillOrga)' : 'url(#fillTreso)'}
+											/>
+										{/each}
+									</ChartClipPath>
+								{/snippet}
+								{#snippet tooltip()}
+									<Chart.Tooltip
+										labelFormatter={(v: Date) =>
+											v.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}
+										indicator="line"
+									/>
+								{/snippet}
+							</AreaChart>
+						</Chart.Container>
+					{:else}
+						<div class="flex h-full items-center justify-center text-gray-400">
+							Pas de données suffisantes
 						</div>
-					{/each}
+					{/if}
 				</div>
 			</Card.Content>
 		</Card.Root>
 	</div>
 
-	<!-- Charts Row 2: Score Evolution -->
+	<!-- Category Performance -->
 	<Card.Root>
 		<Card.Header>
-			<Card.Title>Évolution des scores moyens</Card.Title>
-			<Card.Description>Progression sur les 30 derniers jours</Card.Description>
+			<Card.Title>Performance par catégorie</Card.Title>
+			<Card.Description>Taux de réussite global</Card.Description>
 		</Card.Header>
 		<Card.Content>
-			<div class="h-[300px] w-full">
-				{#if scoreEvolutionData.length > 0}
-					<Chart.Container config={evolutionConfig} class="h-full w-full">
-						<LineChart
-							data={scoreEvolutionData}
-							x="date"
-							xScale={scaleUtc()}
-							series={[
-								{
-									key: 'organisationnelle',
-									label: 'Organisationnelle',
-									color: evolutionConfig.organisationnelle.color
-								},
-								{
-									key: 'tresorerie',
-									label: 'Trésorerie',
-									color: evolutionConfig.tresorerie.color
-								}
-							]}
-							props={{
-								spline: { curve: curveNatural, motion: 'tween', strokeWidth: 2 },
-								xAxis: {
-									format: (v) => v.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })
-								}
-							}}
-						>
-							{#snippet tooltip()}
-								<Chart.Tooltip
-									labelFormatter={(v: Date) =>
-										v.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}
-								/>
-							{/snippet}
-						</LineChart>
-					</Chart.Container>
-				{:else}
-					<div class="flex h-full items-center justify-center text-gray-400">
-						Pas de données suffisantes
+			<div class="space-y-4">
+				{#each data.stats.categoryPerformance as cat}
+					<div class="space-y-1">
+						<div class="flex justify-between text-sm">
+							<span class="font-medium text-[#122555]">{cat.name}</span>
+							<span class="text-gray-500">{cat.successRate}% ({cat.totalQuestions} questions)</span>
+						</div>
+						<div class="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+							<div
+								class="h-full rounded-full {cat.successRate >= 70
+									? 'bg-green-500'
+									: cat.successRate >= 40
+										? 'bg-yellow-500'
+										: 'bg-red-500'}"
+								style="width: {cat.successRate}%"
+							></div>
+						</div>
 					</div>
-				{/if}
+				{/each}
 			</div>
 		</Card.Content>
 	</Card.Root>
@@ -305,3 +430,17 @@
 		</Card.Root>
 	</div>
 </div>
+
+<style>
+	/* Override layerchart legend circles to rounded squares */
+	:global(div.rounded-full[style*='background']) {
+		border-radius: 4px !important;
+	}
+	/* Increase spacing between legend items */
+	:global(.flex.gap-x-4) {
+		gap: 1.5rem !important;
+	}
+	:global(.flex.gap-1) {
+		gap: 0.5rem !important;
+	}
+</style>
