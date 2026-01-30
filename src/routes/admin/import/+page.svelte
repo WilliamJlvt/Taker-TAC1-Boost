@@ -57,7 +57,7 @@
 		</div>
 	{/if}
 
-	<div class="bg-white p-8 rounded-xl border border-gray-100 shadow-sm">
+	<div class="bg-white p-8 rounded-2xl border border-gray-100/50 shadow-sm">
 		<form
 			method="POST"
 			enctype="multipart/form-data"

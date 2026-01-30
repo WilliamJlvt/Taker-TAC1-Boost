@@ -55,7 +55,7 @@
 
 	<!-- Filters -->
 	<div
-		class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex flex-col sm:flex-row gap-4"
+		class="bg-white p-4 rounded-2xl border border-gray-100/50 shadow-sm flex flex-col sm:flex-row gap-4"
 	>
 		<div class="relative flex-1">
 			<SearchIcon class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -96,7 +96,7 @@
 	</div>
 
 	<!-- Questions List -->
-	<div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+	<div class="bg-white rounded-2xl border border-gray-100/50 shadow-sm overflow-hidden">
 		<table class="w-full text-left">
 			<thead class="bg-gray-50 border-b border-gray-100">
 				<tr>

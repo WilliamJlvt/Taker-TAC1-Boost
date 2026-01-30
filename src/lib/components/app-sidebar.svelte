@@ -3,6 +3,7 @@
 	import FileQuestionIcon from '@lucide/svelte/icons/file-question';
 	import FolderOpenIcon from '@lucide/svelte/icons/folder-open';
 	import UploadIcon from '@lucide/svelte/icons/upload';
+	import UsersIcon from '@lucide/svelte/icons/users';
 	import ArrowLeftIcon from '@lucide/svelte/icons/arrow-left';
 
 	// Menu items.
@@ -16,6 +17,11 @@
 			title: 'Questions',
 			url: '/admin/questions',
 			icon: FileQuestionIcon
+		},
+		{
+			title: 'Utilisateurs',
+			url: '/admin/users',
+			icon: UsersIcon
 		},
 		{
 			title: 'Import JSON',

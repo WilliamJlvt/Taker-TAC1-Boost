@@ -50,7 +50,7 @@
 	} satisfies Chart.ChartConfig;
 </script>
 
-<div class="space-y-6">
+<div class="space-y-6 mt-8">
 	<div class="flex items-center justify-between">
 		<h2 class="text-2xl font-bold text-[#122555]">Tableau de bord</h2>
 	</div>
@@ -59,7 +59,7 @@
 	<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 		<a
 			href="/admin/questions"
-			class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex items-center gap-4 hover:shadow-md transition-all group"
+			class="bg-white p-6 rounded-2xl border border-gray-100/50 shadow-sm flex items-center gap-4 hover:shadow-md transition-all group"
 		>
 			<div
 				class="p-3 bg-blue-50 text-blue-600 rounded-lg group-hover:bg-blue-100 transition-colors"
@@ -72,7 +72,9 @@
 			</div>
 		</a>
 
-		<div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex items-center gap-4">
+		<div
+			class="bg-white p-6 rounded-2xl border border-gray-100/50 shadow-sm flex items-center gap-4"
+		>
 			<div class="p-3 bg-amber-50 text-amber-600 rounded-lg">
 				<FolderOpenIcon class="w-8 h-8" />
 			</div>
@@ -83,7 +85,9 @@
 			</div>
 		</div>
 
-		<div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex items-center gap-4">
+		<div
+			class="bg-white p-6 rounded-2xl border border-gray-100/50 shadow-sm flex items-center gap-4"
+		>
 			<div class="p-3 bg-cyan-50 text-cyan-600 rounded-lg">
 				<UsersIcon class="w-8 h-8" />
 			</div>

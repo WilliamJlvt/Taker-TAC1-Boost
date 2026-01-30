@@ -23,6 +23,13 @@ if (existsSync(schemaPath)) {
 	db.exec(schema);
 }
 
+// Migration for new user role column
+try {
+	db.prepare("ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'user'").run();
+} catch (error) {
+	// Column probably already exists
+}
+
 // Migration for new question stats columns
 try {
 	db.prepare('ALTER TABLE questions ADD COLUMN success_count INTEGER DEFAULT 0').run();
@@ -49,6 +56,7 @@ export interface DbUser {
 	email: string;
 	name: string;
 	image: string | null;
+	role: 'admin' | 'user';
 	created_at?: string;
 }
 
@@ -93,26 +101,79 @@ export interface DbAnswerOption {
 
 export function isAdmin(email?: string | null): boolean {
 	if (!email) return false;
-	const adminEmails = (env.ADMIN_EMAILS || '').split(',').map(e => e.trim().toLowerCase());
-	return adminEmails.includes(email.toLowerCase());
+
+	// Hardcoded fallback for bootstrap/security
+	const adminEmails = (env.ADMIN_EMAILS || '').split(',').map((e) => e.trim().toLowerCase());
+	if (adminEmails.includes(email.toLowerCase())) return true;
+
+	const user = db.prepare('SELECT role FROM users WHERE email = ?').get(email.toLowerCase()) as
+		| { role: string }
+		| undefined;
+
+	return user?.role === 'admin';
 }
 
-export function getOrCreateUser(user: Omit<DbUser, 'created_at'>): DbUser {
-	const existing = db.prepare('SELECT * FROM users WHERE email = ?').get(user.email) as DbUser | undefined;
+export function getOrCreateUser(user: Omit<DbUser, 'created_at' | 'role'>): DbUser {
+	const existing = db.prepare('SELECT * FROM users WHERE email = ?').get(user.email) as
+		| DbUser
+		| undefined;
 	if (existing) {
 		db.prepare('UPDATE users SET id = ?, name = ?, image = ? WHERE email = ?').run(
-			user.id, user.name, user.image, user.email
+			user.id,
+			user.name,
+			user.image,
+			user.email
 		);
 		return { ...existing, id: user.id, name: user.name, image: user.image };
 	}
 
-	db.prepare('INSERT INTO users (id, email, name, image) VALUES (?, ?, ?, ?)').run(
+	// Automatic admin promotion if email is in ADMIN_EMAILS
+	const adminEmails = (env.ADMIN_EMAILS || '').split(',').map((e) => e.trim().toLowerCase());
+	const role = adminEmails.includes(user.email.toLowerCase()) ? 'admin' : 'user';
+
+	db.prepare('INSERT INTO users (id, email, name, image, role) VALUES (?, ?, ?, ?, ?)').run(
 		user.id,
 		user.email,
 		user.name,
-		user.image
+		user.image,
+		role
 	);
-	return user as DbUser;
+	return { ...user, role } as DbUser;
+}
+
+export function getAllUsers(): (DbUser & { isHardcodedAdmin: boolean })[] {
+	const users = (db.prepare('SELECT * FROM users ORDER BY created_at DESC').all() as DbUser[]).map(
+		(u) => ({
+			...u,
+			role: u.role || 'user'
+		})
+	);
+	const adminEmails = (env.ADMIN_EMAILS || '').split(',').map((e) => e.trim().toLowerCase());
+
+	return users.map((user) => ({
+		...user,
+		// We flag if it's a hardcoded admin so we can prevent role changes in UI?
+		// Or just to show they have special "super-admin" status.
+		isHardcodedAdmin: adminEmails.includes(user.email.toLowerCase())
+	}));
+}
+
+export function updateUserRole(userId: string, role: string): boolean {
+	const result = db.prepare('UPDATE users SET role = ? WHERE id = ?').run(role, userId);
+	return result.changes > 0;
+}
+
+export function deleteUser(userId: string): boolean {
+	const result = db.prepare('DELETE FROM users WHERE id = ?').run(userId);
+	// Optional: Cascade delete scores? SQLite typically handles this via ON DELETE CASCADE if configured.
+	// Check schema.sql if scores ref users. Our schema calls it `user_id TEXT NOT NULL REFERENCES users(id)`
+	// but default SQLite might not enforce FKs unless PRAGMA foreign_keys = ON; is set (it is not in db.ts currently).
+	// Let's manually clean up scores just in case for now.
+	if (result.changes > 0) {
+		db.prepare('DELETE FROM scores WHERE user_id = ?').run(userId);
+		return true;
+	}
+	return false;
 }
 
 export function saveScore(score: Omit<DbScore, 'id' | 'created_at'>): DbScore {
