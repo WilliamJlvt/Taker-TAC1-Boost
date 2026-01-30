@@ -4,6 +4,8 @@ import { dirname, join } from 'path';
 import { existsSync, mkdirSync, readFileSync } from 'fs';
 import { env } from '$env/dynamic/private';
 
+import schema from './schema.sql?raw';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const dbPath = env.DATABASE_PATH || join(__dirname, '../../../data/tac1.db');
 
@@ -22,11 +24,7 @@ export function getDb(): Database.Database {
 	_db.pragma('journal_mode = WAL');
 
 	// Run migrations
-	const schemaPath = join(__dirname, 'schema.sql');
-	if (existsSync(schemaPath)) {
-		const schema = readFileSync(schemaPath, 'utf-8');
-		_db.exec(schema);
-	}
+	_db.exec(schema);
 
 	// Migration for new user role column
 	try {

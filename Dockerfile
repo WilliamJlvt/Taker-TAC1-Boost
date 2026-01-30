@@ -1,11 +1,15 @@
-FROM node:20-alpine
+# Build stage
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copy package files
-COPY package.json pnpm-lock.yaml ./
+# Install build dependencies
+RUN apk add --no-cache python3 make g++
 
-# Enable corepack and install dependencies
+# Copy package files
+COPY package.json pnpm-lock.yaml .npmrc ./
+
+# Enable corepack and install ALL dependencies
 RUN corepack enable && pnpm install --frozen-lockfile
 
 # Copy source code
@@ -22,15 +26,30 @@ ENV AUTH_SECRET=$AUTH_SECRET
 # Build the application
 RUN pnpm run build
 
-# Remove dev dependencies after build
-RUN pnpm prune --prod
+# Runtime stage
+FROM node:20-alpine
 
-# Expose port
-EXPOSE 3500
+WORKDIR /app
+
+# Install build dependencies for better-sqlite3 at runtime install if needed
+RUN apk add --no-cache python3 make g++
+
+# Copy package files
+COPY package.json pnpm-lock.yaml .npmrc ./
+
+# Install ONLY production dependencies
+RUN corepack enable && pnpm install --prod --frozen-lockfile
+
+# Copy build artifacts
+COPY --from=builder /app/build ./build
+COPY --from=builder /app/data ./data
 
 # Set environment variables
+ENV NODE_ENV=production
 ENV HOST=0.0.0.0
 ENV PORT=3500
 
-# Start the application using Node.js directly
+EXPOSE 3500
+
+# Start the application
 CMD ["node", "build/index.js"]
