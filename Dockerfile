@@ -32,7 +32,7 @@ FROM node:20-alpine
 WORKDIR /app
 
 # Install build dependencies for better-sqlite3 at runtime install if needed
-RUN apk add --no-cache python3 make g++
+RUN apk add --no-cache python3 make g++ sqlite
 
 # Copy package files
 COPY package.json pnpm-lock.yaml .npmrc ./
