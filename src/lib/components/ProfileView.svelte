@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { formatTime } from '$lib/quiz.js';
-	import type { UserStats } from '$lib/server/db';
 	import BuildingIcon from '@lucide/svelte/icons/building-2';
 	import WalletIcon from '@lucide/svelte/icons/wallet';
 	import BarChartIcon from '@lucide/svelte/icons/bar-chart-3';
 	import TrendingUpIcon from '@lucide/svelte/icons/trending-up';
 	import ClipboardListIcon from '@lucide/svelte/icons/clipboard-list';
 
-	let { user, stats, isAdminView = false } = $props();
+	let { user, stats, _ = false } = $props();
 
 	// Chart configuration
 	const chartWidth = 400;

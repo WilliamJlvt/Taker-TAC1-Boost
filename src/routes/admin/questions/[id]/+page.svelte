@@ -56,7 +56,7 @@
 						class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#122555] focus:border-transparent bg-white"
 					>
 						<option value="">Sélectionner une catégorie</option>
-						{#each data.categories as category}
+						{#each data.categories as category (category.id)}
 							<option value={category.id}>{category.name}</option>
 						{/each}
 					</select>
@@ -90,7 +90,7 @@
 					</button>
 				</div>
 
-				{#each answers as answer, i}
+				{#each answers as answer, i (answer.id || i)}
 					<div
 						class="p-4 bg-gray-50 rounded-lg border border-gray-200 relative group animate-fade-in"
 					>

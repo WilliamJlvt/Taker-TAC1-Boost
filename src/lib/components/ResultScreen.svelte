@@ -368,7 +368,7 @@ ${r.answers
 							Erreurs à réviser ({result.answers.filter((a) => !a.isCorrect).length})
 						</h3>
 						<div class="max-h-60 overflow-y-auto space-y-2">
-							{#each result.answers.filter((a) => !a.isCorrect) as errorAnswer, index}
+							{#each result.answers.filter((a) => !a.isCorrect) as errorAnswer, _index}
 								<div class="text-sm">
 									<span class="font-medium text-red-700"
 										>Q{result.answers.indexOf(errorAnswer) + 1}:</span

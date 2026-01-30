@@ -48,7 +48,7 @@ export const actions: Actions = {
 				questionText,
 				answers
 			});
-		} catch (error) {
+		} catch {
 			return fail(500, { error: 'Failed to create question' });
 		}
 

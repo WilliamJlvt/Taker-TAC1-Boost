@@ -25,15 +25,6 @@
 		}, 300);
 	}
 
-	function handleCategoryChange(e: Event) {
-		const value = (e.target as HTMLSelectElement).value;
-		const url = new URL($page.url);
-		if (value) url.searchParams.set('category', value);
-		else url.searchParams.delete('category');
-		url.searchParams.set('page', '1');
-		goto(url);
-	}
-
 	function changePage(newPage: number) {
 		const url = new URL($page.url);
 		url.searchParams.set('page', newPage.toString());
@@ -87,7 +78,7 @@
 				</Select.Trigger>
 				<Select.Content>
 					<Select.Item value="">Toutes les catégories</Select.Item>
-					{#each data.categories as category}
+					{#each data.categories as category (category.id)}
 						<Select.Item value={category.id.toString()}>{category.name}</Select.Item>
 					{/each}
 				</Select.Content>
@@ -107,7 +98,7 @@
 				</tr>
 			</thead>
 			<tbody class="divide-y divide-gray-100">
-				{#each data.questions as question}
+				{#each data.questions as question (question.id)}
 					<tr class="hover:bg-gray-50 transition-colors group">
 						<td class="px-6 py-4">
 							<p class="font-medium text-[#122555] line-clamp-2">{question.question_text}</p>

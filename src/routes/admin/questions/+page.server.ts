@@ -29,7 +29,7 @@ export const actions: Actions = {
 		try {
 			deleteQuestion(id);
 			return { success: true };
-		} catch (error) {
+		} catch (_error) {
 			return fail(500, { error: 'Failed to delete question' });
 		}
 	}

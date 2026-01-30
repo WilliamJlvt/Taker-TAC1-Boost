@@ -47,7 +47,7 @@
 							<span data-slot="select-value" class="truncate">{selectedCategoryLabel}</span>
 						</Select.Trigger>
 						<Select.Content>
-							{#each data.categories as category}
+							{#each data.categories as category (category.id)}
 								<Select.Item value={category.id.toString()}>{category.name}</Select.Item>
 							{/each}
 						</Select.Content>
@@ -82,7 +82,7 @@
 					</button>
 				</div>
 
-				{#each answers as answer, i}
+				{#each answers as _, i (i)}
 					<div
 						class="p-4 bg-gray-50 rounded-lg border border-gray-200 relative group animate-fade-in"
 					>

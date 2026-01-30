@@ -2,7 +2,6 @@
 	import ProfileView from '$lib/components/ProfileView.svelte';
 	import { Button } from '$lib/components/ui/button';
 	import ChevronLeft from '@lucide/svelte/icons/chevron-left';
-	import type { PageData } from './$types';
 
 	let { data } = $props();
 	const user = $derived(data.viewedUser);
