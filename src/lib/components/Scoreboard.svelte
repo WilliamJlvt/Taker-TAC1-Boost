@@ -13,7 +13,6 @@
 		currentUserId?: string | null;
 	} = $props();
 
-	let activeMode = $state<Exclude<ExamMode, 'custom'>>('organisationnel');
 	let leaderboardOrga = $state<ScoreEntry[]>([]);
 	let leaderboardTreso = $state<ScoreEntry[]>([]);
 	let loadingOrga = $state(true);
@@ -26,7 +25,6 @@
 
 	$effect(() => {
 		currentSlide = initialMode === 'tresorerie' ? 1 : 0;
-		activeMode = initialMode;
 	});
 	let touchStartX = $state(0);
 	let touchEndX = $state(0);

@@ -56,7 +56,7 @@
 			<Sidebar.GroupContent>
 				<Sidebar.Menu>
 					{#each items as item}
-						<Sidebar.MenuItem>
+						<Sidebar.MenuItem key={item.url}>
 							<Sidebar.MenuButton isActive={$page.url.pathname === item.url}>
 								{#snippet child({ props }: { props: Record<string, unknown> })}
 									<a href={item.url} {...props}>
