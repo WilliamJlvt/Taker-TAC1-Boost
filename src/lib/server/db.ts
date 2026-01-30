@@ -23,6 +23,19 @@ if (existsSync(schemaPath)) {
 	db.exec(schema);
 }
 
+// Seed fixed categories
+const fixedCategories = [
+	{ name: 'Mouvement', slug: 'mouvement' },
+	{ name: 'CLR', slug: 'clr' },
+	{ name: 'Organisationnel', slug: 'organisationnel' },
+	{ name: 'Trésorerie', slug: 'tresorerie' }
+];
+
+const insertCategory = db.prepare('INSERT OR IGNORE INTO categories (name, slug) VALUES (@name, @slug)');
+for (const cat of fixedCategories) {
+	insertCategory.run(cat);
+}
+
 export interface DbUser {
 	id: string;
 	email: string;
@@ -169,16 +182,16 @@ export interface UserStats {
 
 export function getUserStats(userId: string): UserStats {
 	const allScores = db.prepare('SELECT * FROM scores WHERE user_id = ? ORDER BY created_at ASC').all(userId) as DbScore[];
-	
+
 	// Calculate stats
 	const totalAttempts = allScores.length;
 	const orgaScores = allScores.filter(s => s.exam_mode === 'organisationnelle');
 	const tresoScores = allScores.filter(s => s.exam_mode === 'tresorerie');
-	
+
 	const bestScoreOrga = orgaScores.length > 0 ? Math.max(...orgaScores.map(s => s.score)) : null;
 	const bestScoreTreso = tresoScores.length > 0 ? Math.max(...tresoScores.map(s => s.score)) : null;
 	const avgScore = totalAttempts > 0 ? Math.round(allScores.reduce((sum, s) => sum + s.score, 0) / totalAttempts) : 0;
-	
+
 	// Aggregate category stats
 	const categoryStats: Record<string, { correct: number; total: number; percentage: number }> = {};
 	for (const score of allScores) {
@@ -197,13 +210,13 @@ export function getUserStats(userId: string): UserStats {
 			}
 		}
 	}
-	
+
 	// Calculate percentages
 	for (const cat of Object.keys(categoryStats)) {
 		const { correct, total } = categoryStats[cat];
 		categoryStats[cat].percentage = total > 0 ? Math.round((correct / total) * 100) : 0;
 	}
-	
+
 	// Progression data for charts
 	const progression = {
 		organisationnelle: orgaScores.map(s => ({
@@ -215,10 +228,10 @@ export function getUserStats(userId: string): UserStats {
 			score: s.score
 		}))
 	};
-	
+
 	// Recent attempts (last 10)
 	const recentAttempts = allScores.slice(-10).reverse();
-	
+
 	return {
 		totalAttempts,
 		bestScoreOrga,
@@ -342,7 +355,7 @@ export function deleteQuestion(id: number): void {
 export function importQuestionsFromJSON(jsonContent: any, categoryId: number): { added: number; errors: string[] } {
 	// Expects an array of question objects based on the index.ts transformData structure or raw JSON
 	// We handle the structure: { question: string, answerOptions: { text: string, isCorrect: boolean, rationale?: string }[] }
-	
+
 	if (!Array.isArray(jsonContent)) {
 		return { added: 0, errors: ['JSON content must be an array'] };
 	}
@@ -383,7 +396,7 @@ export function getAllQuestionsWithAnswers(): any[] {
 	const questions = db.prepare('SELECT * FROM questions').all() as DbQuestion[];
 	const answers = db.prepare('SELECT * FROM answer_options ORDER BY position ASC').all() as DbAnswerOption[];
 	const categories = db.prepare('SELECT * FROM categories').all() as DbCategory[];
-	
+
 	const catMap = new Map(categories.map(c => [c.id, c.name]));
 
 	return questions.map(q => {
@@ -392,7 +405,7 @@ export function getAllQuestionsWithAnswers(): any[] {
 			isCorrect: a.is_correct === 1,
 			rationale: a.rationale || undefined
 		}));
-		
+
 		return {
 			id: q.id.toString(),
 			question: q.question_text,

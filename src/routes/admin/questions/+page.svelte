@@ -8,6 +8,7 @@
 	import PencilIcon from '@lucide/svelte/icons/pencil';
 	import ChevronLeftIcon from '@lucide/svelte/icons/chevron-left';
 	import ChevronRightIcon from '@lucide/svelte/icons/chevron-right';
+	import * as Select from '$lib/components/ui/select';
 
 	let { data } = $props();
 
@@ -66,16 +67,32 @@
 				class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#122555] focus:border-transparent"
 			/>
 		</div>
-		<select
-			value={data.filters.categoryId || ''}
-			onchange={handleCategoryChange}
-			class="px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#122555] focus:border-transparent bg-white"
-		>
-			<option value="">Toutes les catégories</option>
-			{#each data.categories as category}
-				<option value={category.id}>{category.name}</option>
-			{/each}
-		</select>
+		<div class="w-full sm:w-[250px]">
+			<Select.Root
+				type="single"
+				value={data.filters.categoryId?.toString() || ''}
+				onValueChange={(v) => {
+					const url = new URL($page.url);
+					if (v) url.searchParams.set('category', v);
+					else url.searchParams.delete('category');
+					url.searchParams.set('page', '1');
+					goto(url);
+				}}
+			>
+				<Select.Trigger class="w-full bg-white">
+					<span data-slot="select-value" class="truncate">
+						{data.categories.find((c) => c.id.toString() === data.filters.categoryId?.toString())
+							?.name ?? 'Toutes les catégories'}
+					</span>
+				</Select.Trigger>
+				<Select.Content>
+					<Select.Item value="">Toutes les catégories</Select.Item>
+					{#each data.categories as category}
+						<Select.Item value={category.id.toString()}>{category.name}</Select.Item>
+					{/each}
+				</Select.Content>
+			</Select.Root>
+		</div>
 	</div>
 
 	<!-- Questions List -->

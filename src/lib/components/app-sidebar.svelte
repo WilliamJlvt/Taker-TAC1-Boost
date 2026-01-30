@@ -18,11 +18,6 @@
 			icon: FileQuestionIcon
 		},
 		{
-			title: 'Catégories',
-			url: '/admin/categories',
-			icon: FolderOpenIcon
-		},
-		{
 			title: 'Import JSON',
 			url: '/admin/import',
 			icon: UploadIcon

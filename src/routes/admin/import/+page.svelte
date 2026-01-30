@@ -1,9 +1,23 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import UploadIcon from '@lucide/svelte/icons/upload';
+	import * as Select from '$lib/components/ui/select';
 
 	let { data, form } = $props();
 	let uploading = $state(false);
+	let fileName = $state('');
+	let categoryId = $state('');
+
+	const selectedCategoryLabel = $derived(
+		data.categories.find((c) => c.id.toString() === categoryId)?.name ?? "Sélectionner une catégorie"
+	);
+
+	function handleFileChange(event: Event) {
+		const target = event.target as HTMLInputElement;
+		if (target.files && target.files.length > 0) {
+			fileName = target.files[0].name;
+		}
+	}
 </script>
 
 <div class="max-w-3xl mx-auto space-y-6">
@@ -46,24 +60,29 @@
 		<form
 			method="POST"
 			enctype="multipart/form-data"
-			use:enhance
-			onsubmit={() => (uploading = true)}
+			use:enhance={() => {
+				uploading = true;
+				return async ({ update }) => {
+					await update();
+					uploading = false;
+				};
+			}}
 			class="space-y-8"
 		>
 			<div>
 				<label class="block text-sm font-medium text-gray-700 mb-2"
 					>1. Choisissez une catégorie cible</label
 				>
-				<select
-					name="category"
-					required
-					class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#122555] focus:border-transparent bg-white transition-shadow"
-				>
-					<option value="">Sélectionner une catégorie</option>
-					{#each data.categories as category}
-						<option value={category.id}>{category.name}</option>
-					{/each}
-				</select>
+				<Select.Root type="single" name="category" bind:value={categoryId} required>
+					<Select.Trigger class="w-full bg-white">
+						<span data-slot="select-value" class="truncate">{selectedCategoryLabel}</span>
+					</Select.Trigger>
+					<Select.Content>
+						{#each data.categories as category}
+							<Select.Item value={category.id.toString()}>{category.name}</Select.Item>
+						{/each}
+					</Select.Content>
+				</Select.Root>
 				<p class="mt-2 text-xs text-gray-500">
 					Toutes les questions importées seront liées à cette catégorie.
 				</p>
@@ -98,16 +117,14 @@
 									accept=".json"
 									class="sr-only"
 									required
-									onchange={(e) => {
-										const fileName = e.currentTarget.files?.[0]?.name;
-										const display = document.getElementById('file-name-display');
-										if (display && fileName) display.innerText = fileName;
-									}}
+									onchange={handleFileChange}
 								/>
 							</label>
 							<p class="pl-1">ou glissez-déposez</p>
 						</div>
-						<p class="text-xs text-gray-500" id="file-name-display">JSON jusqu'à 10MB</p>
+						<p class="text-xs text-gray-500" id="file-name-display">
+							{fileName || "JSON jusqu'à 10MB"}
+						</p>
 					</div>
 				</div>
 			</div>

@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+@plugin 'tailwindcss-animate';
 
 /* Custom color palette */
 :root {
@@ -38,15 +39,15 @@
 	.bg-navy {
 		background-color: var(--color-secondary);
 	}
-	
+
 	.bg-navy-light {
 		background-color: var(--color-secondary-light);
 	}
-	
+
 	.text-navy {
 		color: var(--color-secondary);
 	}
-	
+
 	.border-navy {
 		border-color: var(--color-secondary);
 	}
@@ -56,9 +57,12 @@
 	}
 
 	@keyframes pulse {
-		0%, 100% {
+
+		0%,
+		100% {
 			opacity: 1;
 		}
+
 		50% {
 			opacity: 0.5;
 		}
@@ -69,10 +73,13 @@
 	}
 
 	@keyframes bounce {
-		0%, 100% {
+
+		0%,
+		100% {
 			transform: translateY(-25%);
 			animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
 		}
+
 		50% {
 			transform: none;
 			animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
