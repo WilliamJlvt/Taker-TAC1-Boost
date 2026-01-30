@@ -1,9 +1,25 @@
 import type { Question, QuizAnswer, QuizResult } from './types.js';
-import { getRandomQuestions, shuffleChoices } from './data/index.js';
 
-export function createQuiz(questionCount: number = 100, categories: Question['category'][] = []): Question[] {
-	const randomQuestions = getRandomQuestions(questionCount, categories);
-	return randomQuestions.map(shuffleChoices);
+export function createQuiz(
+	allQuestions: Question[],
+	questionCount: number = 100,
+	categories: Question['category'][] = []
+): Question[] {
+	let filteredQuestions = allQuestions;
+
+	if (categories.length > 0) {
+		filteredQuestions = allQuestions.filter((q) => categories.includes(q.category));
+	}
+
+	const shuffled = [...filteredQuestions].sort(() => Math.random() - 0.5);
+	const selected = shuffled.slice(0, Math.min(questionCount, filteredQuestions.length));
+
+	return selected.map(shuffleChoices);
+}
+
+export function shuffleChoices(question: Question): Question {
+	const answerOptions = [...question.answerOptions].sort(() => Math.random() - 0.5);
+	return { ...question, answerOptions };
 }
 
 export function calculateResult(

@@ -1,0 +1,121 @@
+<script lang="ts">
+	import { signIn, signOut } from '@auth/sveltekit/client';
+	import type { Session } from '@auth/core/types';
+	import UserIcon from '@lucide/svelte/icons/user';
+	import TrophyIcon from '@lucide/svelte/icons/trophy';
+	import LogOutIcon from '@lucide/svelte/icons/log-out';
+	import SettingsIcon from '@lucide/svelte/icons/settings';
+
+	let { session, isAdmin = false }: { session: Session | null; isAdmin?: boolean } = $props();
+
+	let showDropdown = $state(false);
+
+	function handleClickOutside(event: MouseEvent) {
+		const target = event.target as HTMLElement;
+		if (!target.closest('.user-menu')) {
+			showDropdown = false;
+		}
+	}
+</script>
+
+<svelte:window on:click={handleClickOutside} />
+
+<div class="user-menu relative">
+	{#if session?.user}
+		<button
+			onclick={() => (showDropdown = !showDropdown)}
+			class="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/80 hover:bg-white shadow-sm transition-all duration-200 border border-[#122555]/10"
+		>
+			{#if session.user.image}
+				<img
+					src={session.user.image}
+					alt={session.user.name || 'User'}
+					class="w-8 h-8 rounded-full"
+				/>
+			{:else}
+				<div
+					class="w-8 h-8 rounded-full bg-[#122555] flex items-center justify-center text-white font-medium"
+				>
+					{session.user.name?.charAt(0).toUpperCase() || '?'}
+				</div>
+			{/if}
+			<span class="text-sm font-medium text-[#122555] hidden sm:block">
+				{session.user.name}
+			</span>
+			<svg
+				class="w-4 h-4 text-[#122555]/60 transition-transform duration-200 {showDropdown
+					? 'rotate-180'
+					: ''}"
+				fill="none"
+				stroke="currentColor"
+				viewBox="0 0 24 24"
+			>
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+			</svg>
+		</button>
+
+		<div
+			class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-[#122555]/10 py-1 z-50 origin-top-right transition-all duration-200 ease-out
+				{showDropdown
+				? 'opacity-100 scale-100 translate-y-0'
+				: 'opacity-0 scale-95 -translate-y-2 pointer-events-none'}"
+		>
+			<a
+				href="/profile"
+				class="flex items-center gap-2 px-4 py-2 text-sm text-[#122555] hover:bg-[#122555]/5 transition-colors"
+			>
+				<UserIcon class="w-4 h-4" />
+				Mon Profil
+			</a>
+			<a
+				href="/scoreboard"
+				class="flex items-center gap-2 px-4 py-2 text-sm text-[#122555] hover:bg-[#122555]/5 transition-colors"
+			>
+				<TrophyIcon class="w-4 h-4" />
+				Classement
+			</a>
+			{#if isAdmin}
+				<a
+					href="/admin"
+					class="flex items-center gap-2 px-4 py-2 text-sm text-[#122555] hover:bg-[#122555]/5 transition-colors"
+				>
+					<SettingsIcon class="w-4 h-4" />
+					Administration
+				</a>
+			{/if}
+			<hr class="my-1 border-[#122555]/10" />
+			<button
+				onclick={() => signOut()}
+				class="w-full flex items-center gap-2 text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+			>
+				<LogOutIcon class="w-4 h-4" />
+				Se déconnecter
+			</button>
+		</div>
+	{:else}
+		<button
+			onclick={() => signIn('google')}
+			class="flex items-center gap-2 px-4 py-2 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-200 border border-[#122555]/10"
+		>
+			<svg class="w-5 h-5" viewBox="0 0 24 24">
+				<path
+					fill="#4285F4"
+					d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+				/>
+				<path
+					fill="#34A853"
+					d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+				/>
+				<path
+					fill="#FBBC05"
+					d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+				/>
+				<path
+					fill="#EA4335"
+					d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+				/>
+			</svg>
+			<span class="text-sm font-medium text-[#122555]">Se connecter</span>
+		</button>
+	{/if}
+</div>

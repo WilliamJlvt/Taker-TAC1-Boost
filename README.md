@@ -93,7 +93,7 @@ L'application utilise deux configurations Docker :
 L'application utilise 3 fichiers CSV avec les questions :
 - **CLR** : Questions sur la réglementation
 - **Mouvement** : Questions sur les mouvements  
-- **Organisationnel** : Questions organisationnelles
+- **Organisationnel** : Questions organisationnels
 
 ## 🎨 Technologies
 

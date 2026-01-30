@@ -1,6 +1,24 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+@plugin 'tailwindcss-animate';
+
+/* Custom color palette */
+:root {
+	--color-primary: #FFFFFF;
+	--color-secondary: #122555;
+	--color-secondary-light: #1e3a6e;
+	--color-secondary-lighter: #2a4a8a;
+	--color-secondary-dark: #0d1a3d;
+	--color-accent: #3b82f6;
+}
+
+@theme {
+	--color-navy: #122555;
+	--color-navy-light: #1e3a6e;
+	--color-navy-lighter: #2a4a8a;
+	--color-navy-dark: #0d1a3d;
+}
 
 @layer base {
 	* {
@@ -12,20 +30,39 @@
 	body {
 		font-family: 'Inter', system-ui, sans-serif;
 		line-height: 1.6;
-		color: #333;
-		background: #f8fafc;
+		color: var(--color-secondary);
+		background: var(--color-primary);
 	}
 }
 
 @layer utilities {
+	.bg-navy {
+		background-color: var(--color-secondary);
+	}
+
+	.bg-navy-light {
+		background-color: var(--color-secondary-light);
+	}
+
+	.text-navy {
+		color: var(--color-secondary);
+	}
+
+	.border-navy {
+		border-color: var(--color-secondary);
+	}
+
 	.animate-pulse {
 		animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 	}
 
 	@keyframes pulse {
-		0%, 100% {
+
+		0%,
+		100% {
 			opacity: 1;
 		}
+
 		50% {
 			opacity: 0.5;
 		}
@@ -36,10 +73,13 @@
 	}
 
 	@keyframes bounce {
-		0%, 100% {
+
+		0%,
+		100% {
 			transform: translateY(-25%);
 			animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
 		}
+
 		50% {
 			transform: none;
 			animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
