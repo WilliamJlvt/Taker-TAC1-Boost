@@ -155,7 +155,7 @@
 
 				<!-- Choices -->
 				<div class="space-y-3">
-					{#each currentQuestion.answerOptions as option, index}
+					{#each currentQuestion.answerOptions as option, index (option.text)}
 						<button
 							onclick={() => selectOption(option)}
 							disabled={isAnswered}

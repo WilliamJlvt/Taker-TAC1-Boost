@@ -39,7 +39,7 @@
 						Cependant, quelques erreurs sont survenues :
 					</p>
 					<ul class="list-disc list-inside space-y-1 text-green-800">
-						{#each form.errors as error}
+						{#each form.errors as error, i (i)}
 							<li>{error}</li>
 						{/each}
 					</ul>
@@ -79,7 +79,7 @@
 						<span data-slot="select-value" class="truncate">{selectedCategoryLabel}</span>
 					</Select.Trigger>
 					<Select.Content>
-						{#each data.categories as category}
+						{#each data.categories as category (category.id)}
 							<Select.Item value={category.id.toString()}>{category.name}</Select.Item>
 						{/each}
 					</Select.Content>

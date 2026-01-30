@@ -5,17 +5,27 @@
 
 	let { data } = $props();
 
-	let answers = $state([]);
+	interface Answer {
+		id: number | string;
+		text: string;
+		correct: boolean;
+		rationale: string;
+	}
+
+	// eslint-disable-next-line svelte/prefer-writable-derived
+	let answers = $state<Answer[]>([]);
 
 	$effect(() => {
 		answers =
 			data.question.answers.length > 0
-				? data.question.answers.map((a: any) => ({
-						id: a.id,
-						text: a.text,
-						correct: a.is_correct === 1,
-						rationale: a.rationale || ''
-					}))
+				? data.question.answers.map(
+						(a: { id: number; text: string; is_correct: number; rationale: string | null }) => ({
+							id: a.id,
+							text: a.text,
+							correct: a.is_correct === 1,
+							rationale: a.rationale || ''
+						})
+					)
 				: [
 						{ id: Date.now(), text: '', correct: false, rationale: '' },
 						{ id: Date.now() + 1, text: '', correct: false, rationale: '' }

@@ -9,10 +9,6 @@
 	import ClipboardListIcon from '@lucide/svelte/icons/clipboard-list';
 	import SettingsIcon from '@lucide/svelte/icons/settings';
 	import TruckIcon from '@lucide/svelte/icons/truck';
-	import ZapIcon from '@lucide/svelte/icons/zap';
-	import TargetIcon from '@lucide/svelte/icons/target';
-	import DumbbellIcon from '@lucide/svelte/icons/dumbbell';
-	import StarIcon from '@lucide/svelte/icons/star';
 
 	let {
 		startQuiz,
@@ -432,7 +428,7 @@
 							Durée
 						</h3>
 						<div class="grid grid-cols-4 gap-2">
-							{#each presets as preset}
+							{#each presets as preset (preset.name)}
 								<button
 									onclick={() => selectPreset(preset)}
 									class="group p-3 rounded-xl border-2 transition-all duration-200 {questionCount ===

@@ -24,8 +24,9 @@ export const actions: Actions = {
 			const result = importQuestionsFromJSON(json, categoryId);
 
 			return { success: true, ...result };
-		} catch (error: any) {
-			return fail(500, { error: 'Failed to process file: ' + (error.message || 'Unknown error') });
+		} catch (error) {
+			const message = error instanceof Error ? error.message : 'Unknown error';
+			return fail(500, { error: 'Failed to process file: ' + message });
 		}
 	}
 };

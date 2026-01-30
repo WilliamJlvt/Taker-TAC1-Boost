@@ -8,7 +8,7 @@ export const load: PageServerLoad = async ({ params }) => {
 	// Fetch user basic info using the centralized db instance
 	const user = db
 		.prepare('SELECT id, name, email, image, role, created_at FROM users WHERE id = ?')
-		.get(userId) as any;
+		.get(userId) as import('$lib/server/db').DbUser | undefined;
 
 	if (!user) {
 		throw error(404, 'Utilisateur non trouvé');

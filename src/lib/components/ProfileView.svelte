@@ -6,7 +6,7 @@
 	import TrendingUpIcon from '@lucide/svelte/icons/trending-up';
 	import ClipboardListIcon from '@lucide/svelte/icons/clipboard-list';
 
-	let { user, stats, _ = false } = $props();
+	let { user, stats } = $props();
 
 	// Chart configuration
 	const chartWidth = 400;
@@ -141,7 +141,7 @@
 			</h2>
 			{#if Object.keys(stats.categoryStats).length > 0}
 				<div class="space-y-4">
-					{#each Object.entries(stats.categoryStats) as [category, catData]}
+					{#each Object.entries(stats.categoryStats) as [category, catData] (category)}
 						{@const data = catData as { correct: number; total: number; percentage: number }}
 						<div>
 							<div class="flex justify-between mb-1">
@@ -180,7 +180,7 @@
 				<div class="w-full">
 					<svg viewBox="0 0 {chartWidth} {chartHeight}" class="w-full h-auto">
 						<!-- Grid lines -->
-						{#each [0, 25, 50, 75, 100] as tick}
+						{#each [0, 25, 50, 75, 100] as tick (tick)}
 							<line
 								x1={padding.left}
 								y1={scaleY(tick)}
@@ -222,7 +222,7 @@
 								stroke-linecap="round"
 								stroke-linejoin="round"
 							/>
-							{#each chartDataOrga as point}
+							{#each chartDataOrga as point (point.index)}
 								<circle
 									cx={scaleX(point.index, chartDataOrga.length)}
 									cy={scaleY(point.score)}
@@ -243,7 +243,7 @@
 								stroke-linecap="round"
 								stroke-linejoin="round"
 							/>
-							{#each chartDataTreso as point}
+							{#each chartDataTreso as point (point.index)}
 								<circle
 									cx={scaleX(point.index, chartDataTreso.length)}
 									cy={scaleY(point.score)}
@@ -309,7 +309,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						{#each stats.recentAttempts as attempt}
+						{#each stats.recentAttempts as attempt (attempt.id)}
 							<tr class="border-b border-[#122555]/5 hover:bg-[#122555]/5 transition-colors">
 								<td class="py-3 px-2 text-[#122555]">{formatDate(attempt.created_at)}</td>
 								<td class="py-3 px-2">

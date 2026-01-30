@@ -195,7 +195,7 @@
 					</div>
 				{:else}
 					<div class="space-y-3">
-						{#each leaderboardOrga as entry, index}
+						{#each leaderboardOrga as entry, index (entry.id || index)}
 							<div
 								class="flex items-center gap-4 p-4 rounded-xl transition-all duration-200
 									{entry.user_id === currentUserId
@@ -277,7 +277,7 @@
 					</div>
 				{:else}
 					<div class="space-y-3">
-						{#each leaderboardTreso as entry, index}
+						{#each leaderboardTreso as entry, index (entry.id || index)}
 							<div
 								class="flex items-center gap-4 p-4 rounded-xl transition-all duration-200
 									{entry.user_id === currentUserId

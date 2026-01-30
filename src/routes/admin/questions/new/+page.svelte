@@ -82,9 +82,10 @@
 					</button>
 				</div>
 
-				{#each answers as _, i (i)}
+				{#each answers as answer, i (i)}
 					<div
 						class="p-4 bg-gray-50 rounded-lg border border-gray-200 relative group animate-fade-in"
+						data-answer-id={answer.id}
 					>
 						<div class="grid gap-4">
 							<div class="flex gap-4">
