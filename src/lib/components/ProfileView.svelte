@@ -17,20 +17,20 @@
 	const innerHeight = chartHeight - padding.top - padding.bottom;
 
 	// Prepare chart data
-	const chartDataOrga = stats.progression.organisationnel.map(
-		(p: { date: string; score: number }, i: number) => ({
+	const chartDataOrga = $derived(
+		stats.progression.organisationnel.map((p: { date: string; score: number }, i: number) => ({
 			date: new Date(p.date),
 			score: p.score,
 			index: i
-		})
+		}))
 	);
 
-	const chartDataTreso = stats.progression.tresorerie.map(
-		(p: { date: string; score: number }, i: number) => ({
+	const chartDataTreso = $derived(
+		stats.progression.tresorerie.map((p: { date: string; score: number }, i: number) => ({
 			date: new Date(p.date),
 			score: p.score,
 			index: i
-		})
+		}))
 	);
 
 	// Scale functions

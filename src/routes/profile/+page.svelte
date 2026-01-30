@@ -3,9 +3,9 @@
 	import ProfileView from '$lib/components/ProfileView.svelte';
 
 	let { data } = $props();
-	const stats = data.stats;
-	const session = data.session;
-	const user = session?.user;
+	const stats = $derived(data.stats);
+	const session = $derived(data.session);
+	const user = $derived(session?.user);
 </script>
 
 <svelte:head>

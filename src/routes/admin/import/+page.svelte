@@ -71,11 +71,11 @@
 			class="space-y-8"
 		>
 			<div>
-				<label class="block text-sm font-medium text-gray-700 mb-2"
+				<label for="category-select" class="block text-sm font-medium text-gray-700 mb-2"
 					>1. Choisissez une catégorie cible</label
 				>
 				<Select.Root type="single" name="category" bind:value={categoryId} required>
-					<Select.Trigger class="w-full bg-white">
+					<Select.Trigger id="category-select" class="w-full bg-white">
 						<span data-slot="select-value" class="truncate">{selectedCategoryLabel}</span>
 					</Select.Trigger>
 					<Select.Content>
@@ -90,12 +90,16 @@
 			</div>
 
 			<div>
-				<label class="block text-sm font-medium text-gray-700 mb-2"
+				<label for="file-upload" class="block text-sm font-medium text-gray-700 mb-2"
 					>2. Téléchargez votre fichier JSON</label
 				>
 				<div
 					class="mt-1 flex justify-center px-6 pt-10 pb-10 border-2 border-gray-300 border-dashed rounded-xl hover:border-[#122555] hover:bg-gray-50 transition-all cursor-pointer group"
 					onclick={() => document.getElementById('file-upload')?.click()}
+					onkeydown={(e) => e.key === 'Enter' && document.getElementById('file-upload')?.click()}
+					role="button"
+					tabindex="0"
+					aria-label="Upload JSON file"
 				>
 					<div class="space-y-2 text-center">
 						<div

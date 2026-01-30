@@ -3,29 +3,29 @@ import { getCategories, importQuestionsFromJSON } from '$lib/server/db';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
-    return {
-        categories: getCategories()
-    };
+	return {
+		categories: getCategories()
+	};
 };
 
 export const actions: Actions = {
-    default: async ({ request }) => {
-        const data = await request.formData();
-        const categoryId = Number(data.get('category'));
-        const file = data.get('file') as File;
+	default: async ({ request }) => {
+		const data = await request.formData();
+		const categoryId = Number(data.get('category'));
+		const file = data.get('file') as File;
 
-        if (!categoryId || !file) {
-            return fail(400, { missing: true });
-        }
+		if (!categoryId || !file) {
+			return fail(400, { missing: true });
+		}
 
-        try {
-            const content = await file.text();
-            const json = JSON.parse(content);
-            const result = importQuestionsFromJSON(json, categoryId);
+		try {
+			const content = await file.text();
+			const json = JSON.parse(content);
+			const result = importQuestionsFromJSON(json, categoryId);
 
-            return { success: true, ...result };
-        } catch (error: any) {
-            return fail(500, { error: 'Failed to process file: ' + (error.message || 'Unknown error') });
-        }
-    }
+			return { success: true, ...result };
+		} catch (error: any) {
+			return fail(500, { error: 'Failed to process file: ' + (error.message || 'Unknown error') });
+		}
+	}
 };

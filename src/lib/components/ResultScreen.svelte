@@ -48,7 +48,7 @@
 					correctAnswers: r.answers.filter((a) => a.isCorrect).length,
 					timeSpent: r.timeSpent,
 					categoryScores: r.categoryScores,
-					questionResults: r.answers.map(a => ({
+					questionResults: r.answers.map((a) => ({
 						questionId: a.questionId,
 						isCorrect: a.isCorrect
 					}))

@@ -5,7 +5,7 @@
 
 /* Custom color palette */
 :root {
-	--color-primary: #FFFFFF;
+	--color-primary: #ffffff;
 	--color-secondary: #122555;
 	--color-secondary-light: #1e3a6e;
 	--color-secondary-lighter: #2a4a8a;
@@ -57,7 +57,6 @@
 	}
 
 	@keyframes pulse {
-
 		0%,
 		100% {
 			opacity: 1;
@@ -73,7 +72,6 @@
 	}
 
 	@keyframes bounce {
-
 		0%,
 		100% {
 			transform: translateY(-25%);

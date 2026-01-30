@@ -3,19 +3,27 @@ FROM node:20-alpine
 WORKDIR /app
 
 # Copy package files
-COPY package*.json ./
+COPY package.json pnpm-lock.yaml ./
 
-# Install all dependencies (including dev dependencies for build)
-RUN npm ci
+# Enable corepack and install dependencies
+RUN corepack enable && pnpm install --frozen-lockfile
 
 # Copy source code
 COPY . .
 
+# Set build-time variables for SvelteKit static env
+ARG GOOGLE_CLIENT_ID
+ARG GOOGLE_CLIENT_SECRET
+ARG AUTH_SECRET
+ENV GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
+ENV GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET
+ENV AUTH_SECRET=$AUTH_SECRET
+
 # Build the application
-RUN npm run build
+RUN pnpm run build
 
 # Remove dev dependencies after build
-RUN npm prune --production
+RUN pnpm prune --prod
 
 # Expose port
 EXPOSE 3500

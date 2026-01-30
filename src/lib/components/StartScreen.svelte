@@ -168,6 +168,8 @@
 		ontouchstart={handleTouchStart}
 		ontouchmove={handleTouchMove}
 		ontouchend={handleTouchEnd}
+		role="region"
+		aria-label="Quiz mode selector"
 	>
 		<div
 			class="flex transition-transform duration-500 ease-out"

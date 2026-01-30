@@ -13,7 +13,7 @@
 		currentUserId?: string | null;
 	} = $props();
 
-	let activeMode = $state<Exclude<ExamMode, 'custom'>>(initialMode);
+	let activeMode = $state<Exclude<ExamMode, 'custom'>>('organisationnel');
 	let leaderboardOrga = $state<ScoreEntry[]>([]);
 	let leaderboardTreso = $state<ScoreEntry[]>([]);
 	let loadingOrga = $state(true);
@@ -22,7 +22,12 @@
 	let errorTreso = $state<string | null>(null);
 
 	// Carousel state
-	let currentSlide = $state(initialMode === 'tresorerie' ? 1 : 0);
+	let currentSlide = $state(0);
+
+	$effect(() => {
+		currentSlide = initialMode === 'tresorerie' ? 1 : 0;
+		activeMode = initialMode;
+	});
 	let touchStartX = $state(0);
 	let touchEndX = $state(0);
 	let isDragging = $state(false);
@@ -156,6 +161,8 @@
 		ontouchstart={handleTouchStart}
 		ontouchmove={handleTouchMove}
 		ontouchend={handleTouchEnd}
+		role="region"
+		aria-label="Leaderboard carousel"
 	>
 		<div
 			class="flex transition-transform duration-300 ease-out"

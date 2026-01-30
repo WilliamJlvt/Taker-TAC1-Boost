@@ -39,9 +39,11 @@
 			<!-- Category & Question -->
 			<div class="grid gap-6">
 				<div>
-					<label class="block text-sm font-medium text-gray-700 mb-1">Catégorie</label>
+					<label for="category-trigger" class="block text-sm font-medium text-gray-700 mb-1"
+						>Catégorie</label
+					>
 					<Select.Root type="single" name="category" bind:value={categoryId} required>
-						<Select.Trigger class="w-full bg-white">
+						<Select.Trigger id="category-trigger" class="w-full bg-white">
 							<span data-slot="select-value" class="truncate">{selectedCategoryLabel}</span>
 						</Select.Trigger>
 						<Select.Content>
@@ -53,8 +55,11 @@
 				</div>
 
 				<div>
-					<label class="block text-sm font-medium text-gray-700 mb-1">Question</label>
+					<label for="question-textarea" class="block text-sm font-medium text-gray-700 mb-1"
+						>Question</label
+					>
 					<textarea
+						id="question-textarea"
 						name="question"
 						required
 						rows="3"
@@ -67,7 +72,7 @@
 			<!-- Answers -->
 			<div class="space-y-4">
 				<div class="flex justify-between items-center">
-					<label class="block text-sm font-medium text-gray-700">Réponses</label>
+					<span class="block text-sm font-medium text-gray-700">Réponses</span>
 					<button
 						type="button"
 						onclick={addAnswer}
