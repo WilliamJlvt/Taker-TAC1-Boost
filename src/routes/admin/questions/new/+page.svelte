@@ -29,8 +29,8 @@
 	}
 </script>
 
-<div class="max-w-3xl mx-auto space-y-6">
-	<div class="flex justify-between items-center">
+<div class="max-w-3xl mx-auto space-y-6 mt-8">
+	<div class="flex justify-center items-center">
 		<h2 class="text-2xl font-bold text-[#122555]">Nouvelle question</h2>
 	</div>
 
