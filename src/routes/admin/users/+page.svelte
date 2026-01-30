@@ -5,6 +5,7 @@
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { Button } from '$lib/components/ui/button';
 	import MoreHorizontal from '@lucide/svelte/icons/more-horizontal';
+	import TrendingUpIcon from '@lucide/svelte/icons/trending-up';
 	import Trash2 from '@lucide/svelte/icons/trash-2';
 	import Shield from '@lucide/svelte/icons/shield';
 	import ShieldAlert from '@lucide/svelte/icons/shield-alert';
@@ -133,6 +134,15 @@
 									</DropdownMenu.Trigger>
 									<DropdownMenu.Content align="end" class="w-48">
 										<DropdownMenu.Label>Actions</DropdownMenu.Label>
+										<DropdownMenu.Separator />
+										<DropdownMenu.Item>
+											{#snippet child({ props })}
+												<a {...props} href="/admin/users/{user.id}" class="flex items-center">
+													<TrendingUpIcon class="mr-2 h-4 w-4" />
+													Voir le profil
+												</a>
+											{/snippet}
+										</DropdownMenu.Item>
 										<DropdownMenu.Separator />
 										<form action="?/delete" method="POST" use:enhance>
 											<input type="hidden" name="id" value={user.id} />
