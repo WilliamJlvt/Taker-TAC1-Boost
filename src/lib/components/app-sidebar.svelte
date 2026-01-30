@@ -48,7 +48,6 @@
 			</div>
 			<div class="grid flex-1 text-left text-sm leading-tight">
 				<span class="truncate font-semibold">TACBoost Admin</span>
-				<span class="truncate text-xs text-muted-foreground">Administration</span>
 			</div>
 		</div>
 	</Sidebar.Header>

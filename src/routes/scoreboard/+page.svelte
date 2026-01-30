@@ -4,7 +4,7 @@
 	import type { Session } from '@auth/core/types';
 	import TrophyIcon from '@lucide/svelte/icons/trophy';
 
-	let { data }: { data: { session: Session | null } } = $props();
+	let { data }: { data: { session: Session | null; isUserAdmin: boolean } } = $props();
 </script>
 
 <svelte:head>
@@ -32,7 +32,7 @@
 				</h1>
 				<p class="text-[#122555]/60">Les meilleurs scores des examens officiels TAC1</p>
 			</div>
-			<UserMenu session={data.session} />
+			<UserMenu session={data.session} isAdmin={data.isUserAdmin} />
 		</header>
 
 		<div class="max-w-4xl mx-auto">

@@ -120,7 +120,9 @@ export function getOrCreateUser(user: Omit<DbUser, 'created_at' | 'role'>): DbUs
 	if (existing) {
 		// If user ID changed, update the FK references in scores table first
 		if (existing.id !== user.id) {
-			const updateTx = db.transaction(() => {
+			// Disable foreign keys before the transaction (must be outside transaction)
+			db.pragma('foreign_keys = OFF');
+			try {
 				db.prepare('UPDATE scores SET user_id = ? WHERE user_id = ?').run(user.id, existing.id);
 				db.prepare('UPDATE users SET id = ?, name = ?, image = ? WHERE email = ?').run(
 					user.id,
@@ -128,8 +130,9 @@ export function getOrCreateUser(user: Omit<DbUser, 'created_at' | 'role'>): DbUs
 					user.image,
 					user.email
 				);
-			});
-			updateTx();
+			} finally {
+				db.pragma('foreign_keys = ON');
+			}
 		} else {
 			db.prepare('UPDATE users SET name = ?, image = ? WHERE email = ?').run(
 				user.name,
