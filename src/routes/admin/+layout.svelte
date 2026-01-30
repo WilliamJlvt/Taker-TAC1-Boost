@@ -1,22 +1,16 @@
 <script lang="ts">
-	import AppSidebar from "$lib/components/app-sidebar.svelte";
-	import * as Sidebar from '$lib/components/ui/sidebar';
-	import Separator from '$lib/components/ui/separator/separator.svelte';
+	import AppSidebar from '$lib/components/app-sidebar.svelte';
+	import SiteHeader from '$lib/components/site-header.svelte';
+	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 
 	let { children } = $props();
 </script>
 
-<Sidebar.Provider>
-	<AppSidebar />
+<Sidebar.Provider style="--sidebar-width: 20rem">
+	<AppSidebar variant="inset" collapsible="icon" />
 	<Sidebar.Inset>
-		<header
-			class="flex h-16 shrink-0 items-center gap-2 border-b border-gray-100 bg-background px-4"
-		>
-			<Sidebar.Trigger class="-ml-1" />
-			<Separator orientation="vertical" class="mr-2 h-4" />
-			<span class="font-medium text-sm text-muted-foreground">Administration</span>
-		</header>
-		<div class="flex-1 p-6 bg-gray-50/50">
+		<SiteHeader />
+		<div class="flex flex-1 flex-col gap-4 p-4 pt-0">
 			{@render children()}
 		</div>
 	</Sidebar.Inset>

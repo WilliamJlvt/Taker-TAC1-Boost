@@ -29,6 +29,7 @@
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import type { ComponentProps } from 'svelte';
 	import { page } from '$app/stores';
+	import logo from '$lib/assets/logo.svg';
 
 	let { ref = $bindable(null), ...restProps }: ComponentProps<typeof Sidebar.Root> = $props();
 </script>
@@ -36,12 +37,12 @@
 <Sidebar.Root {...restProps} bind:ref>
 	<Sidebar.Header>
 		<div class="flex items-center gap-2 px-2 py-2">
-			<div class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#122555] text-white">
-				<span class="font-bold text-xs">TB</span>
+			<div class="flex h-8 w-8 items-center justify-center rounded-lg">
+				<img src={logo} alt="Logo" class="size-8" />
 			</div>
 			<div class="grid flex-1 text-left text-sm leading-tight">
-				<span class="truncate font-semibold">Taker Admin</span>
-				<span class="truncate text-xs text-muted-foreground">Premium Edition</span>
+				<span class="truncate font-semibold">TACBoost Admin</span>
+				<span class="truncate text-xs text-muted-foreground">Administration</span>
 			</div>
 		</div>
 	</Sidebar.Header>

@@ -23,6 +23,14 @@ if (existsSync(schemaPath)) {
 	db.exec(schema);
 }
 
+// Migration for new question stats columns
+try {
+	db.prepare('ALTER TABLE questions ADD COLUMN success_count INTEGER DEFAULT 0').run();
+	db.prepare('ALTER TABLE questions ADD COLUMN failure_count INTEGER DEFAULT 0').run();
+} catch (error) {
+	// Columns probably already exist
+}
+
 // Seed fixed categories
 const fixedCategories = [
 	{ name: 'Mouvement', slug: 'mouvement' },
@@ -68,6 +76,8 @@ export interface DbQuestion {
 	id: number;
 	category_id: number;
 	question_text: string;
+	success_count: number;
+	failure_count: number;
 	created_at: string;
 	updated_at: string;
 }
@@ -413,4 +423,112 @@ export function getAllQuestionsWithAnswers(): any[] {
 			category: catMap.get(q.category_id)
 		};
 	});
+}
+
+export function updateQuestionStats(results: { questionId: string; isCorrect: boolean }[]) {
+	const updateSuccess = db.prepare('UPDATE questions SET success_count = success_count + 1 WHERE id = ?');
+	const updateFailure = db.prepare('UPDATE questions SET failure_count = failure_count + 1 WHERE id = ?');
+
+	const tx = db.transaction((items: { questionId: string; isCorrect: boolean }[]) => {
+		for (const item of items) {
+			if (item.isCorrect) {
+				updateSuccess.run(item.questionId);
+			} else {
+				updateFailure.run(item.questionId);
+			}
+		}
+	});
+
+	tx(results);
+}
+
+
+export interface DashboardStats {
+	dailyParticipation: { date: string; count: number }[];
+	avgScoreEvolution: {
+		organisationnelle: { date: string; score: number }[];
+		tresorerie: { date: string; score: number }[];
+	};
+	categoryPerformance: { name: string; successRate: number; totalQuestions: number }[];
+	topQuestions: { question: string; successRate: number; count: number }[];
+	flopQuestions: { question: string; successRate: number; count: number }[];
+}
+
+
+export function getDashboardStats(): DashboardStats {
+	// 1. Daily Participation (Last 30 days)
+	const dailyParticipation = db.prepare(`
+		SELECT date(created_at) as date, COUNT(*) as count 
+		FROM scores 
+		WHERE created_at >= date('now', '-30 days')
+		GROUP BY date(created_at) 
+		ORDER BY date ASC
+	`).all() as { date: string; count: number }[];
+
+	// 2. Avg Score Evolution (Last 30 days, by mode)
+	const scores = db.prepare(`
+		SELECT date(created_at) as date, exam_mode, AVG(score) as avg_score
+		FROM scores
+		WHERE created_at >= date('now', '-30 days')
+		GROUP BY date(created_at), exam_mode
+		ORDER BY date ASC
+	`).all() as { date: string; exam_mode: string; avg_score: number }[];
+
+	const avgScoreEvolution = {
+		organisationnelle: scores.filter(s => s.exam_mode === 'organisationnelle').map(s => ({ date: s.date, score: Math.round(s.avg_score) })),
+		tresorerie: scores.filter(s => s.exam_mode === 'tresorerie').map(s => ({ date: s.date, score: Math.round(s.avg_score) }))
+	};
+
+	// 3. Category Performance (Aggregated from question stats)
+	// We join questions with categories and sum up success/failure counts
+	const catStats = db.prepare(`
+		SELECT c.name, SUM(q.success_count) as success, SUM(q.failure_count) as failure
+		FROM questions q
+		JOIN categories c ON q.category_id = c.id
+		GROUP BY c.id
+	`).all() as { name: string; success: number; failure: number }[];
+
+	const categoryPerformance = catStats.map(c => {
+		const total = c.success + c.failure;
+		return {
+			name: c.name,
+			successRate: total > 0 ? Math.round((c.success / total) * 100) : 0,
+			totalQuestions: total
+		};
+	}).sort((a, b) => b.successRate - a.successRate); // Best categories first
+
+	// 4. Top/Flop Questions
+	// We select questions with at least 1 attempt
+	const questions = db.prepare(`
+		SELECT question_text as question, success_count, failure_count
+		FROM questions
+		WHERE (success_count + failure_count) >= 1
+	`).all() as { question: string; success_count: number; failure_count: number }[];
+
+	const processedQuestions = questions.map(q => {
+		const total = q.success_count + q.failure_count;
+		return {
+			question: q.question,
+			successRate: total > 0 ? Math.round((q.success_count / total) * 100) : 0,
+			count: total
+		};
+	});
+
+	// Top 3 (Highest Success Rate)
+	const topQuestions = [...processedQuestions]
+		.sort((a, b) => b.successRate - a.successRate || b.count - a.count)
+		.slice(0, 3);
+
+	// Flop 3 (Lowest Success Rate)
+	const flopQuestions = [...processedQuestions]
+		.sort((a, b) => a.successRate - b.successRate || b.count - a.count)
+		.slice(0, 3);
+
+	return {
+		dailyParticipation,
+		avgScoreEvolution,
+		categoryPerformance,
+		topQuestions,
+		flopQuestions
+	};
 }

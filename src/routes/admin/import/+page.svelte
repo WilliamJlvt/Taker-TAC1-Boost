@@ -9,7 +9,8 @@
 	let categoryId = $state('');
 
 	const selectedCategoryLabel = $derived(
-		data.categories.find((c) => c.id.toString() === categoryId)?.name ?? "Sélectionner une catégorie"
+		data.categories.find((c) => c.id.toString() === categoryId)?.name ??
+			'Sélectionner une catégorie'
 	);
 
 	function handleFileChange(event: Event) {
@@ -20,9 +21,9 @@
 	}
 </script>
 
-<div class="max-w-3xl mx-auto space-y-6">
-	<div class="flex justify-between items-center">
-		<h2 class="text-2xl font-bold text-[#122555]">Importer des questions</h2>
+<div class="max-w-6xl mx-auto space-y-8 mt-8">
+	<div class="flex justify-center items-center">
+		<h2 class="text-3xl font-bold text-[#122555]">Importer des questions</h2>
 	</div>
 
 	<!-- Success / Error Messages -->
@@ -129,7 +130,7 @@
 				</div>
 			</div>
 
-			<div class="flex justify-end pt-4 border-t border-gray-100">
+			<div class="flex justify-center pt-4 border-t border-gray-100">
 				<button
 					type="submit"
 					disabled={uploading}
