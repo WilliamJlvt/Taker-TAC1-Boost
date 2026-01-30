@@ -127,7 +127,7 @@
 	}
 </script>
 
-<div class="max-w-2xl mx-auto space-y-3">
+<div class="sm:max-w-2xl sm:mx-auto space-y-3">
 	<!-- Mode Selector Tabs -->
 	<div class="flex justify-center">
 		<div class="inline-flex bg-[#122555]/10 rounded-2xl p-1.5 shadow-inner">
