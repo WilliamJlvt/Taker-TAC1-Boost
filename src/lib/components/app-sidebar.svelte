@@ -1,7 +1,6 @@
 <script lang="ts" module>
 	import LayoutDashboardIcon from '@lucide/svelte/icons/layout-dashboard';
 	import FileQuestionIcon from '@lucide/svelte/icons/file-question';
-	import FolderOpenIcon from '@lucide/svelte/icons/folder-open';
 	import UploadIcon from '@lucide/svelte/icons/upload';
 	import UsersIcon from '@lucide/svelte/icons/users';
 	import ArrowLeftIcon from '@lucide/svelte/icons/arrow-left';

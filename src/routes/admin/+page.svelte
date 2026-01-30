@@ -38,7 +38,6 @@
 				count: d.count
 			}))
 			.filter((item) => {
-				const referenceDate = new Date();
 				let daysToSubtract = 30;
 				if (timeRange === '14d') daysToSubtract = 14;
 				else if (timeRange === '7d') daysToSubtract = 7;
@@ -71,7 +70,6 @@
 		});
 
 		// Filter by time range
-		const referenceDate = new Date();
 		let daysToSubtract = 30;
 		if (timeRange === '14d') daysToSubtract = 14;
 		else if (timeRange === '7d') daysToSubtract = 7;

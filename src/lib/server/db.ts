@@ -19,27 +19,27 @@ export function getDb(): Database.Database {
 	if (_db) return _db;
 
 	_db = new Database(dbPath);
-	_getDb().pragma('journal_mode = WAL');
+	_db.pragma('journal_mode = WAL');
 
 	// Run migrations
 	const schemaPath = join(__dirname, 'schema.sql');
 	if (existsSync(schemaPath)) {
 		const schema = readFileSync(schemaPath, 'utf-8');
-		_getDb().exec(schema);
+		_db.exec(schema);
 	}
 
 	// Migration for new user role column
 	try {
-		_getDb().prepare("ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'user'").run();
-	} catch (error) {
+		_db.prepare("ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'user'").run();
+	} catch {
 		// Column probably already exists
 	}
 
 	// Migration for new question stats columns
 	try {
-		_getDb().prepare('ALTER TABLE questions ADD COLUMN success_count INTEGER DEFAULT 0').run();
-		_getDb().prepare('ALTER TABLE questions ADD COLUMN failure_count INTEGER DEFAULT 0').run();
-	} catch (error) {
+		_db.prepare('ALTER TABLE questions ADD COLUMN success_count INTEGER DEFAULT 0').run();
+		_db.prepare('ALTER TABLE questions ADD COLUMN failure_count INTEGER DEFAULT 0').run();
+	} catch {
 		// Columns probably already exist
 	}
 
@@ -51,7 +51,7 @@ export function getDb(): Database.Database {
 		{ name: 'Trésorerie', slug: 'tresorerie' }
 	];
 
-	const insertCategory = _getDb().prepare(
+	const insertCategory = _db.prepare(
 		'INSERT OR IGNORE INTO categories (name, slug) VALUES (@name, @slug)'
 	);
 	for (const cat of fixedCategories) {
@@ -62,7 +62,7 @@ export function getDb(): Database.Database {
 }
 
 // Global db export for backward compatibility where possible, but use getDb() for actual access
-export const db = {} as any; // Dummy export to satisfy types if needed, but we should replace usage
+export const db = {} as Record<string, unknown>;
 
 export interface DbUser {
 	id: string;
@@ -318,7 +318,7 @@ export function getUserStats(userId: string): UserStats {
 					categoryStats[cat].correct += data.correct;
 					categoryStats[cat].total += data.total;
 				}
-			} catch (e) {
+			} catch {
 				// Ignore malformed JSON
 			}
 		}
@@ -386,7 +386,7 @@ export function getQuestions(
 		JOIN categories c ON q.category_id = c.id
 		WHERE 1=1
 	`;
-	const params: any[] = [];
+	const params: (string | number)[] = [];
 
 	if (filter.categoryId) {
 		query += ' AND q.category_id = ?';
@@ -483,7 +483,7 @@ export function deleteQuestion(id: number): void {
 }
 
 export function importQuestionsFromJSON(
-	jsonContent: any,
+	jsonContent: unknown,
 	categoryId: number
 ): { added: number; errors: string[] } {
 	// Expects an array of question objects based on the index.ts transformData structure or raw JSON
@@ -503,33 +503,52 @@ export function importQuestionsFromJSON(
 		'INSERT INTO answer_options (question_id, text, is_correct, rationale, position) VALUES (?, ?, ?, ?, ?)'
 	);
 
-	const importTx = getDb().transaction((questions: any[]) => {
-		for (let i = 0; i < questions.length; i++) {
-			const q = questions[i];
-			if (!q.question || !Array.isArray(q.answerOptions)) {
-				errors.push(`Question at index ${i} is missing required fields`);
-				continue;
-			}
+	const importTx = getDb().transaction(
+		(
+			questions: {
+				question: string;
+				answerOptions: { text: string; isCorrect: boolean; rationale?: string }[];
+			}[]
+		) => {
+			for (let i = 0; i < questions.length; i++) {
+				const q = questions[i];
+				if (!q.question || !Array.isArray(q.answerOptions)) {
+					errors.push(`Question at index ${i} is missing required fields`);
+					continue;
+				}
 
-			try {
-				const info = insertQuestion.run(categoryId, q.question);
-				const qId = info.lastInsertRowid as number;
+				try {
+					const info = insertQuestion.run(categoryId, q.question);
+					const qId = info.lastInsertRowid as number;
 
-				q.answerOptions.forEach((ans: any, idx: number) => {
-					insertAnswer.run(qId, ans.text, ans.isCorrect ? 1 : 0, ans.rationale || null, idx);
-				});
-				added++;
-			} catch (e: any) {
-				errors.push(`Error saving question at index ${i}: ${e.message}`);
+					q.answerOptions.forEach((ans, idx: number) => {
+						insertAnswer.run(qId, ans.text, ans.isCorrect ? 1 : 0, ans.rationale || null, idx);
+					});
+					added++;
+				} catch (e: unknown) {
+					const message = e instanceof Error ? e.message : 'Unknown error';
+					errors.push(`Error saving question at index ${i}: ${message}`);
+				}
 			}
 		}
-	});
+	);
 
 	importTx(jsonContent);
 	return { added, errors };
 }
 
-export function getAllQuestionsWithAnswers(): any[] {
+export interface QuestionWithAnswers {
+	id: string;
+	question: string;
+	answerOptions: {
+		text: string;
+		isCorrect: boolean;
+		rationale?: string;
+	}[];
+	category: string | undefined;
+}
+
+export function getAllQuestionsWithAnswers(): QuestionWithAnswers[] {
 	const questions = getDb().prepare('SELECT * FROM questions').all() as DbQuestion[];
 	const answers = getDb()
 		.prepare('SELECT * FROM answer_options ORDER BY position ASC')
