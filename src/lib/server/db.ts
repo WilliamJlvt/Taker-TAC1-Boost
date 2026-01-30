@@ -118,12 +118,25 @@ export function getOrCreateUser(user: Omit<DbUser, 'created_at' | 'role'>): DbUs
 		| DbUser
 		| undefined;
 	if (existing) {
-		db.prepare('UPDATE users SET id = ?, name = ?, image = ? WHERE email = ?').run(
-			user.id,
-			user.name,
-			user.image,
-			user.email
-		);
+		// If user ID changed, update the FK references in scores table first
+		if (existing.id !== user.id) {
+			const updateTx = db.transaction(() => {
+				db.prepare('UPDATE scores SET user_id = ? WHERE user_id = ?').run(user.id, existing.id);
+				db.prepare('UPDATE users SET id = ?, name = ?, image = ? WHERE email = ?').run(
+					user.id,
+					user.name,
+					user.image,
+					user.email
+				);
+			});
+			updateTx();
+		} else {
+			db.prepare('UPDATE users SET name = ?, image = ? WHERE email = ?').run(
+				user.name,
+				user.image,
+				user.email
+			);
+		}
 		return { ...existing, id: user.id, name: user.name, image: user.image };
 	}
 

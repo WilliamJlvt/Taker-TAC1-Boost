@@ -22,7 +22,8 @@
 	import { onMount, onDestroy } from 'svelte';
 	import { browser } from '$app/environment';
 
-	let { data }: { data: { session: Session | null; questions: Question[] } } = $props();
+	let { data }: { data: { session: Session | null; questions: Question[]; isUserAdmin: boolean } } =
+		$props();
 
 	let showStartScreen = $state(true);
 	let showQuiz = $state(false);
@@ -156,7 +157,7 @@
 				<p class="text-[#122555]/60">Révision interactive pour l'examen TAC1</p>
 			</div>
 			<div class="w-32 sm:w-40 flex justify-end">
-				<UserMenu session={data.session} />
+				<UserMenu session={data.session} isAdmin={data.isUserAdmin} />
 			</div>
 		</header>
 

@@ -132,7 +132,7 @@
 											</Button>
 										{/snippet}
 									</DropdownMenu.Trigger>
-									<DropdownMenu.Content align="end" class="w-48">
+									<DropdownMenu.Content align="end" class="w-48 bg-white">
 										<DropdownMenu.Label>Actions</DropdownMenu.Label>
 										<DropdownMenu.Separator />
 										<DropdownMenu.Item>

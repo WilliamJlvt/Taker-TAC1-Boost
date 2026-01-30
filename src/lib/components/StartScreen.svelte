@@ -358,7 +358,7 @@
 				<div class="bg-white rounded-2xl shadow-xl p-6 animate-fade-in border border-[#122555]/10">
 					<div class="text-center mb-4">
 						<div
-							class="inline-flex items-center justify-center w-12 h-12 bg-[#122555]/70 rounded-xl mb-3 shadow-lg"
+							class="inline-flex items-center justify-center w-12 h-12 bg-[#122555] rounded-xl mb-3 shadow-lg"
 						>
 							<SettingsIcon class="w-6 h-6 text-white" />
 						</div>

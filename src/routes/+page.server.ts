@@ -1,8 +1,9 @@
-import { getAllQuestionsWithAnswers } from '$lib/server/db';
+import { getAllQuestionsWithAnswers, isAdmin } from '$lib/server/db';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const session = await locals.auth();
 	const questions = getAllQuestionsWithAnswers();
-	return { session, questions };
+	const isUserAdmin = isAdmin(session?.user?.email);
+	return { session, questions, isUserAdmin };
 };

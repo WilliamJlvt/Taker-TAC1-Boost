@@ -6,7 +6,7 @@
 	import LogOutIcon from '@lucide/svelte/icons/log-out';
 	import SettingsIcon from '@lucide/svelte/icons/settings';
 
-	let { session }: { session: Session | null } = $props();
+	let { session, isAdmin = false }: { session: Session | null; isAdmin?: boolean } = $props();
 
 	let showDropdown = $state(false);
 
@@ -74,13 +74,15 @@
 				<TrophyIcon class="w-4 h-4" />
 				Classement
 			</a>
-			<a
-				href="/admin"
-				class="flex items-center gap-2 px-4 py-2 text-sm text-[#122555] hover:bg-[#122555]/5 transition-colors"
-			>
-				<SettingsIcon class="w-4 h-4" />
-				Administration
-			</a>
+			{#if isAdmin}
+				<a
+					href="/admin"
+					class="flex items-center gap-2 px-4 py-2 text-sm text-[#122555] hover:bg-[#122555]/5 transition-colors"
+				>
+					<SettingsIcon class="w-4 h-4" />
+					Administration
+				</a>
+			{/if}
 			<hr class="my-1 border-[#122555]/10" />
 			<button
 				onclick={() => signOut()}
