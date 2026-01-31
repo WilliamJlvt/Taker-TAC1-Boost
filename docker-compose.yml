@@ -1,9 +1,16 @@
-
 services:
   tac1-boost:
-    build: .
+    build:
+      context: .
+      args:
+        - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+        - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+        - AUTH_SECRET=${AUTH_SECRET}
     ports:
-      - "3500:3500"
+      - '3500:3500'
+    env_file:
+      - .env
     environment:
       - NODE_ENV=production
+      - DEBUG=authjs
     restart: unless-stopped

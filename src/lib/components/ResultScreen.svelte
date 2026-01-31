@@ -48,7 +48,7 @@
 					correctAnswers: r.answers.filter((a) => a.isCorrect).length,
 					timeSpent: r.timeSpent,
 					categoryScores: r.categoryScores,
-					questionResults: r.answers.map(a => ({
+					questionResults: r.answers.map((a) => ({
 						questionId: a.questionId,
 						isCorrect: a.isCorrect
 					}))
@@ -339,7 +339,7 @@ ${r.answers
 					<div class="bg-[#122555]/5 rounded-lg p-6">
 						<h3 class="text-lg font-semibold text-[#122555] mb-4">Résultats par catégorie</h3>
 						<div class="space-y-4">
-							{#each Object.entries(result.categoryScores) as [category, scores]}
+							{#each Object.entries(result.categoryScores) as [category, scores] (category)}
 								{@const percentage = Math.round((scores.correct / scores.total) * 100)}
 								<div>
 									<div class="flex justify-between mb-1">
@@ -368,7 +368,7 @@ ${r.answers
 							Erreurs à réviser ({result.answers.filter((a) => !a.isCorrect).length})
 						</h3>
 						<div class="max-h-60 overflow-y-auto space-y-2">
-							{#each result.answers.filter((a) => !a.isCorrect) as errorAnswer, index}
+							{#each result.answers.filter((a) => !a.isCorrect) as errorAnswer (errorAnswer.questionId)}
 								<div class="text-sm">
 									<span class="font-medium text-red-700"
 										>Q{result.answers.indexOf(errorAnswer) + 1}:</span

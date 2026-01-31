@@ -38,12 +38,10 @@
 				count: d.count
 			}))
 			.filter((item) => {
-				const referenceDate = new Date();
 				let daysToSubtract = 30;
 				if (timeRange === '14d') daysToSubtract = 14;
 				else if (timeRange === '7d') daysToSubtract = 7;
-				const cutoff = new Date(referenceDate);
-				cutoff.setDate(cutoff.getDate() - daysToSubtract);
+				const cutoff = new Date(Date.now() - daysToSubtract * 24 * 60 * 60 * 1000);
 				return item.date >= cutoff;
 			})
 	);
@@ -72,12 +70,10 @@
 		});
 
 		// Filter by time range
-		const referenceDate = new Date();
 		let daysToSubtract = 30;
 		if (timeRange === '14d') daysToSubtract = 14;
 		else if (timeRange === '7d') daysToSubtract = 7;
-		const cutoff = new Date(referenceDate);
-		cutoff.setDate(cutoff.getDate() - daysToSubtract);
+		const cutoff = new Date(Date.now() - daysToSubtract * 24 * 60 * 60 * 1000);
 
 		return allData.filter((item) => item.date >= cutoff);
 	});
@@ -337,7 +333,7 @@
 		</Card.Header>
 		<Card.Content>
 			<div class="space-y-4">
-				{#each data.stats.categoryPerformance as cat}
+				{#each data.stats.categoryPerformance as cat (cat.name)}
 					<div class="space-y-1">
 						<div class="flex justify-between text-sm">
 							<span class="font-medium text-[#122555]">{cat.name}</span>
@@ -371,7 +367,7 @@
 			</Card.Header>
 			<Card.Content>
 				<div class="space-y-4">
-					{#each data.stats.topQuestions as q, i}
+					{#each data.stats.topQuestions as q, i (q.question)}
 						<div
 							class="flex items-start gap-3 p-3 bg-white rounded-lg border border-green-100 shadow-sm"
 						>
@@ -405,7 +401,7 @@
 			</Card.Header>
 			<Card.Content>
 				<div class="space-y-4">
-					{#each data.stats.flopQuestions as q, i}
+					{#each data.stats.flopQuestions as q, i (q.question)}
 						<div
 							class="flex items-start gap-3 p-3 bg-white rounded-lg border border-red-100 shadow-sm"
 						>

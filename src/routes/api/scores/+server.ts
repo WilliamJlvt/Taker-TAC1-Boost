@@ -6,7 +6,10 @@ export const GET: RequestHandler = async ({ url }) => {
 	const mode = url.searchParams.get('mode');
 
 	if (!mode || (mode !== 'organisationnel' && mode !== 'tresorerie')) {
-		return json({ error: 'Invalid mode. Must be "organisationnel" or "tresorerie"' }, { status: 400 });
+		return json(
+			{ error: 'Invalid mode. Must be "organisationnel" or "tresorerie"' },
+			{ status: 400 }
+		);
 	}
 
 	const leaderboard = getLeaderboard(mode);

@@ -1,12 +1,17 @@
-FROM node:20-alpine
+FROM node:20-bullseye-slim
 
 WORKDIR /app
 
-# Copy package files
-COPY package*.json ./
+# Build tools for native deps like better-sqlite3
+RUN apt-get update && apt-get install -y --no-install-recommends \
+	python3 make g++ \
+	&& rm -rf /var/lib/apt/lists/*
 
-# Install all dependencies (including dev)
-RUN npm ci
+# Copy package files
+COPY package.json pnpm-lock.yaml ./
+
+# Enable corepack and install dependencies
+RUN corepack enable && pnpm install && pnpm rebuild better-sqlite3
 
 # Copy source code
 COPY . .
@@ -15,4 +20,4 @@ COPY . .
 EXPOSE 5173
 
 # Start development server
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5173"]
+CMD ["pnpm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "5173"]

@@ -3,12 +3,10 @@
 
 	let {
 		labelFormatter = (v: unknown) => String(v),
-		valueFormatter = (key: string, v: unknown) => String(v),
-		indicator = 'dot'
+		valueFormatter = (key: string, v: unknown) => String(v)
 	}: {
 		labelFormatter?: (value: unknown) => string;
 		valueFormatter?: (key: string, value: unknown) => string;
-		indicator?: 'dot' | 'line';
 	} = $props();
 </script>
 
@@ -20,7 +18,7 @@
 			</div>
 			<div class="space-y-1">
 				{#if data.series && Array.isArray(data.series)}
-					{#each data.series as s}
+					{#each data.series as s (s.key)}
 						<div class="flex items-center gap-2">
 							<span class="w-2 h-2 rounded-full" style="background-color: {s.color}"></span>
 							<span class="text-[#122555]/70">{s.label}:</span>

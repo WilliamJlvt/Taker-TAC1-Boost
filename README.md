@@ -16,6 +16,7 @@ Application web de révision interactive pour l'examen TAC1 avec Svelte, TypeScr
 ## 🏃‍♂️ Démarrage rapide avec Docker
 
 ### Production (recommandé)
+
 ```bash
 # Lancer l'application en mode production
 docker-compose up
@@ -25,6 +26,7 @@ http://localhost:3000
 ```
 
 ### Développement
+
 ```bash
 # Lancer en mode développement avec hot-reload
 docker-compose -f docker-compose-dev.yml up
@@ -36,10 +38,12 @@ http://localhost:5173
 ## 🛠️ Développement local
 
 ### Prérequis
+
 - Node.js 18+
 - npm
 
 ### Installation
+
 ```bash
 # Installer les dépendances
 npm install
@@ -91,8 +95,9 @@ L'application utilise deux configurations Docker :
 ## 📊 Données
 
 L'application utilise 3 fichiers CSV avec les questions :
+
 - **CLR** : Questions sur la réglementation
-- **Mouvement** : Questions sur les mouvements  
+- **Mouvement** : Questions sur les mouvements
 - **Organisationnel** : Questions organisationnels
 
 ## 🎨 Technologies

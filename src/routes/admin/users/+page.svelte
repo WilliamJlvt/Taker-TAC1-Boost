@@ -10,7 +10,6 @@
 	import Shield from '@lucide/svelte/icons/shield';
 	import ShieldAlert from '@lucide/svelte/icons/shield-alert';
 	import * as Select from '$lib/components/ui/select';
-	import type { PageData } from './$types';
 
 	let { data } = $props();
 
@@ -50,7 +49,7 @@
 					</Table.Row>
 				</Table.Header>
 				<Table.Body>
-					{#each data.users as user}
+					{#each data.users as user (user.id)}
 						<Table.Row>
 							<Table.Cell>
 								{#if user.image}

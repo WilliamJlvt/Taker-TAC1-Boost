@@ -36,7 +36,7 @@ export function calculateResult(
 			categoryScores[question.category] = { correct: 0, total: 0 };
 		}
 		categoryScores[question.category].total++;
-		
+
 		if (answer && answer.isCorrect) {
 			correctAnswers++;
 			categoryScores[question.category].correct++;

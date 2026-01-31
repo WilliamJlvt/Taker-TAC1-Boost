@@ -5,19 +5,35 @@
 
 	let { data } = $props();
 
-	let answers = $state(
-		data.question.answers.length > 0
-			? data.question.answers.map((a: any) => ({
-					id: a.id,
-					text: a.text,
-					correct: a.is_correct === 1,
-					rationale: a.rationale || ''
-				}))
-			: [
-					{ id: Date.now(), text: '', correct: false, rationale: '' },
-					{ id: Date.now() + 1, text: '', correct: false, rationale: '' }
-				]
-	);
+	interface Answer {
+		id: number | string;
+		text: string;
+		correct: boolean;
+		rationale: string;
+	}
+
+	// eslint-disable-next-line svelte/prefer-writable-derived
+	let answers = $state<Answer[]>([]);
+
+	$effect(() => {
+		answers =
+			data.question.answers.length > 0
+				? data.question.answers.map(
+						(a: { id: number; text: string; is_correct: number; rationale: string | null }) => ({
+							id: a.id,
+							text: a.text,
+							correct: a.is_correct === 1,
+							rationale: a.rationale || ''
+						})
+					)
+				: [
+						{ id: Date.now(), text: '', correct: false, rationale: '' },
+						{ id: Date.now() + 1, text: '', correct: false, rationale: '' }
+					];
+	});
+
+	const initialCategoryId = $derived(data.question.category_id);
+	const initialQuestionText = $derived(data.question.question_text);
 
 	function addAnswer() {
 		answers = [...answers, { id: Date.now(), text: '', correct: false, rationale: '' }];
@@ -39,28 +55,34 @@
 			<!-- Category & Question -->
 			<div class="grid gap-6">
 				<div>
-					<label class="block text-sm font-medium text-gray-700 mb-1">Catégorie</label>
+					<label for="category-select" class="block text-sm font-medium text-gray-700 mb-1"
+						>Catégorie</label
+					>
 					<select
+						id="category-select"
 						name="category"
 						required
-						value={data.question.category_id}
+						value={initialCategoryId}
 						class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#122555] focus:border-transparent bg-white"
 					>
 						<option value="">Sélectionner une catégorie</option>
-						{#each data.categories as category}
+						{#each data.categories as category (category.id)}
 							<option value={category.id}>{category.name}</option>
 						{/each}
 					</select>
 				</div>
 
 				<div>
-					<label class="block text-sm font-medium text-gray-700 mb-1">Question</label>
+					<label for="question-textarea" class="block text-sm font-medium text-gray-700 mb-1"
+						>Question</label
+					>
 					<textarea
+						id="question-textarea"
 						name="question"
 						required
 						rows="3"
 						class="w-full px-3 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#122555] focus:border-transparent"
-						placeholder="Intitulé de la question">{data.question.question_text}</textarea
+						placeholder="Intitulé de la question">{initialQuestionText}</textarea
 					>
 				</div>
 			</div>
@@ -68,7 +90,7 @@
 			<!-- Answers -->
 			<div class="space-y-4">
 				<div class="flex justify-between items-center">
-					<label class="block text-sm font-medium text-gray-700">Réponses</label>
+					<span class="block text-sm font-medium text-gray-700">Réponses</span>
 					<button
 						type="button"
 						onclick={addAnswer}
@@ -78,7 +100,7 @@
 					</button>
 				</div>
 
-				{#each answers as answer, i}
+				{#each answers as answer, i (answer.id || i)}
 					<div
 						class="p-4 bg-gray-50 rounded-lg border border-gray-200 relative group animate-fade-in"
 					>

@@ -89,7 +89,7 @@
 	}
 
 	// Handle browser back button
-	function handlePopState(event: PopStateEvent) {
+	function handlePopState() {
 		if (showQuiz) {
 			// User pressed back during quiz - reset
 			resetQuiz();

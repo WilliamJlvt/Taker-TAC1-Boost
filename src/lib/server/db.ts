@@ -4,6 +4,8 @@ import { dirname, join } from 'path';
 import { existsSync, mkdirSync, readFileSync } from 'fs';
 import { env } from '$env/dynamic/private';
 
+import schema from './schema.sql?raw';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const dbPath = env.DATABASE_PATH || join(__dirname, '../../../data/tac1.db');
 
@@ -13,43 +15,53 @@ if (!existsSync(dataDir)) {
 	mkdirSync(dataDir, { recursive: true });
 }
 
-export const db = new Database(dbPath);
-db.pragma('journal_mode = WAL');
+let _db: Database.Database | undefined;
 
-// Run migrations
-const schemaPath = join(__dirname, 'schema.sql');
-if (existsSync(schemaPath)) {
-	const schema = readFileSync(schemaPath, 'utf-8');
-	db.exec(schema);
+export function getDb(): Database.Database {
+	if (_db) return _db;
+
+	_db = new Database(dbPath);
+	_db.pragma('journal_mode = WAL');
+
+	// Run migrations
+	_db.exec(schema);
+
+	// Migration for new user role column
+	try {
+		_db.prepare("ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'user'").run();
+	} catch {
+		// Column probably already exists
+	}
+
+	// Migration for new question stats columns
+	try {
+		_db.prepare('ALTER TABLE questions ADD COLUMN success_count INTEGER DEFAULT 0').run();
+		_db.prepare('ALTER TABLE questions ADD COLUMN failure_count INTEGER DEFAULT 0').run();
+	} catch {
+		// Columns probably already exist
+	}
+
+	// Seed fixed categories
+	const fixedCategories = [
+		{ name: 'Mouvement', slug: 'mouvement' },
+		{ name: 'CLR', slug: 'clr' },
+		{ name: 'Organisationnel', slug: 'organisationnel' },
+		{ name: 'Trésorerie', slug: 'tresorerie' }
+	];
+
+	const insertCategory = _db.prepare(
+		'INSERT OR IGNORE INTO categories (name, slug) VALUES (@name, @slug)'
+	);
+	for (const cat of fixedCategories) {
+		insertCategory.run(cat);
+	}
+
+	return _db;
 }
 
-// Migration for new user role column
-try {
-	db.prepare("ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'user'").run();
-} catch (error) {
-	// Column probably already exists
-}
-
-// Migration for new question stats columns
-try {
-	db.prepare('ALTER TABLE questions ADD COLUMN success_count INTEGER DEFAULT 0').run();
-	db.prepare('ALTER TABLE questions ADD COLUMN failure_count INTEGER DEFAULT 0').run();
-} catch (error) {
-	// Columns probably already exist
-}
-
-// Seed fixed categories
-const fixedCategories = [
-	{ name: 'Mouvement', slug: 'mouvement' },
-	{ name: 'CLR', slug: 'clr' },
-	{ name: 'Organisationnel', slug: 'organisationnel' },
-	{ name: 'Trésorerie', slug: 'tresorerie' }
-];
-
-const insertCategory = db.prepare('INSERT OR IGNORE INTO categories (name, slug) VALUES (@name, @slug)');
-for (const cat of fixedCategories) {
-	insertCategory.run(cat);
-}
+// Global db export for backward compatibility where possible, but use getDb() for actual access.
+// This ensures legacy call sites (db.prepare) keep working in SSR.
+export const db = getDb();
 
 export interface DbUser {
 	id: string;
@@ -106,39 +118,36 @@ export function isAdmin(email?: string | null): boolean {
 	const adminEmails = (env.ADMIN_EMAILS || '').split(',').map((e) => e.trim().toLowerCase());
 	if (adminEmails.includes(email.toLowerCase())) return true;
 
-	const user = db.prepare('SELECT role FROM users WHERE email = ?').get(email.toLowerCase()) as
-		| { role: string }
-		| undefined;
+	const user = getDb()
+		.prepare('SELECT role FROM users WHERE email = ?')
+		.get(email.toLowerCase()) as { role: string } | undefined;
 
 	return user?.role === 'admin';
 }
 
 export function getOrCreateUser(user: Omit<DbUser, 'created_at' | 'role'>): DbUser {
-	const existing = db.prepare('SELECT * FROM users WHERE email = ?').get(user.email) as
+	const existing = getDb().prepare('SELECT * FROM users WHERE email = ?').get(user.email) as
 		| DbUser
 		| undefined;
 	if (existing) {
 		// If user ID changed, update the FK references in scores table first
 		if (existing.id !== user.id) {
 			// Disable foreign keys before the transaction (must be outside transaction)
-			db.pragma('foreign_keys = OFF');
+			getDb().pragma('foreign_keys = OFF');
 			try {
-				db.prepare('UPDATE scores SET user_id = ? WHERE user_id = ?').run(user.id, existing.id);
-				db.prepare('UPDATE users SET id = ?, name = ?, image = ? WHERE email = ?').run(
-					user.id,
-					user.name,
-					user.image,
-					user.email
-				);
+				getDb()
+					.prepare('UPDATE scores SET user_id = ? WHERE user_id = ?')
+					.run(user.id, existing.id);
+				getDb()
+					.prepare('UPDATE users SET id = ?, name = ?, image = ? WHERE email = ?')
+					.run(user.id, user.name, user.image, user.email);
 			} finally {
-				db.pragma('foreign_keys = ON');
+				getDb().pragma('foreign_keys = ON');
 			}
 		} else {
-			db.prepare('UPDATE users SET name = ?, image = ? WHERE email = ?').run(
-				user.name,
-				user.image,
-				user.email
-			);
+			getDb()
+				.prepare('UPDATE users SET name = ?, image = ? WHERE email = ?')
+				.run(user.name, user.image, user.email);
 		}
 		return { ...existing, id: user.id, name: user.name, image: user.image };
 	}
@@ -147,23 +156,19 @@ export function getOrCreateUser(user: Omit<DbUser, 'created_at' | 'role'>): DbUs
 	const adminEmails = (env.ADMIN_EMAILS || '').split(',').map((e) => e.trim().toLowerCase());
 	const role = adminEmails.includes(user.email.toLowerCase()) ? 'admin' : 'user';
 
-	db.prepare('INSERT INTO users (id, email, name, image, role) VALUES (?, ?, ?, ?, ?)').run(
-		user.id,
-		user.email,
-		user.name,
-		user.image,
-		role
-	);
+	getDb()
+		.prepare('INSERT INTO users (id, email, name, image, role) VALUES (?, ?, ?, ?, ?)')
+		.run(user.id, user.email, user.name, user.image, role);
 	return { ...user, role } as DbUser;
 }
 
 export function getAllUsers(): (DbUser & { isHardcodedAdmin: boolean })[] {
-	const users = (db.prepare('SELECT * FROM users ORDER BY created_at DESC').all() as DbUser[]).map(
-		(u) => ({
-			...u,
-			role: u.role || 'user'
-		})
-	);
+	const users = (
+		getDb().prepare('SELECT * FROM users ORDER BY created_at DESC').all() as DbUser[]
+	).map((u) => ({
+		...u,
+		role: u.role || 'user'
+	}));
 	const adminEmails = (env.ADMIN_EMAILS || '').split(',').map((e) => e.trim().toLowerCase());
 
 	return users.map((user) => ({
@@ -175,25 +180,25 @@ export function getAllUsers(): (DbUser & { isHardcodedAdmin: boolean })[] {
 }
 
 export function updateUserRole(userId: string, role: string): boolean {
-	const result = db.prepare('UPDATE users SET role = ? WHERE id = ?').run(role, userId);
+	const result = getDb().prepare('UPDATE users SET role = ? WHERE id = ?').run(role, userId);
 	return result.changes > 0;
 }
 
 export function deleteUser(userId: string): boolean {
-	const result = db.prepare('DELETE FROM users WHERE id = ?').run(userId);
+	const result = getDb().prepare('DELETE FROM users WHERE id = ?').run(userId);
 	// Optional: Cascade delete scores? SQLite typically handles this via ON DELETE CASCADE if configured.
 	// Check schema.sql if scores ref users. Our schema calls it `user_id TEXT NOT NULL REFERENCES users(id)`
 	// but default SQLite might not enforce FKs unless PRAGMA foreign_keys = ON; is set (it is not in db.ts currently).
 	// Let's manually clean up scores just in case for now.
 	if (result.changes > 0) {
-		db.prepare('DELETE FROM scores WHERE user_id = ?').run(userId);
+		getDb().prepare('DELETE FROM scores WHERE user_id = ?').run(userId);
 		return true;
 	}
 	return false;
 }
 
 export function saveScore(score: Omit<DbScore, 'id' | 'created_at'>): DbScore {
-	const stmt = db.prepare(`
+	const stmt = getDb().prepare(`
 		INSERT INTO scores (user_id, exam_mode, score, total_questions, correct_answers, time_spent, category_scores)
 		VALUES (?, ?, ?, ?, ?, ?, ?)
 	`);
@@ -227,8 +232,13 @@ export interface LeaderboardEntry {
 	created_at: string;
 }
 
-export function getLeaderboard(examMode: 'organisationnel' | 'tresorerie', limit = 20): LeaderboardEntry[] {
-	return db.prepare(`
+export function getLeaderboard(
+	examMode: 'organisationnel' | 'tresorerie',
+	limit = 20
+): LeaderboardEntry[] {
+	return getDb()
+		.prepare(
+			`
 		SELECT 
 			s.id, s.user_id, u.name as user_name, u.image as user_image,
 			s.score, s.total_questions, s.correct_answers, s.time_spent, s.created_at,
@@ -244,14 +254,20 @@ export function getLeaderboard(examMode: 'organisationnel' | 'tresorerie', limit
 		)
 		ORDER BY s.score DESC, s.time_spent ASC
 		LIMIT ?
-	`).all(examMode, limit) as LeaderboardEntry[];
+	`
+		)
+		.all(examMode, limit) as LeaderboardEntry[];
 }
 
 export function getUserScores(userId: string, examMode?: string): DbScore[] {
 	if (examMode) {
-		return db.prepare('SELECT * FROM scores WHERE user_id = ? AND exam_mode = ? ORDER BY created_at DESC').all(userId, examMode) as DbScore[];
+		return getDb()
+			.prepare('SELECT * FROM scores WHERE user_id = ? AND exam_mode = ? ORDER BY created_at DESC')
+			.all(userId, examMode) as DbScore[];
 	}
-	return db.prepare('SELECT * FROM scores WHERE user_id = ? ORDER BY created_at DESC').all(userId) as DbScore[];
+	return getDb()
+		.prepare('SELECT * FROM scores WHERE user_id = ? ORDER BY created_at DESC')
+		.all(userId) as DbScore[];
 }
 
 export interface UserStats {
@@ -268,23 +284,32 @@ export interface UserStats {
 }
 
 export function getUserStats(userId: string): UserStats {
-	const allScores = db.prepare('SELECT * FROM scores WHERE user_id = ? ORDER BY created_at ASC').all(userId) as DbScore[];
+	const allScores = getDb()
+		.prepare('SELECT * FROM scores WHERE user_id = ? ORDER BY created_at ASC')
+		.all(userId) as DbScore[];
 
 	// Calculate stats
 	const totalAttempts = allScores.length;
-	const orgaScores = allScores.filter(s => s.exam_mode === 'organisationnel');
-	const tresoScores = allScores.filter(s => s.exam_mode === 'tresorerie');
+	const orgaScores = allScores.filter((s) => s.exam_mode === 'organisationnel');
+	const tresoScores = allScores.filter((s) => s.exam_mode === 'tresorerie');
 
-	const bestScoreOrga = orgaScores.length > 0 ? Math.max(...orgaScores.map(s => s.score)) : null;
-	const bestScoreTreso = tresoScores.length > 0 ? Math.max(...tresoScores.map(s => s.score)) : null;
-	const avgScore = totalAttempts > 0 ? Math.round(allScores.reduce((sum, s) => sum + s.score, 0) / totalAttempts) : 0;
+	const bestScoreOrga = orgaScores.length > 0 ? Math.max(...orgaScores.map((s) => s.score)) : null;
+	const bestScoreTreso =
+		tresoScores.length > 0 ? Math.max(...tresoScores.map((s) => s.score)) : null;
+	const avgScore =
+		totalAttempts > 0
+			? Math.round(allScores.reduce((sum, s) => sum + s.score, 0) / totalAttempts)
+			: 0;
 
 	// Aggregate category stats
 	const categoryStats: Record<string, { correct: number; total: number; percentage: number }> = {};
 	for (const score of allScores) {
 		if (score.category_scores) {
 			try {
-				const cats = JSON.parse(score.category_scores) as Record<string, { correct: number; total: number }>;
+				const cats = JSON.parse(score.category_scores) as Record<
+					string,
+					{ correct: number; total: number }
+				>;
 				for (const [cat, data] of Object.entries(cats)) {
 					if (!categoryStats[cat]) {
 						categoryStats[cat] = { correct: 0, total: 0, percentage: 0 };
@@ -292,7 +317,7 @@ export function getUserStats(userId: string): UserStats {
 					categoryStats[cat].correct += data.correct;
 					categoryStats[cat].total += data.total;
 				}
-			} catch (e) {
+			} catch {
 				// Ignore malformed JSON
 			}
 		}
@@ -306,11 +331,11 @@ export function getUserStats(userId: string): UserStats {
 
 	// Progression data for charts
 	const progression = {
-		organisationnel: orgaScores.map(s => ({
+		organisationnel: orgaScores.map((s) => ({
 			date: s.created_at,
 			score: s.score
 		})),
-		tresorerie: tresoScores.map(s => ({
+		tresorerie: tresoScores.map((s) => ({
 			date: s.created_at,
 			score: s.score
 		}))
@@ -333,11 +358,12 @@ export function getUserStats(userId: string): UserStats {
 // --- Admin Functions ---
 
 export function getCategories(): DbCategory[] {
-	return db.prepare('SELECT * FROM categories ORDER BY name ASC').all() as DbCategory[];
+	return getDb().prepare('SELECT * FROM categories ORDER BY name ASC').all() as DbCategory[];
 }
 
 export function createCategory(data: { name: string; slug: string; description?: string }): number {
-	const info = db.prepare('INSERT INTO categories (name, slug, description) VALUES (?, ?, ?)')
+	const info = getDb()
+		.prepare('INSERT INTO categories (name, slug, description) VALUES (?, ?, ?)')
 		.run(data.name, data.slug, data.description || null);
 	return info.lastInsertRowid as number;
 }
@@ -349,7 +375,9 @@ export interface QuestionFilter {
 	offset?: number;
 }
 
-export function getQuestions(filter: QuestionFilter = {}): (DbQuestion & { category_name: string, answer_count: number })[] {
+export function getQuestions(
+	filter: QuestionFilter = {}
+): (DbQuestion & { category_name: string; answer_count: number })[] {
 	let query = `
 		SELECT q.*, c.name as category_name,
 		(SELECT COUNT(*) FROM answer_options WHERE question_id = q.id) as answer_count
@@ -357,7 +385,7 @@ export function getQuestions(filter: QuestionFilter = {}): (DbQuestion & { categ
 		JOIN categories c ON q.category_id = c.id
 		WHERE 1=1
 	`;
-	const params: any[] = [];
+	const params: (string | number)[] = [];
 
 	if (filter.categoryId) {
 		query += ' AND q.category_id = ?';
@@ -380,14 +408,20 @@ export function getQuestions(filter: QuestionFilter = {}): (DbQuestion & { categ
 		}
 	}
 
-	return db.prepare(query).all(...params) as (DbQuestion & { category_name: string, answer_count: number })[];
+	return getDb()
+		.prepare(query)
+		.all(...params) as (DbQuestion & { category_name: string; answer_count: number })[];
 }
 
 export function getQuestion(id: number): (DbQuestion & { answers: DbAnswerOption[] }) | undefined {
-	const question = db.prepare('SELECT * FROM questions WHERE id = ?').get(id) as DbQuestion | undefined;
+	const question = getDb().prepare('SELECT * FROM questions WHERE id = ?').get(id) as
+		| DbQuestion
+		| undefined;
 	if (!question) return undefined;
 
-	const answers = db.prepare('SELECT * FROM answer_options WHERE question_id = ? ORDER BY position ASC, id ASC').all(id) as DbAnswerOption[];
+	const answers = getDb()
+		.prepare('SELECT * FROM answer_options WHERE question_id = ? ORDER BY position ASC, id ASC')
+		.all(id) as DbAnswerOption[];
 	return { ...question, answers };
 }
 
@@ -402,10 +436,14 @@ export interface QuestionData {
 }
 
 export function createQuestion(data: QuestionData): number {
-	const insertQuestion = db.prepare('INSERT INTO questions (category_id, question_text) VALUES (?, ?)');
-	const insertAnswer = db.prepare('INSERT INTO answer_options (question_id, text, is_correct, rationale, position) VALUES (?, ?, ?, ?, ?)');
+	const insertQuestion = getDb().prepare(
+		'INSERT INTO questions (category_id, question_text) VALUES (?, ?)'
+	);
+	const insertAnswer = getDb().prepare(
+		'INSERT INTO answer_options (question_id, text, is_correct, rationale, position) VALUES (?, ?, ?, ?, ?)'
+	);
 
-	const createTx = db.transaction((questionData: QuestionData) => {
+	const createTx = getDb().transaction((questionData: QuestionData) => {
 		const info = insertQuestion.run(questionData.categoryId, questionData.questionText);
 		const questionId = info.lastInsertRowid as number;
 
@@ -420,11 +458,15 @@ export function createQuestion(data: QuestionData): number {
 }
 
 export function updateQuestion(id: number, data: QuestionData): void {
-	const updateQuestionStmt = db.prepare('UPDATE questions SET category_id = ?, question_text = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?');
-	const deleteAnswers = db.prepare('DELETE FROM answer_options WHERE question_id = ?');
-	const insertAnswer = db.prepare('INSERT INTO answer_options (question_id, text, is_correct, rationale, position) VALUES (?, ?, ?, ?, ?)');
+	const updateQuestionStmt = getDb().prepare(
+		'UPDATE questions SET category_id = ?, question_text = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?'
+	);
+	const deleteAnswers = getDb().prepare('DELETE FROM answer_options WHERE question_id = ?');
+	const insertAnswer = getDb().prepare(
+		'INSERT INTO answer_options (question_id, text, is_correct, rationale, position) VALUES (?, ?, ?, ?, ?)'
+	);
 
-	const updateTx = db.transaction((qId: number, questionData: QuestionData) => {
+	const updateTx = getDb().transaction((qId: number, questionData: QuestionData) => {
 		updateQuestionStmt.run(questionData.categoryId, questionData.questionText, qId);
 		deleteAnswers.run(qId);
 		questionData.answers.forEach((ans, index) => {
@@ -436,10 +478,13 @@ export function updateQuestion(id: number, data: QuestionData): void {
 }
 
 export function deleteQuestion(id: number): void {
-	db.prepare('DELETE FROM questions WHERE id = ?').run(id);
+	getDb().prepare('DELETE FROM questions WHERE id = ?').run(id);
 }
 
-export function importQuestionsFromJSON(jsonContent: any, categoryId: number): { added: number; errors: string[] } {
+export function importQuestionsFromJSON(
+	jsonContent: unknown,
+	categoryId: number
+): { added: number; errors: string[] } {
 	// Expects an array of question objects based on the index.ts transformData structure or raw JSON
 	// We handle the structure: { question: string, answerOptions: { text: string, isCorrect: boolean, rationale?: string }[] }
 
@@ -450,48 +495,75 @@ export function importQuestionsFromJSON(jsonContent: any, categoryId: number): {
 	let added = 0;
 	const errors: string[] = [];
 
-	const insertQuestion = db.prepare('INSERT INTO questions (category_id, question_text) VALUES (?, ?)');
-	const insertAnswer = db.prepare('INSERT INTO answer_options (question_id, text, is_correct, rationale, position) VALUES (?, ?, ?, ?, ?)');
+	const insertQuestion = getDb().prepare(
+		'INSERT INTO questions (category_id, question_text) VALUES (?, ?)'
+	);
+	const insertAnswer = getDb().prepare(
+		'INSERT INTO answer_options (question_id, text, is_correct, rationale, position) VALUES (?, ?, ?, ?, ?)'
+	);
 
-	const importTx = db.transaction((questions: any[]) => {
-		for (let i = 0; i < questions.length; i++) {
-			const q = questions[i];
-			if (!q.question || !Array.isArray(q.answerOptions)) {
-				errors.push(`Question at index ${i} is missing required fields`);
-				continue;
-			}
+	const importTx = getDb().transaction(
+		(
+			questions: {
+				question: string;
+				answerOptions: { text: string; isCorrect: boolean; rationale?: string }[];
+			}[]
+		) => {
+			for (let i = 0; i < questions.length; i++) {
+				const q = questions[i];
+				if (!q.question || !Array.isArray(q.answerOptions)) {
+					errors.push(`Question at index ${i} is missing required fields`);
+					continue;
+				}
 
-			try {
-				const info = insertQuestion.run(categoryId, q.question);
-				const qId = info.lastInsertRowid as number;
+				try {
+					const info = insertQuestion.run(categoryId, q.question);
+					const qId = info.lastInsertRowid as number;
 
-				q.answerOptions.forEach((ans: any, idx: number) => {
-					insertAnswer.run(qId, ans.text, ans.isCorrect ? 1 : 0, ans.rationale || null, idx);
-				});
-				added++;
-			} catch (e: any) {
-				errors.push(`Error saving question at index ${i}: ${e.message}`);
+					q.answerOptions.forEach((ans, idx: number) => {
+						insertAnswer.run(qId, ans.text, ans.isCorrect ? 1 : 0, ans.rationale || null, idx);
+					});
+					added++;
+				} catch (e: unknown) {
+					const message = e instanceof Error ? e.message : 'Unknown error';
+					errors.push(`Error saving question at index ${i}: ${message}`);
+				}
 			}
 		}
-	});
+	);
 
 	importTx(jsonContent);
 	return { added, errors };
 }
 
-export function getAllQuestionsWithAnswers(): any[] {
-	const questions = db.prepare('SELECT * FROM questions').all() as DbQuestion[];
-	const answers = db.prepare('SELECT * FROM answer_options ORDER BY position ASC').all() as DbAnswerOption[];
-	const categories = db.prepare('SELECT * FROM categories').all() as DbCategory[];
+export interface QuestionWithAnswers {
+	id: string;
+	question: string;
+	answerOptions: {
+		text: string;
+		isCorrect: boolean;
+		rationale?: string;
+	}[];
+	category: string | undefined;
+}
 
-	const catMap = new Map(categories.map(c => [c.id, c.name]));
+export function getAllQuestionsWithAnswers(): QuestionWithAnswers[] {
+	const questions = getDb().prepare('SELECT * FROM questions').all() as DbQuestion[];
+	const answers = getDb()
+		.prepare('SELECT * FROM answer_options ORDER BY position ASC')
+		.all() as DbAnswerOption[];
+	const categories = getDb().prepare('SELECT * FROM categories').all() as DbCategory[];
 
-	return questions.map(q => {
-		const qAnswers = answers.filter(a => a.question_id === q.id).map(a => ({
-			text: a.text,
-			isCorrect: a.is_correct === 1,
-			rationale: a.rationale || undefined
-		}));
+	const catMap = new Map(categories.map((c) => [c.id, c.name]));
+
+	return questions.map((q) => {
+		const qAnswers = answers
+			.filter((a) => a.question_id === q.id)
+			.map((a) => ({
+				text: a.text,
+				isCorrect: a.is_correct === 1,
+				rationale: a.rationale || undefined
+			}));
 
 		return {
 			id: q.id.toString(),
@@ -503,10 +575,14 @@ export function getAllQuestionsWithAnswers(): any[] {
 }
 
 export function updateQuestionStats(results: { questionId: string; isCorrect: boolean }[]) {
-	const updateSuccess = db.prepare('UPDATE questions SET success_count = success_count + 1 WHERE id = ?');
-	const updateFailure = db.prepare('UPDATE questions SET failure_count = failure_count + 1 WHERE id = ?');
+	const updateSuccess = getDb().prepare(
+		'UPDATE questions SET success_count = success_count + 1 WHERE id = ?'
+	);
+	const updateFailure = getDb().prepare(
+		'UPDATE questions SET failure_count = failure_count + 1 WHERE id = ?'
+	);
 
-	const tx = db.transaction((items: { questionId: string; isCorrect: boolean }[]) => {
+	const tx = getDb().transaction((items: { questionId: string; isCorrect: boolean }[]) => {
 		for (const item of items) {
 			if (item.isCorrect) {
 				updateSuccess.run(item.questionId);
@@ -519,7 +595,6 @@ export function updateQuestionStats(results: { questionId: string; isCorrect: bo
 	tx(results);
 }
 
-
 export interface DashboardStats {
 	dailyParticipation: { date: string; count: number }[];
 	avgScoreEvolution: {
@@ -531,58 +606,79 @@ export interface DashboardStats {
 	flopQuestions: { question: string; successRate: number; count: number }[];
 }
 
-
 export function getDashboardStats(): DashboardStats {
 	// 1. Daily Participation (Last 30 days)
-	const dailyParticipation = db.prepare(`
+	const dailyParticipation = getDb()
+		.prepare(
+			`
 		SELECT date(created_at) as date, COUNT(*) as count 
 		FROM scores 
 		WHERE created_at >= date('now', '-30 days')
 		GROUP BY date(created_at) 
 		ORDER BY date ASC
-	`).all() as { date: string; count: number }[];
+	`
+		)
+		.all() as { date: string; count: number }[];
 
 	// 2. Avg Score Evolution (Last 30 days, by mode)
-	const scores = db.prepare(`
+	const scores = getDb()
+		.prepare(
+			`
 		SELECT date(created_at) as date, exam_mode, AVG(score) as avg_score
 		FROM scores
 		WHERE created_at >= date('now', '-30 days')
 		GROUP BY date(created_at), exam_mode
 		ORDER BY date ASC
-	`).all() as { date: string; exam_mode: string; avg_score: number }[];
+	`
+		)
+		.all() as { date: string; exam_mode: string; avg_score: number }[];
 
 	const avgScoreEvolution = {
-		organisationnel: scores.filter(s => s.exam_mode === 'organisationnel').map(s => ({ date: s.date, score: Math.round(s.avg_score) })),
-		tresorerie: scores.filter(s => s.exam_mode === 'tresorerie').map(s => ({ date: s.date, score: Math.round(s.avg_score) }))
+		organisationnel: scores
+			.filter((s) => s.exam_mode === 'organisationnel')
+			.map((s) => ({ date: s.date, score: Math.round(s.avg_score) })),
+		tresorerie: scores
+			.filter((s) => s.exam_mode === 'tresorerie')
+			.map((s) => ({ date: s.date, score: Math.round(s.avg_score) }))
 	};
 
 	// 3. Category Performance (Aggregated from question stats)
 	// We join questions with categories and sum up success/failure counts
-	const catStats = db.prepare(`
+	const catStats = getDb()
+		.prepare(
+			`
 		SELECT c.name, SUM(q.success_count) as success, SUM(q.failure_count) as failure
 		FROM questions q
 		JOIN categories c ON q.category_id = c.id
 		GROUP BY c.id
-	`).all() as { name: string; success: number; failure: number }[];
+	`
+		)
+		.all() as { name: string; success: number; failure: number }[];
 
-	const categoryPerformance = catStats.map(c => {
-		const total = c.success + c.failure;
-		return {
-			name: c.name,
-			successRate: total > 0 ? Math.round((c.success / total) * 100) : 0,
-			totalQuestions: total
-		};
-	}).sort((a, b) => b.successRate - a.successRate); // Best categories first
+	const categoryPerformance = catStats
+		.map((c) => {
+			const total = c.success + c.failure;
+			return {
+				name: c.name,
+				successRate: total > 0 ? Math.round((c.success / total) * 100) : 0,
+				totalQuestions: total
+			};
+		})
+		.sort((a, b) => b.successRate - a.successRate); // Best categories first
 
 	// 4. Top/Flop Questions
 	// We select questions with at least 1 attempt
-	const questions = db.prepare(`
+	const questions = getDb()
+		.prepare(
+			`
 		SELECT question_text as question, success_count, failure_count
 		FROM questions
 		WHERE (success_count + failure_count) >= 1
-	`).all() as { question: string; success_count: number; failure_count: number }[];
+	`
+		)
+		.all() as { question: string; success_count: number; failure_count: number }[];
 
-	const processedQuestions = questions.map(q => {
+	const processedQuestions = questions.map((q) => {
 		const total = q.success_count + q.failure_count;
 		return {
 			question: q.question,
