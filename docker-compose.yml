@@ -12,4 +12,5 @@ services:
       - .env
     environment:
       - NODE_ENV=production
+      - DEBUG=authjs
     restart: unless-stopped
