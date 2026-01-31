@@ -100,6 +100,40 @@ L'application utilise 3 fichiers CSV avec les questions :
 - **Mouvement** : Questions sur les mouvements
 - **Organisationnel** : Questions organisationnels
 
+## 📥 Import JSON (questions)
+
+Le format attendu pour l'import JSON est une liste d'objets avec une question et ses réponses :
+
+```json
+[
+  {
+    "question": "Selon les normes de la CNJE, quel est le principe fondamental pour l'organisation du pôle trésorerie afin d'assurer la protection de la structure ?",
+    "answerOptions": [
+      {
+        "text": "L'intervention d'au moins deux personnes utilisant des outils séparés.",
+        "isCorrect": true,
+        "rationale": "Le contrôle interne en trésorerie se matérialise par la séparation des tâches et des outils, impliquant au minimum deux intervenants pour prévenir les risques."
+      },
+      {
+        "text": "La nomination d'un trésorier unique ayant tous les accès pour plus d'efficacité.",
+        "isCorrect": false,
+        "rationale": "Centraliser tous les accès sur une seule personne est contraire au principe de contrôle interne, car cela augmente considérablement les risques d'erreurs ou de fraude."
+      },
+      {
+        "text": "L'utilisation d'un seul logiciel de gestion partagé par toute l'équipe.",
+        "isCorrect": false,
+        "rationale": "Le principe de contrôle interne requiert l'utilisation d'outils différents et séparés pour permettre une vérification croisée des informations."
+      },
+      {
+        "text": "Une validation des dépenses par le Président à la fin de chaque mois.",
+        "isCorrect": false,
+        "rationale": "Bien que la validation soit une bonne pratique, le principe fondamental du contrôle interne est la séparation des tâches au quotidien, et non un contrôle a posteriori."
+      }
+    ]
+  }
+]
+```
+
 ## 🎨 Technologies
 
 - **Svelte 5** : Framework réactif avec runes
