@@ -13,4 +13,9 @@ services:
     environment:
       - NODE_ENV=production
       - DEBUG=authjs
+    volumes:
+      - tac1-data:/app/data
     restart: unless-stopped
+
+volumes:
+  tac1-data:
