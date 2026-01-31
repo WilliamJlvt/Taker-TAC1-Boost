@@ -59,8 +59,9 @@ export function getDb(): Database.Database {
 	return _db;
 }
 
-// Global db export for backward compatibility where possible, but use getDb() for actual access
-export const db = {} as Record<string, unknown>;
+// Global db export for backward compatibility where possible, but use getDb() for actual access.
+// This ensures legacy call sites (db.prepare) keep working in SSR.
+export const db = getDb();
 
 export interface DbUser {
 	id: string;
