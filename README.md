@@ -1,17 +1,19 @@
 # TAC1 Boost 🚀
 
-Application web de révision interactive pour l'examen TAC1 avec Svelte, TypeScript et Tailwind CSS.
+Application web de révision interactive pour l'examen TAC1 (SvelteKit + Svelte 5 + TypeScript + Tailwind).
 
 ## 🎯 Fonctionnalités
 
-- **Quiz randomisé** : Questions et réponses mélangées aléatoirement
-- **Timer intelligent** : Compte à rebours avec alertes visuelles
-- **Modes prédéfinis** : Rapide (10Q/3min), Moyen, Long, Complet
-- **Mode personnalisé** : Choisir le nombre de questions et le temps
-- **Raccourcis clavier** : Entrée/Espace pour passer rapidement
-- **Analyse détaillée** : Résultats par catégorie avec erreurs
-- **Interface responsive** : Mobile-first avec animations
-- **Export/Partage** : Téléchargement et partage des résultats
+- **Quiz randomisé** : questions et réponses mélangées
+- **Modes d'entraînement** : Rapide (10Q/3min), Moyen (25Q/10min), Long (50Q/25min), Complet (100Q/60min)
+- **Modes officiels** : TAC1 Organisationnel et TAC1 Trésorerie (50Q/30min)
+- **Mode personnalisé** : choix du nombre de questions, du temps et des catégories
+- **Timer** : compte à rebours et suivi du temps passé
+- **Corrections détaillées** : bonnes réponses + explications (si disponibles)
+- **Raccourcis clavier** : Entrée/Espace pour passer à la question suivante
+- **Scores & leaderboard** : sauvegarde des scores officiels et classement global
+- **Profil utilisateur** : historique, progression et stats par catégorie
+- **Administration** : dashboard, gestion des questions, import JSON, gestion des utilisateurs
 
 ## 🏃‍♂️ Démarrage rapide avec Docker
 
@@ -22,7 +24,7 @@ Application web de révision interactive pour l'examen TAC1 avec Svelte, TypeScr
 docker-compose up
 
 # Accéder à l'application
-http://localhost:3000
+http://localhost:3500
 ```
 
 ### Développement
@@ -39,70 +41,72 @@ http://localhost:5173
 
 ### Prérequis
 
-- Node.js 18+
-- npm
+- Node.js 20+
+- pnpm
 
 ### Installation
 
 ```bash
 # Installer les dépendances
-npm install
+pnpm install
 
 # Lancer en mode développement
-npm run dev
+pnpm run dev
 
 # Build pour la production
-npm run build
+pnpm run build
 
 # Prévisualiser le build
-npm run preview
+pnpm run preview
 ```
+
+### Variables d'environnement
+
+Le projet utilise Auth.js (Google) et une base SQLite locale. Exemple de variables à définir dans `.env` :
+
+```
+GOOGLE_CLIENT_ID=...
+GOOGLE_CLIENT_SECRET=...
+AUTH_SECRET=...
+ADMIN_EMAILS=admin@exemple.com,autre@exemple.com
+DATABASE_PATH=/chemin/vers/data/tac1.db
+```
+
+- `ADMIN_EMAILS` : promotion automatique des comptes en admin.
+- `DATABASE_PATH` : optionnel (par défaut `data/tac1.db`).
 
 ## 📁 Structure du projet
 
 ```
 src/
 ├── lib/
-│   ├── components/        # Composants Svelte
-│   │   ├── StartScreen.svelte
-│   │   ├── QuestionCard.svelte
-│   │   ├── Timer.svelte
-│   │   └── ResultScreen.svelte
-│   ├── data/             # Données des questions CSV
-│   ├── assets/           # Images et icônes
-│   ├── types.ts          # Types TypeScript
-│   ├── stores.ts         # Stores Svelte
-│   └── quiz.ts           # Logique du quiz
-├── routes/               # Pages SvelteKit
-└── app.css              # Styles globaux
+│   ├── components/        # Composants Svelte (UI + pages)
+│   ├── server/            # Auth + accès DB SQLite
+│   ├── assets/            # Images et icônes
+│   ├── types.ts           # Types TypeScript
+│   ├── stores.ts          # Stores Svelte
+│   └── quiz.ts            # Logique du quiz
+├── routes/
+│   ├── api/               # Endpoints (scores, profil)
+│   ├── admin/             # Dashboard admin & gestion contenu
+│   └── ...                # Pages publiques (home, scoreboard, profil)
+└── app.css                # Styles globaux
 ```
-
-## 🎮 Utilisation
-
-1. **Choisir un mode** : Sélectionner un mode prédéfini ou personnaliser
-2. **Répondre aux questions** : Cliquer sur les réponses
-3. **Navigation rapide** : Utiliser Entrée/Espace pour passer rapidement
-4. **Analyser les résultats** : Voir le score et les erreurs détaillées
-5. **Partager** : Exporter ou partager ses résultats
-
-## 🐳 Configuration Docker
-
-L'application utilise deux configurations Docker :
-
-- **Production** (`Dockerfile`) : Version optimisée avec build
-- **Développement** (`Dockerfile.dev`) : Version avec hot-reload
 
 ## 📊 Données
 
-L'application utilise 3 fichiers CSV avec les questions :
+- Les questions et résultats sont stockés en **SQLite** (fichier local `data/tac1.db`, non versionné).
+- Les catégories sont seedées automatiquement au démarrage (CLR, Mouvement, Organisationnel, Trésorerie).
+- Les questions peuvent être chargées depuis un CSV local :
 
-- **CLR** : Questions sur la réglementation
-- **Mouvement** : Questions sur les mouvements
-- **Organisationnel** : Questions organisationnels
+```bash
+pnpm run seed
+# Charge data/seed/seed-questions.csv (non versionné)
+```
 
 ## 📥 Import JSON (questions)
 
-Le format attendu pour l'import JSON est une liste d'objets avec une question et ses réponses :
+L'import admin attend une liste d'objets avec une question et ses réponses :
 
 ```json
 [
@@ -134,23 +138,32 @@ Le format attendu pour l'import JSON est une liste d'objets avec une question et
 ]
 ```
 
+## 🐳 Configuration Docker
+
+- **Production** : `Dockerfile` (build + runtime, port `3500`)
+- **Développement** : `Dockerfile.dev` (hot-reload, port `5173`)
+
 ## 🎨 Technologies
 
-- **Svelte 5** : Framework réactif avec runes
-- **SvelteKit** : Meta-framework full-stack
-- **TypeScript** : Typage statique
-- **Tailwind CSS** : Framework CSS utility-first
-- **Vite** : Build tool rapide
+- **Svelte 5**
+- **SvelteKit**
+- **TypeScript**
+- **Tailwind CSS**
+- **SQLite** (better-sqlite3)
+- **Auth.js** (Google)
+- **Vite**
 
 ## 📝 Scripts disponibles
 
 ```bash
-npm run dev          # Serveur de développement
-npm run build        # Build production
-npm run preview      # Prévisualiser le build
-npm run check        # Vérification TypeScript
-npm run lint         # Linter ESLint + Prettier
-npm run format       # Formater le code
+pnpm run dev          # Serveur de développement
+pnpm run build        # Build production
+pnpm run preview      # Prévisualiser le build
+pnpm run seed         # Charge les questions depuis data/seed/seed-questions.csv
+pnpm run check        # Vérification TypeScript
+pnpm run lint         # Linter ESLint + Prettier
+pnpm run lint:fix     # Linter + auto-fix
+pnpm run format       # Formater le code
 ```
 
 ---
